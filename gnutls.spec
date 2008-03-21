@@ -11,8 +11,16 @@ Source0: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.bz2
 #Source1: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.gz.sig
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgcrypt >= 1.3.1
+
+%if "%{centos_ver}" == "4"
 Provides: libgnutls.so.11
 Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)
+%endif
+
+%if "%{centos_ver}" == "5"
+Provides: libgnutls.so.13
+Provides: libgnutls.so.13(GNUTLS_1_3)
+%endif
 
 %package devel
 Summary: Development files for the %{name} package.
@@ -113,6 +121,9 @@ fi
 %{_mandir}/man1/*
 
 %changelog
+* Fri Mar 21 2008 David Hrbáč <david@hrbac.cz> - 2.1.7-3
+- added libgnutls.so.13(GNUTLS_1_3) to fool dependencies
+
 * Fri Dec 14 2007 David Hrbáč <david@hrbac.cz> - 2.1.7-2.el4.hrb
 - added libgnutls.so.11(GNUTLS_REL_1_0_9) to fool dependencies
 
