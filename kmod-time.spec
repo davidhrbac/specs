@@ -8,6 +8,8 @@
 %define _with_smp %(test -d %{_libmoddir}/%{kernel}smp/build && echo 1 || echo 0)
 
 %define kversion %(echo "%{kernel}" | sed -e 's|-.*||')
+%define k2version %(echo "%{kernel}" | sed 's@-@.@g')
+
 %define krelease %(echo "%{kernel}" | sed -e 's|.*-||')
 
 %define pversion 20051006
@@ -18,14 +20,18 @@
 
 Summary: Linux module for time.
 Name:    kmod-time
-Version: %(echo %{kernel} | sed 's@-@_@g')
+
+Version:  
+#Version: %{k2version}
 Release: 0.%{pversion}.%{mysig}
 License: GPL
 Group:   System Environment/Kernel
 URL:     http://www.netfilter.org/patch-o-matic/
 Source0: http://ftp.netfilter.org/pub/patch-o-matic-ng/snapshot/patch-o-matic-ng-%{pversion}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: kernel-devel
+BuildRequires: kernel-devel 
+#= %{kernel}
+
 ExclusiveArch: i686 x86_64
 Requires: kernel = %{kernel}
 Packager: David Hrbáč <david@hrbac.cz>
