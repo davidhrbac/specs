@@ -4,7 +4,7 @@
 
 Name:          pyzor
 Version:       0.4.0
-Release:       11%{?dist}
+Release:       12%{?dist}
 Summary:       Pyzor collaborative spam filtering system
 
 Group:         Applications/Internet
@@ -15,10 +15,11 @@ Source1:       http://easynews.dl.sourceforge.net/sourceforge/pyzor/pyzor-0.4.0.
 Patch0:        http://antispam.imp.ch/patches/patch-pyzor-debian-mbox
 Patch1:        http://antispam.imp.ch/patches/patch-pyzor-handle_unknown_encodings
 Patch2:        http://antispam.imp.ch/patches/patch-pyzor-unknowntype
+Patch3:        pyzor-0.4.0-digest.patch
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:     noarch
 BuildRequires: python >= 2.2.1
-Requires:      python = %{pyver}
+#Requires:      python = %{pyver}
 
 %description
 Pyzor is a collaborative, networked system to detect
@@ -38,6 +39,8 @@ is highly recommended.
 %patch1 -p0
 # Treat empty messages as text
 %patch2 -p0
+
+%patch3 -p1
 
 
 %build
@@ -71,6 +74,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Apr  2 2008 David Hrbáč <david@hrbac.cz> - 0.4.0-12
+- Added digest patch
+
 * Wed Mar 19 2008 David Hrbáč <david@hrbac.cz> - 0.4.0-11
 - CentOS rebuild
 

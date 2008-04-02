@@ -5,7 +5,7 @@ Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://static.synd.info/downloads/releases/
 Source:		http://static.synd.info/downloads/releases/%{name}-%{version}.tar.gz
-Patch0:		mod_auth_token-config.patch
+Source1:        mod_auth_token.conf
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
@@ -20,9 +20,6 @@ having to pipe it through a script for security.
 
 %prep
 %setup -q
-#%{__rm} install-sh
-
-#%patch0 -p0 -b .config
 
 %build
 
@@ -34,6 +31,8 @@ make
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/httpd/modules
 install -m 755 .libs/%{name}.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -42,6 +41,7 @@ install -m 755 .libs/%{name}.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules
 %defattr(-,root,root)
 %doc LICENSE README
 %{_libdir}/httpd/modules/*.so
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %changelog
 * Tue Apr  1 2008 David Hrbáč <david@hrbac.cz> - 1.0.2-1
