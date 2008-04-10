@@ -46,7 +46,7 @@ rm -rf $RPM_BUILD_ROOT
 /%{_lib}/security/pam_mysql.so
 
 %changelog
-* Wed Mar 31 2008 David Hrbáč <david@hrbac.cz> - 0.7-0.4.rc1.1
+* Thu Apr 10 2008 David Hrbáč <david@hrbac.cz> - 0.7-0.4.rc1.1
 - CentOS rebuild
 
 * Sat Jan 19 2008 Paul P. Komkoff Jr <i@stingr.net> - 0.7-0.4.rc1.1

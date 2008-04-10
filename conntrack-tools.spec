@@ -1,12 +1,12 @@
 Name:           conntrack-tools
-Version:        0.9.5
-Release: 3%{?dist}
+Version:        0.9.6
+Release: 1%{?dist}
 Summary:        Tools to manipulate netfilter connection tracking table
 Group:          System Environment/Base
 License:        GPLv2
 URL:            http://netfilter.org
 Source0:        http://netfilter.org/projects/%{name}/files/%{name}-%{version}.tar.bz2
-Patch0:         conntrack-tools-0.9.5-open.patch
+#Patch0:         conntrack-tools-0.9.5-open.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libnfnetlink-devel libnetfilter_conntrack-devel pkgconfig bison flex
 Provides:       conntrack = 1.0-1
@@ -30,7 +30,7 @@ show an event message (one line) per newly established connection.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 
 %build
 %configure --disable-static
@@ -52,6 +52,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 
 %changelog
+* Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.9.6-1
+- new upstream version
+
 * Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.9.5-3
 - CentOS rebuild
 
