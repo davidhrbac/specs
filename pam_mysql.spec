@@ -11,6 +11,7 @@ URL:		http://sf.net/projects/pam-mysql/
 BuildRequires:  pam-devel mysql-devel cyrus-sasl-devel
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	pam
+BuildRequires:  automake autoconf openssl-devel pkgconfig
 
 %description
 Pam_mysql aims to provide a backend neutral means of authenticating
@@ -19,13 +20,10 @@ users against an MySQL database.
 %prep
 %setup -q -n %{name}-%{version}RC1
 %patch0 -p1
+%{__sed} -i -e 's/sinclude(.*)//' configure.in
 
 %build
-%configure \
-  --with-openssl \
-  --with-pam-mods-dir=/%{_lib}/security \
-  --enable-static=no \
-  --with-cyrus-sasl2
+%configure --with-openssl --with-cyrus-sasl2 --with-pam-mods-dir=/%{_lib}/security
 
 make %{?_smp_mflags}
 
