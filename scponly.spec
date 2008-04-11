@@ -1,11 +1,11 @@
 Summary: Restricted shell for ssh based file services
 Name: scponly
-Version: 4.6
-Release: 7%{?dist}
+Version: 4.8
+Release: 1%{?dist}
 License: BSD
 Group: Applications/Internet
 URL: http://sublimation.org/scponly/
-Source: http://sublimation.org/scponly/scponly-%{version}.tgz
+Source: http://mesh.dl.sourceforge.net/sourceforge/scponly/scponly-%{version}.tgz
 Patch0: scponly-install.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n) 
 
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot}
 %config(noreplace) %{_sysconfdir}/scponly/*
 
 %changelog
+* Fri Apr 11 2008 David Hrbáč <david@hrbac.cz> - 4.8-1
+- Updated to release 4.8.
+
 * Thu Apr 10 2008 David Hrbáč <david@hrbac.cz> - 4.6-7
 - CentOS rebuild
 
