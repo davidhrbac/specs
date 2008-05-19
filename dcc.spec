@@ -40,7 +40,9 @@ make
 
 %install
 rm -rf %{buildroot}
-make install
+make install \
+  SET_BINOWN= SET_MANOWN= SET_DCCOWN=
+perl -pi -e's,%{buildroot},,g' %{buildroot}%{homedir}/map.txt
 mkdir -p %{buildroot}%{_mandir}/man8/
 install *.8 %{buildroot}%{_mandir}/man8/
 
@@ -61,7 +63,7 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
-* Fri Apr 25 2008 David Hrbáč <david@hrbac.cz> - 1.3.90-1
+* Mon May 19 2008 David Hrbáč <david@hrbac.cz> - 1.3.90-1
 - update to new version
 
 * Wed Apr  2 2008 David Hrbáč <david@hrbac.cz> - 1.3.86-1
