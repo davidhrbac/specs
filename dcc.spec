@@ -2,11 +2,11 @@
 %define cgibindir %{_datadir}/%{name}/cgi-bin
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
-Version: 1.3.86
+Version: 1.3.90
 Release: 1%{?dist}
 License: GPL
 Group: Applications/System
-Source0: http://www.dcc-servers.net/dcc/source/dcc.tar.Z
+Source0: http://www.dcc-servers.net/dcc/source/dcc-%{version}.tar.Z
 Patch0:       dcc.patch
 URL: http://rhyolite.com/anti-spam/dcc/
 BuildRoot: %{_tmppath}/%{name}-root
@@ -61,6 +61,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Fri Apr 25 2008 David Hrbáč <david@hrbac.cz> - 1.3.90-1
+- update to new version
+
 * Wed Apr  2 2008 David Hrbáč <david@hrbac.cz> - 1.3.86-1
 - CentOS rebuild
 

@@ -16,7 +16,7 @@ BuildRequires:	zlib-devel
 Requires:	cacti
 Provides:	cacti-cactid
 Obsoletes:	cacti-cactid
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{_tmppath}/%{name}-root
 
 %description
 A backend data gatherer for cacti. This package represents the future
