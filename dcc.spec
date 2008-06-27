@@ -8,6 +8,7 @@ License: GPL
 Group: Applications/System
 Source0: http://www.dcc-servers.net/dcc/source/dcc-%{version}.tar.Z
 Patch0:       dcc.patch
+Patch1:       dcc2.patch
 URL: http://rhyolite.com/anti-spam/dcc/
 BuildRoot: %{_tmppath}/%{name}-root
 #BuildRequires: sendmail-devel
@@ -25,6 +26,7 @@ unsolicited, the DCC client can log, discard, or reject the message.
 %prep
 %setup -q -n %{name}-%{version}
 %patch -p0
+%patch1 -p0
 
 %build
 ./configure \

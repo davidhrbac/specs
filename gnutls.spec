@@ -1,13 +1,13 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
-Version: 2.1.7
-Release: 3%{?dist}
+Version: 2.2.5
+Release: 1%{?dist}
 License: LGPL
 Group: System Environment/Libraries
 BuildRequires: libgcrypt-devel >= 1.3.1, gettext
 BuildRequires: zlib-devel, readline-devel, libtermcap-devel
 URL: http://www.gnutls.org/
-Source0: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.bz2
+Source0: ftp://ftp.gnutls.org/pub/gnutls/%{name}-%{version}.tar.bz2
 #Source1: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.gz.sig
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgcrypt >= 1.3.1
