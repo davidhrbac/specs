@@ -1,6 +1,6 @@
 Summary:	mod_gnutls is a DSO module for the apache Web server.
 Name:		mod_gnutls
-Version:	0.4.2.1
+Version:	0.4.3
 Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.outoforder.cc/projects/apache/mod_gnutls/
@@ -62,6 +62,9 @@ mkdir -p -m 0700 $RPM_BUILD_ROOT%{_var}/cache/mod_gnutls_cache
 %attr(0700, apache, apache) %{_var}/cache/mod_gnutls_cache
 
 %changelog
+* Mon Jun 30 2008 David Hrbáč <david@hrbac.cz> - 0.4.3-1
+- update to new version 0.4.3
+
 * Sat Feb 23 2008 David Hrbáč <david@hrbac.cz> - 0.4.2.1-1.el4.hrb
 - update to new version 0.4.2.1
 
