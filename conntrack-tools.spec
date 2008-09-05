@@ -10,6 +10,7 @@ Source0:        http://netfilter.org/projects/%{name}/files/%{name}-%{version}.t
 Patch1:         conntrack-tools-rollup.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libnfnetlink-devel libnetfilter_conntrack-devel pkgconfig bison flex
+BuildRequires:  autoconf automake libtool
 Provides:       conntrack = 1.0-1
 Obsoletes:      conntrack < 1.0-1
 
@@ -35,7 +36,7 @@ show an event message (one line) per newly established connection.
 
 #%patch0 -p1
 %patch1 -p1
-#autoreconf -i --force
+autoreconf -i --force
 
 %build
 %configure --disable-static
@@ -57,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 
 %changelog
-* Wed Sep  3 2008 David Hrbáč <david@hrbac.cz> - 0.9.7-1
+* Fri Sep  5 2008 David Hrbáč <david@hrbac.cz> - 0.9.7-1
 - new upstream version
 
 * Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.9.6-1
