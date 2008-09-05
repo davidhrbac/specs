@@ -1,5 +1,5 @@
 Name:           libnetfilter_queue
-Version:        0.0.15
+Version:        0.0.16
 Release:        1%{?dist}
 Summary:        Netfilter queue userspace library
 Group:          System Environment/Libraries
@@ -65,6 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.0.16-1
+- new upstream version
+
 * Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.0.15-1
 - CentOS rebuild
 

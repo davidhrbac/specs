@@ -1,6 +1,6 @@
 Name:           libnetfilter_log
-Version:        0.0.13
-Release:        4%{?dist}
+Version:        0.0.15
+Release:        1%{?dist}
 Summary:        Netfilter logging userspace library
 Group:          System Environment/Libraries
 License:        GPL
@@ -69,6 +69,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Sep  5 2008 David Hrbáč <david@hrbac.cz> - 0.0.15-1
+- new upstream version
+
 * Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.0.13-4
 - CentOS rebuild
 

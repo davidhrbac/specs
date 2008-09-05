@@ -1,12 +1,13 @@
 Name:           libnfnetlink
-Version:        0.0.33
-Release: 1%{?dist}
+Version:        0.0.39
+Release: 2%{?dist}
 Summary:        Netfilter netlink userspace library
 Group:          System Environment/Libraries
 License:        GPL
 URL:            http://netfilter.org
 Source0:        http://netfilter.org/projects/libnfnetlink/files/%{name}-%{version}.tar.bz2
 Source1:	http://www.gnu.org/licenses/gpl.txt
+Patch0:		libnfnetlink-sysheader.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #BuildRequires:  
@@ -65,6 +66,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libnfnetlink/*.h
 
 %changelog
+* Fri Sep  5 2008 David Hrbáč <david@hrbac.cz> - 0.0.39-2
+- do not mess with bundled nfnetlink.h, use <linux/netfilter/nfnetlink.h>
+
+* Wed Sep  3 2008 David Hrbáč <david@hrbac.cz> - 0.0.39-1
+- new upstream version
+
 * Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.0.33-1
 - CentOS rebuild
 - new upstream version 

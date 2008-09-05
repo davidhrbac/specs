@@ -1,6 +1,6 @@
 Name:           libnetfilter_conntrack
-Version:        0.0.89
-Release: 1%{?dist}
+Version:        0.0.96
+Release:	2%{?dist}
 Summary:        Netfilter conntrack userspace library
 Group:          System Environment/Libraries
 License:        GPL
@@ -61,6 +61,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libnetfilter_conntrack/*.h
 
 %changelog
+* Fri Sep  5 2008 David Hrbáč <david@hrbac.cz> - 0.0.96-2
+- use system headers instead of bundled
+
+* Wed Sep  3 2008 David Hrbáč <david@hrbac.cz> - 0.0.96-1
+- new upstream version
+
 * Wed Apr  9 2008 David Hrbáč <david@hrbac.cz> - 0.0.89-1
 - CentOS rebuild
 - new upstream version
