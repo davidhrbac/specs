@@ -6,7 +6,7 @@
 
 Summary:      OCI8 functions
 Name:         php-pecl-%{php_pecl_name}
-Version:      1.2.4
+Version:      1.3.4
 Release:      1%{?dist}
 License:      PHP License
 Group:        Development/Languages
@@ -65,6 +65,9 @@ EOF
 %{php_extdir}/%{php_pecl_name}.so
 
 %changelog
+* Mon Sep  8 2008 David Hrbáč <david@hrbac.cz> 1.3.4-1
+- new upstream version
+
 * Sat Feb  2 2008 David Hrbáč <david@hrbac.cz> 1.2.4-1
 - update to version 1.2.4
 

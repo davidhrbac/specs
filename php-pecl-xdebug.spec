@@ -5,8 +5,8 @@
 %define pecl_name xdebug
 
 Name:           php-pecl-xdebug
-Version:        2.0.2
-Release:        4%{?dist}
+Version:        2.0.3
+Release:        1%{?dist}
 Summary:        PECL package for debugging PHP scripts
 
 License:        BSD
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Sep  8 2008 David Hrbáč <david@hrbac.cz> - 2.0.3-1
+- new upstream version 
+
 * Wed Mar 19 2008 David Hrbáč <david@hrbac.cz> - 2.0.2-4
 - CentOS rebuild
 
