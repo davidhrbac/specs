@@ -1,10 +1,10 @@
 Summary:	Mod_chroot makes running Apache in a secure chroot environment easy
-Name:		mod_chroot
+Name:		mod_spamhaus
 Version:	0.5
 Release:	1%{?dist}
 Group:		System Environment/Daemons
-URL:		http://core.segfault.pl/~hobbit/mod_chroot/
-Source:		http://core.segfault.pl/~hobbit/mod_chroot/dist/%{name}-%{version}.tar.gz
+URL:		http://sourceforge.net/projects/mod-spamhaus/
+Source:		http://surfnet.dl.sourceforge.net/sourceforge/mod-spamhaus/%{name}05.tar.gz
 Source1:	mod_chroot.conf
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
@@ -20,13 +20,13 @@ mod_chroot makes running Apache in a secure chroot environment easy. You don't
 need to create a special directory hierarchy containing /dev, /lib, /etc...
 
 %prep
-%setup -q
-
+%setup -q -n mod-spamhaus 
+perl -pi -e "s|apxs2|apxs|g" Makefile
 %build
-apxs -c mod_chroot.c
+#apxs -c %{name}.c
 #configure 
 
-#make
+make
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}

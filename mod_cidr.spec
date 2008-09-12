@@ -1,10 +1,10 @@
 Summary:	Mod_chroot makes running Apache in a secure chroot environment easy
-Name:		mod_chroot
-Version:	0.5
+Name:		mod_cidr
+Version:	0.04
 Release:	1%{?dist}
 Group:		System Environment/Daemons
-URL:		http://core.segfault.pl/~hobbit/mod_chroot/
-Source:		http://core.segfault.pl/~hobbit/mod_chroot/dist/%{name}-%{version}.tar.gz
+URL:		http://www.s5h.net/code/mod-cidr/
+Source:		http://www.s5h.net/code/mod-cidr/%{name}-%{version}.tar.gz
 Source1:	mod_chroot.conf
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
@@ -20,10 +20,10 @@ mod_chroot makes running Apache in a secure chroot environment easy. You don't
 need to create a special directory hierarchy containing /dev, /lib, /etc...
 
 %prep
-%setup -q
+%setup -n %{name}-0.04
 
 %build
-apxs -c mod_chroot.c
+apxs -c %{name}.c
 #configure 
 
 #make

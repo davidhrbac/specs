@@ -1,11 +1,12 @@
 Summary:	Mod_chroot makes running Apache in a secure chroot environment easy
-Name:		mod_chroot
-Version:	0.5
+Name:		mod_ifier
+Version:	0.8
 Release:	1%{?dist}
 Group:		System Environment/Daemons
-URL:		http://core.segfault.pl/~hobbit/mod_chroot/
-Source:		http://core.segfault.pl/~hobbit/mod_chroot/dist/%{name}-%{version}.tar.gz
-Source1:	mod_chroot.conf
+URL:		http://www.steve.org.uk/Software/mod_ifier/
+Source:		http://www.steve.org.uk/Software/mod_ifier/mod-ifier-%{version}.tar.gz
+#Source1:	mod_chroot.conf
+Patch0:		mod_ifier.patch
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
@@ -20,13 +21,18 @@ mod_chroot makes running Apache in a secure chroot environment easy. You don't
 need to create a special directory hierarchy containing /dev, /lib, /etc...
 
 %prep
-%setup -q
+%setup -q -n mod-ifier-%{version}
+%patch0 -p0
+
+find . -type d -perm 0700 -exec chmod 755 {} \;
+find . -type d -perm 0555 -exec chmod 755 {} \;
+find . -type f -perm 0555 -exec chmod 755 {} \;
+find . -type f -perm 0444 -exec chmod 644 {} \;
+
 
 %build
-apxs -c mod_chroot.c
-#configure 
-
-#make
+pushd src
+apxs -c %{name}.c
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}

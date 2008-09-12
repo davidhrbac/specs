@@ -2,7 +2,7 @@
 %define cgibindir %{_datadir}/%{name}/cgi-bin
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
-Version: 1.3.90
+Version: 1.3.92
 Release: 1%{?dist}
 License: GPL
 Group: Applications/System
@@ -38,6 +38,7 @@ unsolicited, the DCC client can log, discard, or reject the message.
       --with-cgibin=%{cgibindir} \
       --with-installroot=%{buildroot} \
       --disable-sys-inst
+      --disable-chown
 make
 
 %install
@@ -65,6 +66,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Wed Sep 10 2008 David Hrbáč <david@hrbac.cz> - 1.3.92-1
+- new upstream version
+
 * Mon May 19 2008 David Hrbáč <david@hrbac.cz> - 1.3.90-1
 - update to new version
 

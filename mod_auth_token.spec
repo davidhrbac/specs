@@ -1,6 +1,6 @@
 Summary:	Token-based authentication module for the apache Web server.
 Name:		mod_auth_token
-Version:	1.0.2
+Version:	1.0.3
 Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://static.synd.info/downloads/releases/
@@ -44,5 +44,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %changelog
+* Tue Sep  9 2008 David Hrbáč <david@hrbac.cz> - 1.0.3-1
+- new upstream version
+
 * Tue Apr  1 2008 David Hrbáč <david@hrbac.cz> - 1.0.2-1
 - Initial build on CentOS

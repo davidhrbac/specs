@@ -2,9 +2,8 @@
 
 Summary:     A fast WWW search engine for websites
 Name:        mnogosearch
-Version:     3.3.6
-Release:     2.%{mysig}
-#Release:     7.%{?dist}%{?pext}
+Version:     3.3.7
+Release:     1.%{mysig}
 License:     GPL
 Group:       Applications/Internet
 Source0:     http://www.%{name}.org/Download/%{name}-%{version}.tar.gz
@@ -142,6 +141,9 @@ ldconfig
 
 
 %changelog
+* Fri Sep 12 2008 David Hrbáč <david@hrbac.cz> - 3.3.7-1
+- new upstream version
+
 * Mon Mar 31 2008 David Hrbáč <david@hrbac.cz> 3.3.6-2
 - rewrite for Mock
 
