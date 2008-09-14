@@ -1,7 +1,7 @@
 Summary:	mod_gnutls is a DSO module for the apache Web server.
 Name:		mod_gnutls
 Version:	0.4.3
-Release:	1%{?dist}
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.outoforder.cc/projects/apache/mod_gnutls/
 Source:		http://www.outoforder.cc/downloads/mod_gnutls/%{name}-%{version}.tar.bz2
@@ -13,7 +13,7 @@ BuildRequires:  gnutls >= 1.2.0, gnutls-devel >= 2.1.0, gnutls-utils >= 2.1.0, a
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
 Requires:       gnutls >= 2.1
 #Requires:       gnutls >= 2.1, httpd >= 2.0.52
-Requires:       httpd = %(rpm -q httpd --qf "%%{version}-%%{release}\n")
+Requires:       httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
 %description
 mod_gnutls uses the GnuTLS library to provide SSL v3, TLS 1.0 and TLS 1.1
@@ -62,6 +62,9 @@ mkdir -p -m 0700 $RPM_BUILD_ROOT%{_var}/cache/mod_gnutls_cache
 %attr(0700, apache, apache) %{_var}/cache/mod_gnutls_cache
 
 %changelog
+* Sat Sep 13 2008 David Hrbáč <david@hrbac.cz> - 0.4.3-2
+- corrected httpd requires 
+
 * Mon Jun 30 2008 David Hrbáč <david@hrbac.cz> - 0.4.3-1
 - update to new version 0.4.3
 

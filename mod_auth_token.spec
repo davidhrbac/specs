@@ -1,7 +1,7 @@
 Summary:	Token-based authentication module for the apache Web server.
 Name:		mod_auth_token
-Version:	1.0.3
-Release:	1%{?dist}
+Version:	1.0.2
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://static.synd.info/downloads/releases/
 Source:		http://static.synd.info/downloads/releases/%{name}-%{version}.tar.gz
@@ -11,7 +11,7 @@ BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
 BuildRequires:  automake
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
-Requires:       httpd = %(rpm -q httpd --qf "%%{version}-%%{release}\n")
+Requires:       httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
 %description
 Token-based authentication similar to mod_secdownload in LIGHTTPD. Have your 
@@ -44,8 +44,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %changelog
-* Tue Sep  9 2008 David Hrbáč <david@hrbac.cz> - 1.0.3-1
-- new upstream version
+* Sat Sep 13 2008 David Hrbáč <david@hrbac.cz> - 1.0.2-2
+- corrected httpd requires
 
 * Tue Apr  1 2008 David Hrbáč <david@hrbac.cz> - 1.0.2-1
 - Initial build on CentOS
