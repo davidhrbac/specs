@@ -1,23 +1,26 @@
-Summary:	Mod_chroot makes running Apache in a secure chroot environment easy
+Summary:	mod_spamhaus is an Apache module that uses DNSBL
 Name:		mod_spamhaus
 Version:	0.5
 Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://sourceforge.net/projects/mod-spamhaus/
 Source:		http://surfnet.dl.sourceforge.net/sourceforge/mod-spamhaus/%{name}05.tar.gz
-Source1:	mod_chroot.conf
+Source1:	%{name}.conf
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
-#BuildRequires:  gnutls >= 1.2.0, gnutls-devel >= 2.1.0, gnutls-utils >= 2.1.0, apr-devel
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
-#Requires:       gnutls >= 2.1
-#Requires:       gnutls >= 2.1, httpd >= 2.0.52
-Requires:       httpd = %(rpm -q httpd --qf "%%{version}-%%{release}\n")
+Requires:       httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
 %description
-mod_chroot makes running Apache in a secure chroot environment easy. You don't
-need to create a special directory hierarchy containing /dev, /lib, /etc...
+mod_spamhaus is an Apache module that uses DNSBL in order to block spam relay
+via web forms, preventing URL injection, block http DDoS attacks from bots and
+generally protecting your web service denying access to a known bad IP address. 
+It take advantage of the Spamhaus Block List (SBL) and the Exploits Block List
+(XBL) querying xbl-sbl.spamhaus.org Spamhaus's DNSBLs are offered as a free
+public service for low-volume non-commercial use. To check if you qualify for
+free use, please see: Spamhaus DNSBL usage criteria
+(http://www.spamhaus.org/organization/dnsblusage.html)
 
 %prep
 %setup -q -n mod-spamhaus 
@@ -34,22 +37,20 @@ make
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 install -d %{buildroot}%{_libdir}/httpd/modules
 
-install -m0755 .libs/*.so %{buildroot}%{_libdir}/httpd/modules
+install -m0755 src/.libs/*.so %{buildroot}%{_libdir}/httpd/modules
 
 # Install the config file
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
-install -m 644 %{SOURCE1} \
-   $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
-
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%doc CAVEATS ChangeLog INSTALL LICENSE README README.Apache20
+%doc LICENSE ReadMe.txt
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
-%attr(0755,root,root) %{_libdir}/httpd/modules/mod_chroot.so
+%attr(0755,root,root) %{_libdir}/httpd/modules/%{name}.so
 
 %changelog
 * Tue Sep  9 2008 David Hrbáč <david@hrbac.cz> - 0.5-1

@@ -12,9 +12,7 @@ BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
 #BuildRequires:  gnutls >= 1.2.0, gnutls-devel >= 2.1.0, gnutls-utils >= 2.1.0, apr-devel
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
-#Requires:       gnutls >= 2.1
-#Requires:       gnutls >= 2.1, httpd >= 2.0.52
-Requires:       httpd = %(rpm -q httpd --qf "%%{version}-%%{release}\n")
+Requires:       httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
 %description
 mod_chroot makes running Apache in a secure chroot environment easy. You don't

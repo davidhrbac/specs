@@ -1,7 +1,7 @@
 Summary:	Mod_chroot makes running Apache in a secure chroot environment easy
 Name:		mod_cidr
 Version:	0.04
-Release:	1%{?dist}
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.s5h.net/code/mod-cidr/
 Source:		http://www.s5h.net/code/mod-cidr/%{name}-%{version}.tar.gz
@@ -11,8 +11,6 @@ BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
 #BuildRequires:  gnutls >= 1.2.0, gnutls-devel >= 2.1.0, gnutls-utils >= 2.1.0, apr-devel
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
-#Requires:       gnutls >= 2.1
-#Requires:       gnutls >= 2.1, httpd >= 2.0.52
 Requires:       httpd = %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
 %description
@@ -52,5 +50,5 @@ install -m 644 %{SOURCE1} \
 %attr(0755,root,root) %{_libdir}/httpd/modules/mod_chroot.so
 
 %changelog
-* Tue Sep  9 2008 David Hrbáč <david@hrbac.cz> - 0.5-1
+* Tue Sep  9 2008 David Hrbáč <david@hrbac.cz> - 0.04-1
 - initial build
