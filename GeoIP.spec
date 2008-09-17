@@ -3,7 +3,7 @@
 %define data_stamp 20080903
 
 Name:	    GeoIP
-Version:    1.4.4
+Version:    1.4.5
 Release:    1%{?dist}
 Summary:    C library finding what country an IP/hostname originates from
 
@@ -110,6 +110,9 @@ gunzip -f data/GeoIP.dat.gz
 %{_localstatedir}/lib/%{name}/*
 
 %changelog
+* Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 1.4.5-1
+- new upstream version
+
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 1.4.4-1
 - initial rebuild, upgrade db to Sep 2008
 
