@@ -1,6 +1,6 @@
 Name:           liboggz
-Version:        0.9.5
-Release:        2%{?dist}
+Version:        0.9.7
+Release:        1%{?dist}
 Summary:        Simple programming interface for Ogg files and streams
 
 Group:          System Environment/Libraries
@@ -78,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %changelog
+* Sun Sep 21 2008 David Hrbáč <david@hrbac.cz> - 0.9.7-1
+- new upstream version
+
 * Sat Sep 20 2008 David Hrbáč <david@hrbac.cz> - 0.9.5-2
 - initial rebuild
 

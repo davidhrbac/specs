@@ -1,6 +1,6 @@
 Name:           mod_wsgi
-Version:        1.3
-Release:        3%{?dist}
+Version:        2.1
+Release:        1%{?dist}
 Summary:        A WSGI interface for Python web applications in Apache
 
 Group:          System Environment/Libraries
@@ -53,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Sep 21 2008 David Hrbáč <david@hrbac.cz> - 2.1-1
+- new upstream version
+
 * Sat Sep 20 2008 David Hrbáč <david@hrbac.cz> - 1.3-3
 - initial rebuild
 
