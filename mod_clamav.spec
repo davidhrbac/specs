@@ -1,16 +1,21 @@
 Summary:	mod_clamav is an filter which scans the content delivered by the proxy module 
 Name:		mod_clamav
 Version:	0.22
-Release:	1%{?dist}
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://software.othello.ch/mod_clamav/
 Source:		http://software.othello.ch/mod_clamav/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
+Patch0:		mod_clamav-0.21-apache220.diff
 License:	GPL
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
-BuildRequires:  clamav-devel >= 0.92
+BuildRequires:  clamav-devel 
 BuildRequires:  gmp-devel
+%{?build_centos5:BuildRequires:bzip2-devel}
+%{?build_centos5:BuildRequires:zlib-devel}
+BuildRequires:  bzip2-devel
+BuildRequires:  zlib-devel
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
 Requires:       httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
@@ -22,7 +27,9 @@ thus virus scanning does not take an extra round-trip to a virus scanning proxy,
 as with many other virus scanning products.
 
 %prep
-%setup -q  
+%setup -q 
+%{?build_centos5:%patch0 -p0}
+
 perl -pi -e "s|apxs2|apxs|g" Makefile
 %build
 #apxs -c %{name}.c
@@ -56,5 +63,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/%{name}.so
 
 %changelog
+* Thu Oct  2 2008 David Hrbáč <david@hrbac.cz> - 0.22-2
+-  patch to build with apache 2.2
+
 * Mon Sep 15 2008 David Hrbáč <david@hrbac.cz> - 0.22-1
 - initial build
