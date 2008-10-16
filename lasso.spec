@@ -1,23 +1,28 @@
 %define with_java %{?_without_java: 0} %{?!_without_java: 1}
 %define with_php %{?_without_php: 0} %{?!_without_php: 1}
 %define with_python %{?_without_python: 0} %{?!_without_python: 1}
+%define with_wsf %{?_without_wsf: 0} %{?!_without_wsf: 1}
 %define php_version %(php-config --version | cut -d. -f1)
 %define php_extdir %(php-config --extension-dir 2>/dev/null || echo %{_libdir}/php4)
-%if "%{php_version}" == "5"
+
+%define with_java 0
 %define with_php 0
-%endif
+%define with_python 0
 
 Summary: Liberty Alliance Single Sign On
 Name: lasso
-Version: 2.1.1
+Version: 2.2.1
 Release: 1%{?dist}
 License: GPL
 Group: System Environment/Libraries
 Source: https://labs.libre-entreprise.org/frs/download.php/594/lasso-%{version}.tar.gz
 Buildroot: %{_tmppath}/%{name}-%{version}-%(id -u -n)
+%if %{with_wsf}
+BuildRequires: cyrus-sasl-devel
+%endif
+BuildRequires: glib2-devel, swig >= 1.3.28
 BuildRequires: libxml2-devel, xmlsec1-devel >= 1.2.6
 BuildRequires: openssl-devel, xmlsec1-openssl-devel >= 1.2.6
-BuildRequires: swig >= 1.3.28
 Requires: libxml2, xmlsec1 >= 1.2.6
 Requires: openssl, xmlsec1-openssl >= 1.2.6
 Url: http://lasso.entrouvert.org/
@@ -57,7 +62,8 @@ supplied by %{name}.
 %package java
 Summary: Java module for %{name}
 Group: Development/Libraries
-BuildRequires: gcc-java >= 3.4.2
+BuildRequires: java-devel >= 1.4.2
+BuildRequires: python-lxml
 Requires: jre-gcj >= 1.4.2, jpackage-utils >= 1.5
 Requires: %{name} = %{version}-%{release}
 Obsoletes: java-%{name} < %{version}-%{release}
@@ -73,7 +79,8 @@ supplied by %{name}.
 %package php
 Summary: PHP module for %{name}
 Group: Development/Libraries
-BuildRequires: php-devel >= 4.0
+BuildRequires: php-devel >= 4.0, expat-devel
+BuildRequires: python-lxml
 Requires: php >= 4.0
 Requires: %{name} = %{version}-%{release}
 Obsoletes: php-%{name} < %{version}-%{release}
@@ -89,6 +96,8 @@ supplied by %{name}.
 %package python
 Summary: Python Bindings for %{name}
 Group: Development/Libraries
+BuildRequires: python-devel
+BuildRequires: python-lxml
 Requires: python >= %{python_version}
 Requires: %{name} = %{version}-%{release}
 Obsoletes: python-%{name} < %{version}-%{release}
@@ -108,10 +117,6 @@ supplied by %{name}.
 
 %build
 %configure --prefix=%{_prefix} \
-           --enable-wsf \
-           --with-sasl2 \
-           --enable-gtk-doc \
-	   --with-html-dir=%{_datadir}/gtk-doc/html/%{name} \
 	%if !%{with_java}
 	   --disable-java \
 	%endif
@@ -119,12 +124,19 @@ supplied by %{name}.
 	   --disable-python \
 	%endif
 	%if %{with_php}
-	   --enable-php%{php_version} \
-           --with-php%{php_version}-extension-dir=%{php_extdir}
+	   --enable-php%{php_version}=yes \
+           --with-php%{php_version}-extension-dir=%{php_extdir} \
+           --with-php5-config-dir=/etc/php.d \
 	%else
-	   --disable-php4 \
-	   --disable-php5
+	   --enable-php4=no \
+	   --enable-php5=no \
 	%endif
+	%if %{with_wsf}
+           --enable-wsf \
+           --with-sasl2 \
+	%endif
+           --enable-gtk-doc \
+	   --with-html-dir=%{_datadir}/gtk-doc/html/%{name} 
 
 %install
 rm -rf %{buildroot}
@@ -176,12 +188,9 @@ rm -rf %{buildroot}
 %doc %{_datadir}/gtk-doc/html/%{name}
 %{_libdir}/pkgconfig/lasso.pc
 %{_includedir}/%{name}
-%{_libdir}/*.*a
+%{_libdir}/*.a
 %if %{with_java}
 %{_libdir}/java/*.a
-%endif
-%if %{with_php}
-%{_libdir}/php*/*.a
 %endif
 
 %files perl -f %{name}-perl-filelist
@@ -208,22 +217,78 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
-* Thu Sep 25 2008 David Hrbáč <david@hrbac.cz> - 2.1.0-1
+* Mon Oct 13 2008 David Hrbáč <david@hrbac.cz> - 2.2.1-1
 - initial rebuild
+
+* Fri Oct 03 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.2.1-1%{?dist}
+- Updated to final 2.2.1
+- Rebuilt on CentOS 4,5 and Fedora 9
+
+* Mon May 05 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.2.0-1%{?dist}
+- Updated to final 2.2.0
+- Rebuilt on CentOS 4,5 and Fedora 8
+
+* Mon Apr 28 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.98-1%{?dist}
+- Updated to test 2.1.98 (Fix CentOS 4 build)
+- Rebuilt on CentOS 4,5 and Fedora 8
+
+* Mon Apr 21 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.97-1%{?dist}
+- Updated to test 2.1.97
+- Added missing BuildRequires expat-devel for php package
+- Added missing BuildRequires python-devel for python package
+- Rebuilt on CentOS 4,5 and Fedora 8
+
+* Tue Apr 08 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.96-1%{?dist}
+- Updated to test 2.1.96 (Fix ElementTree build)
+- Added missing BuildRequires python-lxml instead of
+  python-elementtree for java, php and python packages
+- Added missing BuildRequires glib2-devel
+- Added missing BuildRequires cyrus-sasl-devel and
+  added conditionnal build support for ID-WSF
+- Rebuilt on CentOS 5 and Fedora 8
+
+* Mon Apr 07 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.95-1%{?dist}
+- Updated to test 2.1.95 (Fix ID-WSF changes)
+- Changed BuildRequires gcc-java to java-devel
+- Rebuilt on CentOS 5
+
+* Wed Apr 02 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.94-1%{?dist}
+- Updated to test 2.1.94 (Fix ID-WSF changes)
+- Rebuilt on CentOS 5
+
+* Fri Mar 28 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.93-1%{?dist}
+- Updated to test 2.1.93 (Fix for Java Bindings and WSF changes)
+- Rebuilt on CentOS 5
+
+* Fri Mar 14 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.92-1%{?dist}
+- Updated to test 2.1.92 (Fix for Java Bindings)
+- Rebuilt on CentOS 5
+
+* Fri Mar 14 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.91-1%{?dist}
+- Updated to test 2.1.91 (Fix for Java Bindings)
+- Rebuilt on CentOS 5
+
+* Thu Feb 28 2008 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.9-1%{?dist}
+- Updated to test 2.1.9 (New Java and PHP Bindings !)
+- Rebuilt on CentOS 5
+
+* Mon Aug 23 2007 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.1-1%{?dist}
+- Updated to 2.1.1 
+- Rebuilt on CentOS 5
 
 * Mon Aug 13 2007 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.1.0-1%{?dist}
 - Updated to 2.1.0 
-- Changed %doc to %{_datadir}/gtk-doc/html/lasso/* in devel subpackage
+- Removed static librairies
 - Rebuilt on CentOS 5
 
 * Mon Jan 22 2007 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 2.0.0-1%{?dist}
 - Updated to 2.0.0 
-- Disabled support for PHP version 5
+- Disabled swig broken support for PHP version 5
 - Changed %doc to %{_datadir}/gtk-doc/html/lasso/* in devel subpackage
 - Built on Fedora Core 3 / RHEL 4 and Fedora Core 6 / RHEL 5
 
 * Wed Dec 20 2006 Jean-Marc Liger <jmliger@siris.sorbonne.fr> 1.9.9-1
-- Updated to 1.9.9 (SAML 2.0 full support !)
+- Updated to test 1.9.9 (SAML 2.0 full support !)
 - Changed Provides/Obsoletes to follow new Fedora naming rules
 - Choosed BuildRequires to be more OpenSUSE/Mandriva compliant
 - Added php_extdir macro to support both PHP version 4 and 5
