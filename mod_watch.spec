@@ -1,11 +1,12 @@
 Summary:	Apache module: Monitoring Interface for MRTG.
 Name:		mod_watch 
 Version:	4.03
-Release:	3%{?dist}
+Release:	4%{?dist}
 Group:		System Environment/Daemons
 #Source:         %{name}-4.3.tar.gz
 Source:         %{name}-%{version}.tar.gz
 Source1:	%{name}.conf
+Patch0:		mod_watch-apache220.patch
 License:	BSD
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
@@ -24,6 +25,8 @@ mod_vhost_alias and mod_gzip.
 %prep
 #%setup -q -n %{name}-4.3_apache22_mod
 %setup -q -n %{name}-4.3 
+%{?build_centos5:%patch0 -p0}
+
 %build
 #apxs -c %{name}.c
 #configure 
@@ -52,6 +55,9 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/*.so
 
 %changelog
+* Thu Nov  4 2008 David Hrbáč <david@hrbac.cz> - 4.03-4
+-  patch to build with apache 2.2
+
 * Sat Sep 20 2008 David Hrbáč <david@hrbac.cz> - 4.03-3
 - added missing modules
 
