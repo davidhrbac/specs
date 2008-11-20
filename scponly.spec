@@ -1,7 +1,7 @@
 Summary: Restricted shell for ssh based file services
 Name: scponly
 Version: 4.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: BSD
 Group: Applications/Internet
 URL: http://sublimation.org/scponly/
@@ -27,7 +27,7 @@ as a wrapper to the "tried and true" ssh suite of applications.
 
 %build
 %configure --enable-scp-compat --enable-rsync-compat --enable-winscp-compat \
-	--enable-chrooted-binary
+	--enable-chrooted-binary --with-default-chdir=/srv
 %{__make} %{?_smp_mflags} \
 	OPTS="%{optflags}"
 
