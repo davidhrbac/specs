@@ -7,7 +7,7 @@
 Summary:      A bytecode compiler
 Name:         php-pecl-%{php_pecl_name}
 Version:      0.8
-Release:      1%{?dist}
+Release:      2%{?dist}
 License:      PHP License
 Group:        Development/Languages
 URL:          http://pecl.php.net/package/%{php_pecl_name}
@@ -43,7 +43,7 @@ For install instructions see the manual at pear.php.net
 %build
 cd %{php_pecl_name}-%{version}
 phpize
-%configure --with-mnogosearch=/usr
+%configure
 %{__make} %{?_smp_mflags}
 
 %install
@@ -68,8 +68,5 @@ EOF
 %{php_extdir}/%{php_pecl_name}.so
 
 %changelog
-* Fri Jul 27 2007 David Hrbáč <david@hrbac.cz> 1.0.0-2
-- small changes
-
-* Thu Jun 19 2007 David Hrbáč <david@hrbac.cz> 1.0.0-1
-- initial spec created for CentOS-4
+* Mon Dec  8 2008 David Hrbáč <david@hrbac.cz> 0.8-2
+- initial spec created for CentOS

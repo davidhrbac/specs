@@ -1,5 +1,5 @@
 Name:           perl-DBD-Oracle
-Version:        1.21
+Version:        1.22
 Release: 	1%{?dist}
 Summary:        A Oracle interface for perl
 
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Nov 18 2008 David Hrbáč <david@hrbac.cz> - 1.22-1
+- update to new version
+
 * Fri Apr 18 2008 David Hrbáč <david@hrbac.cz> - 1.21-1
 - update to new version
 
