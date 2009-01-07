@@ -1,7 +1,7 @@
 Summary: Create deltas between rpms
 Name: deltarpm
 Version: 3.4
-Release: 6%{?dist}
+Release: 11%{?dist}
 License: BSD
 Group: System Environment/Base
 URL: http://www.novell.com/products/linuxpackages/professional/deltarpm.html
@@ -9,13 +9,12 @@ URL: http://www.novell.com/products/linuxpackages/professional/deltarpm.html
 Source: ftp://ftp.suse.com/pub/projects/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: bzip2-devel, rpm-devel
-#, popt-devel
+BuildRequires: bzip2-devel, rpm-devel, popt-devel
 
 Patch0: deltarpm-3.4-multilib-workaround.patch
 Patch1: deltarpm-3.4-multilib-include-colored.patch
 Patch2: deltarpm-3.4-prelink-bugfix.patch
-Patch3: deltarpm-3.4-no-skip-doc.patch
+Patch3: deltarpm-3.4-skipmd5.patch
 
 %description
 A deltarpm contains the difference between an old
@@ -29,7 +28,7 @@ deltarpms can also work with installed rpms.
 %patch0 -p0 -b .multilib
 %patch1 -p1 -b .multicolor
 %patch2 -p1 -b .prelink
-%patch3 -p1 -b .nodoc
+%patch3 -p1 -b .skipmd5
 
 %build
 %{__make} %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" \
@@ -56,7 +55,20 @@ deltarpms can also work with installed rpms.
 %{_bindir}/rpmdumpheader
 
 %changelog
-* Wed Aug 29 2007 Jonathan Dieter <jdieter@gmail.com> - 3.4.6
+* Sun Jul 13 2008 Jonathan Dieter <jdieter@gmail.com> - 3.4-11
+- Rebuild for rpm 4.6
+
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 3.4-10
+- Autorebuild for GCC 4.3
+
+* Mon Jan  7 2008 Jonathan Dieter <jdieter@gmail.com> - 3.4-9
+- Add patch that allows deltarpm to rebuild rpms from deltarpms that have
+  had the rpm signature added after their creation.  The code came from
+  upstream.
+- Drop nodoc patch added in 3.4-4 as most packages in repository have been
+  updated since April-May 2007 and this patch was supposed to be temporary.
+
+* Wed Aug 29 2007 Jonathan Dieter <jdieter@gmail.com> - 3.4-6
 - Bring in popt-devel in BuildRequires to fix build in x86_64
 
 * Wed Aug 29 2007 Fedora Release Engineering <rel-eng at fedoraproject dot org> - 3.4-5
