@@ -1,7 +1,7 @@
 Summary:	Apache module: Monitoring Interface for MRTG.
 Name:		mod_watch 
 Version:	4.03
-Release:	4%{?dist}
+Release:	5%{?dist}
 Group:		System Environment/Daemons
 #Source:         %{name}-4.3.tar.gz
 Source:         %{name}-%{version}.tar.gz
@@ -55,6 +55,9 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/*.so
 
 %changelog
+* Tue Feb 17 2009 David Hrbáč <david@hrbac.cz> - 4.03-5
+- added missing watch-table handler to conf
+ 
 * Thu Nov  4 2008 David Hrbáč <david@hrbac.cz> - 4.03-4
 -  patch to build with apache 2.2
 

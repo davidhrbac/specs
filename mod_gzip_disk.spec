@@ -1,6 +1,6 @@
 Summary:	Module that serves gzip compressed HTML from disk rather than compressing on the fly.
 Name:		mod_gzip_disk
-Version:	0.03
+Version:	0.5
 Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.s5h.net/code/mod-gzip/
@@ -47,5 +47,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/%{name}.so
 
 %changelog
+* Wed Feb 18 2009 David Hrbáč <david@hrbac.cz> - 0.5-1
+- new upstream version
+
 * Mon Sep 15 2008 David Hrbáč <david@hrbac.cz> - 0.03-1
 - initial build

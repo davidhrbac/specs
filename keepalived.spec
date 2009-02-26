@@ -3,8 +3,8 @@
 
 Summary: HA monitor built upon LVS, VRRP and service pollers
 Name: keepalived
-Version: 1.1.15
-Release: 4%{?dist}
+Version: 1.1.16
+Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
 URL: http://www.keepalived.org/
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Tue Feb 17 2009 David Hrbáč <david@hrbac.cz> - 1.1.16-1
+- Update to 1.1.16
+
 * Sat Apr 12 2008 David Hrbáč <david@hrbac.cz> - 1.1.15-4
 - CentOS rebuild
 
