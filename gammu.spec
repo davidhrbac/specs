@@ -1,5 +1,5 @@
 Name:		gammu
-Version:        1.21.0
+Version:        1.22.95
 Release:        1%{?dist}
 Summary:        Command Line utility to work with mobile phones
 
@@ -65,12 +65,12 @@ popd
 for docs in \
 	docs/develop/{protocol/'*',sounds/*,sms/'*'}	\
 	docs/develop/{*.htm,*.txt}			\
-	docs/user/'*' ; do
+	docs/user/{*.html,*.txt} ; do
 	sed -e 's/\r//' -i $docs
 done
 
 #fix libdir
-sed -i 's|${CMAKE_INSTALL_PREFIX}/lib|%{_libdir}|g' build/{cmake_install.cmake,common/cmake_install.cmake}
+sed -i 's|${CMAKE_INSTALL_PREFIX}/lib|%{_libdir}|g' build/cmake_install.cmake
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -120,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 26 2009 David Hrbáč <david@hrbac.cz> - 1.22.95-1
+- Update release.
+
 * Wed Feb 25 2009 David Hrbáč <david@hrbac.cz> - 1.21.0-1
 - initial rebuild
 
