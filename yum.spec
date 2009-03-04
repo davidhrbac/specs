@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.8
-Release: 9%{?dist}.2.1
+Release: 9%{?dist}.2.1.1
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -41,6 +41,7 @@ Patch104: yum-pkg-lists-patterns.patch
 Patch105: yum-3.2.8-man-page-2008-03-24.patch
 Patch106: opt-config-file-url.patch
 
+Patch900: yum-C4-3.2.8-allowrun.patch
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
 BuildRequires: python
@@ -112,6 +113,8 @@ can notify you when they are available via email, syslog or dbus.
 %patch105 -p1
 %patch106 -p1
 
+%patch900 -p1
+
 %build
 make
 
@@ -157,6 +160,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /usr/lib/yum-plugins
 
 %changelog
+* Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.1
+- Patch to work on C4
+
 * Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1
 - initial rebuild
 - drop python >= 2.4, rpm-python, rpm >= 0:4.4.2

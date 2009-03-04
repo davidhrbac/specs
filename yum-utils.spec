@@ -6,7 +6,7 @@
 Summary: Utilities based around the yum package manager
 Name: yum-utils
 Version: 1.1.10
-Release: 9%{?dist}
+Release: 9%{?dist}.1
 License: GPL
 Group: Development/Tools
 Source: http://linux.duke.edu/yum/download/yum-utils/%{name}-%{version}.tar.gz
@@ -27,7 +27,8 @@ Patch13: yum-utils-yumdownloader-source.patch
 URL: http://linux.duke.edu/yum/download/yum-utils/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
-Requires: python >= 2.4 , yum >= 3.1.1
+#Requires: python >= 2.4 , yum >= 3.1.1
+Requires: yum >= 3.1.1
 # 3.0.1-5 is the RHEL-5-GOLD version
 
 %description
@@ -60,6 +61,7 @@ deltas before or after updating packages.
 Summary: Yum plugin which chooses fastest repository from a mirrorlist
 Group: System Environment/Base
 Requires: yum >= 3.0
+Obsoletes: yum-plugin-fastestmirror
 
 %description -n yum-fastestmirror
 This plugin sorts each repository's mirrorlist by connection speed
@@ -81,6 +83,7 @@ kmod-foo kernel modules is described by the Fedora Extras packaging standards.
 Summary: Yum plugin to protect packages from certain repositories.
 Group: System Environment/Base
 Requires: yum >= 3.0
+Obsoletes: yum-plugin-protectbase
 
 %description -n yum-protectbase
 This plugin allows certain repositories to be protected. Packages in the
@@ -146,6 +149,7 @@ check packages for dependency problems and skip the one with problems.
 Summary: plugin to give priorities to packages from different repos 
 Group: System Environment/Base
 Requires: yum >= 3.0
+Obsoletes: yum-plugin-priorities
 
 %description -n yum-priorities
 This plugin allows repositories to have different priorities. 
@@ -452,6 +456,15 @@ fi
 %{_mandir}/man1/yum-filter-data.1.*
 
 %changelog
+* Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 1.1.10-9.1
+- drop Requires: python >= 2.4 
+
+* Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 1.1.10-9
+- initial rebuild
+- Obsoletes: yum-plugin-fastestmirror
+- Obsoletes: yum-plugin-priorities
+- Obsoletes: yum-plugin-protectbase
+
 * Sun Jun  8 2008 Karanbir Singh <kbsingh@centos.org> - 1.1.10-9.el5.centos
 - Keep all plugins, we dont need to worry about rhn 
 
