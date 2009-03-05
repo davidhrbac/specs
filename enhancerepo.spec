@@ -1,6 +1,8 @@
+%define ruby_sitelib %(ruby -rrbconfig -e "puts Config::CONFIG['rubylibdir']")
+
 Name:      enhancerepo
 Version:   0.3.2
-Release:   2.27
+Release:   2.27%{?dist}
 License:   GPL
 Summary:   Adds additional information to repomd repositories
 Source:    %{name}-%{version}.tar.bz2
@@ -23,14 +25,14 @@ servers as the testbed for the specification
 %build
 
 %install
-%{__install} -d -m 0755 %{buildroot}%{_libdir}/ruby/vendor_ruby/%{rb_ver}/
+%{__install} -d -m 0755 %{buildroot}%{ruby_sitelib}/
 %{__mkdir_p} %{buildroot}%{_bindir}
 %{__install} -m 0755 bin/enhancerepo %{buildroot}%{_bindir}
-%{__mkdir_p} %{buildroot}%{_libdir}/ruby/vendor_ruby/%{rb_ver}/%{name}
-%{__mkdir_p} %{buildroot}%{_libdir}/ruby/vendor_ruby/%{rb_ver}/%{name}/rpmmd
-%{__install} -m 0644 lib/%{name}.rb %{buildroot}%{_libdir}/ruby/vendor_ruby/%{rb_ver}
-%{__install} -m 0644 lib/%{name}/*.rb %{buildroot}%{_libdir}/ruby/vendor_ruby/%{rb_ver}/%{name}
-%{__install} -m 0644 lib/%{name}/rpmmd/*.rb %{buildroot}%{_libdir}/ruby/vendor_ruby/%{rb_ver}/%{name}/rpmmd
+%{__mkdir_p} %{buildroot}%{ruby_sitelib}/%{name}
+%{__mkdir_p} %{buildroot}%{ruby_sitelib}/%{name}/rpmmd
+%{__install} -m 0644 lib/%{name}.rb %{buildroot}%{ruby_sitelib}
+%{__install} -m 0644 lib/%{name}/*.rb %{buildroot}%{ruby_sitelib}/%{name}
+%{__install} -m 0644 lib/%{name}/rpmmd/*.rb %{buildroot}%{ruby_sitelib}/%{name}/rpmmd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -38,10 +40,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_bindir}/enhancerepo
-%{_libdir}/ruby/vendor_ruby/%{rb_ver}/%{name}/
-%{_libdir}/ruby/vendor_ruby/%{rb_ver}/%{name}.rb
+%{ruby_sitelib}/%{name}/
+%{ruby_sitelib}/%{name}.rb
 
 %changelog
+* Thu Mar 5 2009 - David Hrbáč <david@hrbac.cz> - 0.3.2-2.27
+- Initial rebuild
+- Small changes
+
 * Mon Oct 6 2008 - dmacvicar@suse.de
 - add support for updates generation
 * Tue Sep 30 2008 - dmacvicar@suse.de
