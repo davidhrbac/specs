@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.8
-Release: 9%{?dist}.2.1.2
+Release: 9%{?dist}.2.1.3
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -41,7 +41,9 @@ Patch104: yum-pkg-lists-patterns.patch
 Patch105: yum-3.2.8-man-page-2008-03-24.patch
 Patch106: opt-config-file-url.patch
 
-Patch900: yum-C4-3.2.8-allowrun.patch
+#Patch900: yum-C4-3.2.8-allowrun.patch
+Patch900: yum-C4-3.2.8-allowrun2.patch
+
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
 BuildRequires: python
@@ -116,7 +118,8 @@ can notify you when they are available via email, syslog or dbus.
 
 %patch900 -p1
 
-sed -i '/\[catchSqliteException\]/{N; s/:$/:\n        pass/}'  yum/sqlitesack.py
+#sed -i '/\[catchSqliteException\]/{N; s/:$/:\n        pass/}'  yum/sqlitesack.py
+sed -i -e 's/@catchSqliteException/\[catchSqliteException\]/g' -e '/\[catchSqliteException\]/{N; s/:\s*$/:\n        pass/}' yum/sqlitesack.py
 %build
 make
 
@@ -161,7 +164,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/yum/pluginconf.d 
 %dir /usr/lib/yum-plugins
 
+%post
+find /var/cache/yum/ -name '*.sqlite' -o -name '*.sqlite.bz2' | xargs rm
+
 %changelog
+* Thu Mar  4 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.3
+- Improved @catchSqliteException
+- Solved sqlite location_base error
+
 * Wed Mar  4 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.2
 - Resolves urlgrubber
 
