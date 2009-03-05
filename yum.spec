@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.8
-Release: 9%{?dist}.2.1.1
+Release: 9%{?dist}.2.1.2
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -50,7 +50,8 @@ Conflicts: pirut < 1.1.4
 #Requires: python >= 2.4, rpm-python, rpm >= 0:4.4.2
 Requires: python-iniparse
 Requires: python-sqlite
-Requires: urlgrabber >= 3.1.0
+#Requires: urlgrabber >= 3.1.0
+Requires: urlgrabber
 Requires: python-elementtree
 Requires: yum-fastestmirror
 # Make sure metadata code is updated too
@@ -115,6 +116,7 @@ can notify you when they are available via email, syslog or dbus.
 
 %patch900 -p1
 
+sed -i '/\[catchSqliteException\]/{N; s/:$/:\n        pass/}'  yum/sqlitesack.py
 %build
 make
 
@@ -160,6 +162,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /usr/lib/yum-plugins
 
 %changelog
+* Wed Mar  4 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.2
+- Resolves urlgrubber
+
 * Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.1
 - Patch to work on C4
 
