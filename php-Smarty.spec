@@ -1,7 +1,7 @@
 Name:           php-Smarty
 Summary:        Template/Presentation Framework for PHP
 Version:        2.6.20
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Source0:        http://smarty.php.net/distributions/Smarty-%{version}.tar.gz
 Patch0:         %{name}-2.6.20-security.patch
@@ -12,11 +12,7 @@ Group:          Development/Libraries
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
-%if 0%{?rhel}
-Requires:       php >= 5.1.6-3.5
-%else
-Requires:       php >= 5.2.0-9
-%endif
+Requires:       php
 
 %description
 Although Smarty is known as a "Template Engine", it would be more accurately
@@ -67,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar  9 2009 David Hrbáč <david@hrbac.cz> - 2.6.20-3
+- Removed requires version
+
 * Sat Dec 20 2008 David Hrbáč <david@hrbac.cz> - 2.6.20-2
 - initial rebuild
 
