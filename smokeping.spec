@@ -23,7 +23,7 @@ Patch2:           smokeping-2.4.2-tr.patch
 Patch3:           smokeping-2.3.5-silence.patch
 Patch4:           smokeping-2.4.2-jsonrpc-strict.patch
 BuildRequires:    glibc-common
-Requires:         perl >= 5.6.1 rrdtool >= 1.0.33 fping >= 2.4b2 traceroute
+Requires:         perl >= 5.6.1 rrdtool >= 1.0.33 fping traceroute
 # Not picked up for some reason
 Requires:         perl(Config::Grammar)
 Requires:         webserver net-tools
