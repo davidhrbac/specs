@@ -1,10 +1,10 @@
 Name:           php-Smarty
 Summary:        Template/Presentation Framework for PHP
-Version:        2.6.20
-Release:        3%{?dist}
+Version:        2.6.22
+Release:        1%{?dist}
 
-Source0:        http://smarty.php.net/distributions/Smarty-%{version}.tar.gz
-Patch0:         %{name}-2.6.20-security.patch
+Source0:        http://www.smarty.net/distributions/Smarty-%{version}.tar.gz
+#Patch0:         %{name}-2.6.20-security.patch
 License:        LGPLv2+
 URL:            http://smarty.php.net
 Group:          Development/Libraries
@@ -31,7 +31,7 @@ iconv -f iso8859-1 -t utf-8 NEWS > NEWS.conv && mv -f NEWS.conv NEWS
 iconv -f iso8859-1 -t utf-8 ChangeLog > ChangeLog.conv && mv -f ChangeLog.conv ChangeLog
 
 # install security patch
-%patch0 -p0 -b .security~
+#%patch0 -p0 -b .security~
 
 
 %build
@@ -63,6 +63,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 10 2009 David Hrbáč <david@hrbac.cz> - 2.6.22-1
+- New upstream version
+
+* Tue Mar 10 2009 David Hrbáč <david@hrbac.cz> - 2.6.21-1
+- New upstream version
+
 * Mon Mar  9 2009 David Hrbáč <david@hrbac.cz> - 2.6.20-3
 - Removed requires version
 
