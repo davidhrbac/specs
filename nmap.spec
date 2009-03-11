@@ -32,8 +32,8 @@ predictability characteristics, reverse-identd scanning, and more.
 %package frontend
 Summary: the GTK+ frontend for nmap
 Group: Applications/System
-Requires: nmap = %{epoch}:%{version} gtk2 python >= 2.5 pygtk2 python-sqlite2
-BuildRequires: python >= 2.5 pygtk2-devel libpng-devel
+Requires: nmap = %{epoch}:%{version} gtk2 python pygtk2 python-sqlite2
+BuildRequires: python pygtk2-devel libpng-devel
 %description frontend
 This package includes zenmap, a GTK+ frontend for nmap. The nmap package must
 be installed before installing nmap-frontend.

@@ -7,7 +7,7 @@
 Summary:          Latency Logging and Graphing System
 Name:             smokeping
 Version:          2.4.2
-Release:          7%{?dist}
+Release:          8%{?dist}
 License:          GPLv2+
 Group:            Applications/Internet
 URL:              http://oss.oetiker.ch/smokeping/
@@ -22,6 +22,8 @@ Patch1:           smokeping-2.4.2-config.patch
 Patch2:           smokeping-2.4.2-tr.patch
 Patch3:           smokeping-2.3.5-silence.patch
 Patch4:           smokeping-2.4.2-jsonrpc-strict.patch
+Patch99:          smokeping-2.4.2-path2.patch
+
 BuildRequires:    glibc-common
 Requires:         perl >= 5.6.1 rrdtool >= 1.0.33 fping traceroute
 # Not picked up for some reason
@@ -45,6 +47,7 @@ which presents the graphs.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch99 -p1
 
 %{__install} -p -m 0644 %{SOURCE5} . 
 iconv -f ISO-8859-1 -t utf-8 -o CHANGES.utf8 CHANGES
@@ -132,6 +135,9 @@ fi
 %attr(0755, apache, root) %{_localstatedir}/lib/%{name}/images
 
 %changelog
+* Tue Feb 17 2009 David Hrbáč <david@hrbac.cz>  - 2.4.2-8
+- mrtg lib path patch
+
 * Tue Feb 17 2009 David Hrbáč <david@hrbac.cz>  - 2.4.2-7
 - initial rebuild
 - small change to build on Centos 4.x too

@@ -32,7 +32,7 @@ of the configuration file format.
 %{__rm} -rf %{buildroot}
 %{__make} pure_install PERL_INSTALL_ROOT=%{buildroot}
 
-find %{buildroot} -type f -name .packlist -delete
+find %{buildroot} -type f -name .packlist | xargs rm
 %{_fixperms} %{buildroot}/*
 
 %check
