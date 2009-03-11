@@ -1,29 +1,22 @@
 Summary: Network exploration tool and security scanner
 Name: nmap
-Version: 4.76
+Version: 4.68
 Release: 3%{?dist}
 # libdnet-stripped is BSD (advertising clause rescinded by the Univ. of California in 1999)
 License: GPLv2
 Group: Applications/System
-Source0: http://nmap.org/dist/%{name}-%{version}.tar.bz2
+Source0: http://download.insecure.org/nmap/dist/%{name}-%{version}.tar.bz2
 Source1: zenmap.desktop
-Source2: zenmap-root.pamd
-Source3: zenmap-root.consoleapps
-
-#prevent possible race condition for shtool, rhbz#158996
+Source2: nmapfe-32.png
+Source3: nmapfe-48.png
 Patch1: nmap-4.03-mktemp.patch
-
-#don't suggest to scan microsoft
 Patch2: nmap-4.52-noms.patch
-
-#don't strip debuginfo
 Patch3: nmap-4.68-nostrip.patch
-
-URL: http://nmap.org/
+URL: http://www.insecure.org/nmap/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Epoch: 2
 BuildRequires: openssl-devel, gtk2-devel, lua-devel, libpcap-devel, pcre-devel
-BuildRequires: desktop-file-utils
+BuildRequires: /usr/bin/desktop-file-install
 
 %define pixmap_srcdir zenmap/share/pixmaps
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
@@ -39,8 +32,8 @@ predictability characteristics, reverse-identd scanning, and more.
 %package frontend
 Summary: the GTK+ frontend for nmap
 Group: Applications/System
-Requires: nmap = %{epoch}:%{version} gtk2 python pygtk2 python-sqlite2 usermode
-BuildRequires: python pygtk2-devel libpng-devel
+Requires: nmap = %{epoch}:%{version} gtk2 python >= 2.5 pygtk2 python-sqlite2
+BuildRequires: python >= 2.5 pygtk2-devel libpng-devel
 %description frontend
 This package includes zenmap, a GTK+ frontend for nmap. The nmap package must
 be installed before installing nmap-frontend.
@@ -51,12 +44,18 @@ be installed before installing nmap-frontend.
 %patch2 -p1 -b .noms
 %patch3 -p1 -b .nostrip
 
+# we want pixmaps in /usr/share/pixmaps/zenmap/
+#mkdir %{pixmap_srcdir}/zenmap
+#mv %{pixmap_srcdir}/*.svg %{pixmap_srcdir}/zenmap
+#mv %{pixmap_srcdir}/*.png %{pixmap_srcdir}/zenmap
+
 rm -rf liblua libpcap libpcre
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
 export CXXFLAGS="$RPM_OPT_FLAGS"
 %configure  --with-libpcap=/usr
+#make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" %{?_smp_mflags}
 make %{?_smp_mflags}
 
 %install
@@ -64,16 +63,6 @@ rm -rf $RPM_BUILD_ROOT
 
 make DESTDIR=$RPM_BUILD_ROOT install
 rm -f $RPM_BUILD_ROOT%{_bindir}/uninstall_zenmap
-
-#use consolehelper
-rm -f $RPM_BUILD_ROOT%{_datadir}/applications/zenmap*.desktop
-rm -f $RPM_BUILD_ROOT%{_datadir}/zenmap/su-to-zenmap.sh
-ln -s /usr/bin/consolehelper $RPM_BUILD_ROOT%{_bindir}/zenmap-root
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pam.d \
-	$RPM_BUILD_ROOT%{_sysconfdir}/security/console.apps
-install -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/zenmap-root
-install -m 0644 %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/security/console.apps/zenmap-root
-
 cp docs/zenmap.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 gzip $RPM_BUILD_ROOT%{_mandir}/man1/* || :
 pushd $RPM_BUILD_ROOT%{_mandir}/man1
@@ -86,9 +75,12 @@ desktop-file-install --vendor nmap \
 	--add-category X-Red-Hat-Base \
 	%{SOURCE1};
 
-#for .desktop and app icon
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
-ln -s %{_datadir}/zenmap/pixmaps/zenmap.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps \
+	$RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+install -m 0644 %{SOURCE2} \
+	$RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/zenmap.png
+install -m 0644 %{SOURCE3} \
+	$RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/zenmap.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -97,16 +89,16 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc COPYING*
 %doc docs/README
+#%doc docs/nmap-fingerprinting-article.txt
+#%doc docs/nmap.deprecated.txt
 %doc docs/nmap.usage.txt
 %{_bindir}/nmap
 %{_datadir}/nmap
+%{_libexecdir}/nmap
 %{_mandir}/man1/nmap.1.gz
 
 %files frontend
 %defattr(-,root,root)
-%config %{_sysconfdir}/pam.d/zenmap-root
-%config %{_sysconfdir}/security/console.apps/zenmap-root
-%{_bindir}/zenmap-root
 %{_bindir}/zenmap
 %{_bindir}/nmapfe
 %{_bindir}/xnmap
@@ -119,22 +111,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xnmap.1.gz
 
 %changelog
-* Sun Feb  8 2009 David Hrbáč <david@hrbac.cz> - 2:4.76-3
-- initial rebuild
-
-* Sat Jan 17 2009 Tomas Mraz <tmraz@redhat.com> - 2:4.76-3
-- rebuild with new openssl
-
-* Mon Dec 15 2008 Michal Hlavinka <mhlavink@redhat.com> - 2:4.77-2
-- bump release for rebuild
-
-* Mon Dec 15 2008 Michal Hlavinka <mhlavink@redhat.com> - 2:4.76-1
-- new upstream version 4.76
-- use consolehelper for root auth
-
-* Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 2:4.68-4
-- Rebuild for Python 2.6
-
 * Mon Aug 11 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 2:4.68-3
 - add missing BuildRequires to use system libs rather than local copies
 - really fix license tag
