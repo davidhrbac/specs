@@ -1,14 +1,14 @@
 Name:           mod_dnssd
-Version:        0.5
-Release:        6%{?dist}
+Version:        0.6
+Release:        1%{?dist}
 Summary:        An Apache HTTPD module which adds Zeroconf support
 
 Group:          System Environment/Daemons
-License:        Apache Software License
+License:        ASL 2.0
 URL:            http://0pointer.de/lennart/projects/mod_dnssd/
 Source0:        http://0pointer.de/lennart/projects/mod_dnssd/%{name}-%{version}.tar.gz
 Source1:        mod_dnssd.conf-httpd
-Patch0:         mod_dnssd-r63-uid.patch
+#Patch0:         mod_dnssd-r63-uid.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  httpd-devel avahi-devel e2fsprogs-devel
@@ -19,7 +19,7 @@ using Avahi.
 
 %prep
 %setup -q
-%patch0 -p2 -b .uid
+#patch0 -p2 -b .uid
 
 %build
 %configure --disable-lynx
@@ -40,6 +40,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/httpd/modules/mod_dnssd.so
 
 %changelog
+* Tue Apr 28 2009 David Hrbáč <david@hrbac.cz> - 0.5-1
+- new upstream version
+
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 0.5-6
 - initial rebuild
 

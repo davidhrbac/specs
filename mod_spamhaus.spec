@@ -1,6 +1,6 @@
 Summary:	mod_spamhaus is an Apache module that uses DNSBL
 Name:		mod_spamhaus
-Version:	0.5
+Version:	0.7
 Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://sourceforge.net/projects/mod-spamhaus/

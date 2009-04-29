@@ -2,11 +2,11 @@
 %define cgibindir %{_datadir}/%{name}/cgi-bin
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
-Version: 1.3.102
+Version: 1.3.103
 Release: 1%{?dist}
 License: GPL
 Group: Applications/System
-Source0: http://www.dcc-servers.net/dcc/source/dcc-%{version}.tar.Z
+Source0: http://rhyolite.com/src/dcc/old/dcc-%{version}.tar.Z
 Patch0:       dcc.patch
 Patch1:       dcc2.patch
 URL: http://rhyolite.com/anti-spam/dcc/
@@ -30,14 +30,15 @@ unsolicited, the DCC client can log, discard, or reject the message.
 
 %build
 ./configure \
-      --with-uid=root \
+      --with-uid=mockbuild \
       --homedir=%{homedir} \
       --bindir=%{_bindir} \
       --libexecdir=%{_libexecdir}/%{name} \
       --mandir=%{_mandir} \
       --with-cgibin=%{cgibindir} \
       --with-installroot=%{buildroot} \
-      --disable-sys-inst
+      --disable-sys-inst \
+      --disable-chown
 #      --disable-chown
 make
 
@@ -54,7 +55,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-, root, root)
-%doc CHANGES FAQ.txt INSTALL.txt LICENSE *.html
+%doc CHANGES LICENSE *.html
 %dir %{homedir}
 %config(noreplace) %{homedir}/*
 %{_bindir}/*
@@ -66,6 +67,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Thu Apr 28 2009 David Hrbáč <david@hrbac.cz> - 1.3.103-1
+- new upstream version
+
 * Mon Jan 19 2009 David Hrbáč <david@hrbac.cz> - 1.3.102-1
 - new upstream version
  

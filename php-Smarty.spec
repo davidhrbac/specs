@@ -6,7 +6,7 @@ Release:        1%{?dist}
 Source0:        http://www.smarty.net/distributions/Smarty-%{version}.tar.gz
 #Patch0:         %{name}-2.6.20-security.patch
 License:        LGPLv2+
-URL:            http://smarty.php.net
+URL:            http://www.smarty.net
 Group:          Development/Libraries
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)

@@ -83,6 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Apr 28 2009 David Hrbáč <david@hrbac.cz> - 0.0.0-0.8.20070129svn713
+- initial rebuild
+
 * Fri Apr  4 2008 Dmitry Butskoy <Dmitry@Butskoy.name> 0.0.0-0.8.20070129svn713
 - note in config that Apache's "KeepAlive" must be "On" (#440446)
 

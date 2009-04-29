@@ -1,10 +1,10 @@
 Summary:	Token-based authentication module for the apache Web server.
 Name:		mod_auth_token
-Version:	1.0.3
+Version:	1.0.5
 Release:	1%{?dist}
 Group:		System Environment/Daemons
-URL:		http://static.synd.info/downloads/releases/
-Source:		http://static.synd.info/downloads/releases/%{name}-%{version}.tar.gz
+URL:		http://www.synd.info/downloads/releases/
+Source:		http://www.synd.info/downloads/releases/%{name}-%{version}.tar.gz
 Source1:        mod_auth_token.conf
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
@@ -20,6 +20,8 @@ having to pipe it through a script for security.
 
 %prep
 %setup -q
+ln -sf /usr/share/automake-1.9/install-sh install-sh
+ln -sf /usr/share/automake-1.9/missing missing
 
 %build
 
@@ -44,6 +46,9 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %changelog
+* Thu Apr 28 2009 David Hrbáč <david@hrbac.cz> - 1.0.5-1
+- new upstream version
+
 * Sun Sep 14 2008 David Hrbáč <david@hrbac.cz> - 1.0.3-1
 - new upstream version
  

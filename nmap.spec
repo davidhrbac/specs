@@ -15,7 +15,8 @@ Patch3: nmap-4.68-nostrip.patch
 URL: http://www.insecure.org/nmap/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Epoch: 2
-BuildRequires: openssl-devel, gtk2-devel, lua-devel, libpcap-devel, pcre-devel
+#BuildRequires: openssl-devel, gtk2-devel, lua-devel, libpcap-devel, pcre-devel
+BuildRequires: openssl-devel, gtk2-devel, lua-devel, libpcap, pcre-devel
 BuildRequires: /usr/bin/desktop-file-install
 
 %define pixmap_srcdir zenmap/share/pixmaps
@@ -111,6 +112,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xnmap.1.gz
 
 %changelog
+* Wed Mar 11 2009 David Hrbáč <david@hrbac.cz>  - 2:4.68-3
+- Initial rebuild
+
 * Mon Aug 11 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 2:4.68-3
 - add missing BuildRequires to use system libs rather than local copies
 - really fix license tag
