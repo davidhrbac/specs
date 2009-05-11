@@ -53,5 +53,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/%{name}.so
 
 %changelog
+* Thu Apr 30 2009  David Hrbáč <david@hrbac.cz> - 0.7-1
+- new upstream version
+
 * Tue Sep  9 2008 David Hrbáč <david@hrbac.cz> - 0.5-1
 - initial build
