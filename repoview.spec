@@ -1,5 +1,5 @@
 Name:           repoview
-Version:        0.6.3
+Version:        0.6.4
 Release:        1%{?dist}
 Summary:        Creates a set of static HTML pages in a yum repository
 
@@ -12,6 +12,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
 Requires:       python-kid >= 0.6.3, yum >= 3.0, python-elementtree
+Requires:	python-hashlib
 
 %description
 RepoView creates a set of static HTML pages in a yum repository for easy
@@ -57,6 +58,11 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed May 13 2009 David Hrbáč <david@hrbac.cz> - 0.6.3-1
 - new upstream version
+- added requirements
+
+* Wed May 13 2009 David Hrbáč <david@hrbac.cz> - 0.6.3-1
+- new upstream version
+
 * Wed Dec 31 2008 Konstantin Ryabitsev <icon@fedoraproject.org> - 0.6.2-1.1
 - Build for EL-5
 
