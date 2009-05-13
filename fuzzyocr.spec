@@ -1,7 +1,7 @@
 %define svn svn135
 Name:           fuzzyocr
 Version:        3.5.0
-Release:        4.%{svn}%{?dist}
+Release:        5.%{svn}%{?dist}
 Summary:        FuzzyOCR is a spamassassin plugin used to identify image spam
 Group:          Applications/Internet
 License:        Apache 2.0
@@ -13,7 +13,8 @@ Patch1:         fuzzyocr-C4-netpbm-10.25.patch
 BuildArch: 	noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 #Requires:  	spamassassin perl-String-Approx perl-Log-Agent netpbm-progs ocrad gifsicle
-Requires:       spamassassin perl-String-Approx perl-Log-Agent netpbm netpbm-progs ImageMagick libungif libungif-progs ocrad gifsicle 
+Requires:       spamassassin perl-String-Approx perl-Log-Agent netpbm netpbm-progs ImageMagick ocrad gifsicle
+Requires:       /usr/bin/giffix 
 Requires:       perl-MLDBM-Sync perl-Tie-Cache
 
 %description
@@ -87,6 +88,9 @@ for file in /var/log/fuzzyocr.log /var/amavis/.spamassassin/FuzzyOcr.db /var/ama
 done
 
 %changelog
+* Wed May 13 2009 David Hrbáč <david@hrbac.cz> - 3.5.0-5.svn135
+- changed requirements 
+
 * Wed May  6 2009 David Hrbáč <david@hrbac.cz> - 3.5.0-4.svn135
 - create log file
 - create DB files
