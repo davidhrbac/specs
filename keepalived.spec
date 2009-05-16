@@ -3,7 +3,7 @@
 
 Summary: HA monitor built upon LVS, VRRP and service pollers
 Name: keepalived
-Version: 1.1.16
+Version: 1.1.17
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
@@ -45,8 +45,12 @@ healthchecks and LVS directors failover.
 
 
 %build
-%configure --with-kernel-dir="/lib/modules/%{kernel}/build"
+KERNELDIR=$(ls -1d /lib/modules/%{kernel}*/build | head -1)
+%configure --with-kernel-dir="${KERNELDIR}"
 %{__make} %{?_smp_mflags} STRIP=/bin/true
+
+#%configure --with-kernel-dir="/lib/modules/%{kernel}/build"
+#%{__make} %{?_smp_mflags} STRIP=/bin/true
 
 
 %install
@@ -100,6 +104,9 @@ fi
 
 
 %changelog
+* Sat May 16 2009 David Hrbáč <david@hrbac.cz> - 1.1.17-1
+- new upstream release
+
 * Tue Feb 17 2009 David Hrbáč <david@hrbac.cz> - 1.1.16-1
 - Update to 1.1.16
 
