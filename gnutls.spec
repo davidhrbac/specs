@@ -1,7 +1,7 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
 Version: 2.2.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: LGPL
 Group: System Environment/Libraries
 BuildRequires: libgcrypt-devel >= 1.3.1, gettext
@@ -14,12 +14,20 @@ Requires: libgcrypt >= 1.3.1
 
 %if "%{centos_ver}" == "4"
 Provides: libgnutls.so.11
+  %ifarch x86_64
+Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)(64bit)
+  %else
 Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)
+  %endif
 %endif
 
 %if "%{centos_ver}" == "5"
 Provides: libgnutls.so.13
+  %ifarch x86_64
+Provides: libgnutls.so.13(GNUTLS_1_3)(64bit)
+  %else
 Provides: libgnutls.so.13(GNUTLS_1_3)
+  %endif
 %endif
 
 %package devel
@@ -68,6 +76,10 @@ make
 %install
 rm -fr $RPM_BUILD_ROOT
 %makeinstall
+#%if "%{centos_ver}" == "4"
+#  ln -s $RPM_BUILD_ROOT%{_libdir}/libgnutls.so.26.1.6 $RPM_BUILD_ROOT%{_libdir}/libgnutls.so.13 
+#%endif
+
 rm -f $RPM_BUILD_ROOT%{_bindir}/srptool
 rm -f $RPM_BUILD_ROOT%{_bindir}/gnutls-srpcrypt
 #cp -f %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/libgnutls-config
@@ -121,6 +133,9 @@ fi
 %{_mandir}/man1/*
 
 %changelog
+* Mon May 18 2009 David Hrbáč <david@hrbac.cz> - 2.2.5-2
+- dependecy issue
+
 * Fri Mar 21 2008 David Hrbáč <david@hrbac.cz> - 2.1.7-3
 - added libgnutls.so.13(GNUTLS_1_3) to fool dependencies
 
