@@ -1,7 +1,7 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
 Version: 2.2.5
-Release: 2%{?dist}
+Release: 4%{?dist}
 License: LGPL
 Group: System Environment/Libraries
 BuildRequires: libgcrypt-devel >= 1.3.1, gettext
@@ -13,19 +13,21 @@ BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgcrypt >= 1.3.1
 
 %if "%{centos_ver}" == "4"
-Provides: libgnutls.so.11
   %ifarch x86_64
+Provides: libgnutls.so.11(64bit)
 Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)(64bit)
   %else
+Provides: libgnutls.so.11
 Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)
   %endif
 %endif
 
 %if "%{centos_ver}" == "5"
-Provides: libgnutls.so.13
   %ifarch x86_64
+Provides: libgnutls.so.13()(64bit)
 Provides: libgnutls.so.13(GNUTLS_1_3)(64bit)
   %else
+Provides: libgnutls.so.13
 Provides: libgnutls.so.13(GNUTLS_1_3)
   %endif
 %endif
@@ -90,6 +92,21 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %find_lang %{name}
 
+cd $RPM_BUILD_ROOT%{_libdir}
+
+%if "%{centos_ver}" == "4"
+ln -s libgnutls-extra.so.26.1.6 libgnutls-extra.so.11
+ln -s libgnutls-openssl.so.26.1.6 libgnutls-openssl.so.11
+ln -s libgnutls.so.26.1.6 libgnutls.so.11
+%endif
+
+%if "%{centos_ver}" == "5"
+ln -s libgnutls-extra.so.26.1.6 libgnutls-extra.so.13
+ln -s libgnutls-openssl.so.26.1.6 libgnutls-openssl.so.13
+ln -s libgnutls.so.26.1.6 libgnutls.so.13
+%endif
+
+
 %check
 make check
 
@@ -133,6 +150,13 @@ fi
 %{_mandir}/man1/*
 
 %changelog
+* Tue May 19 2009 David Hrbáč <david@hrbac.cz> - 2.2.5-4
+- dependecy issue
+- library symlinks
+
+* Tue May 19 2009 David Hrbáč <david@hrbac.cz> - 2.2.5-3
+- dependecy issue
+
 * Mon May 18 2009 David Hrbáč <david@hrbac.cz> - 2.2.5-2
 - dependecy issue
 
