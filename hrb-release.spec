@@ -1,7 +1,7 @@
 Summary: Repository hrb release file and package configuration
 Name: hrb-release
 Version: 0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -26,8 +26,8 @@ Release file for hrb-tls repository.
 # URL: http://www.hrbac.cz/repository.htm
 [hrb-stable]
 name = hrb
-baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb/stable/%{_arch}/
-#mirrorlist = 
+#baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb/stable/%{_arch}/
+mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb
 enabled = 1
 protect = 0
 gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -35,8 +35,8 @@ gpgcheck = 1
 
 [hrb-testing]
 name = hrb-test
-baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb/testing/%{_arch}/
-#mirrorlist =
+#baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb/testing/%{_arch}/
+mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb
 enabled = 0
 protect = 0
 gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -58,6 +58,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb.repo
 
 %changelog
+* Wed May 27 2009 David Hrbáč <david@hrbac.cz> - 0.1-3
+- new mirrors
+ 
 * Thu Mar 20 2008 David Hrbáč <david@hrbac.cz> - 0.1-2
 - URL update
 

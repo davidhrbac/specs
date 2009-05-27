@@ -1,7 +1,7 @@
 Summary: Repository hrb-kernel release file and package configuration
 Name: hrb-kernel-release
 Version: 0.1
-Release: 1%{?dist} 
+Release: 2%{?dist} 
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -26,8 +26,8 @@ Release file for hrb-kernel repository.
 # URL: http://www.hrbac.cz/repository.htm
 [hrb-kernel-stable]
 name = hrb-kernel
-baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-kernel/stable/%{_arch}/
-#mirrorlist = 
+#aseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-kernel/stable/%{_arch}/
+mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb-kernel
 enabled = 1
 protect = 0
 gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -35,8 +35,8 @@ gpgcheck = 1
 
 [hrb-kernel-testing]
 name = hrb-kernel-test
-baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-kernel/testing/%{_arch}/
-#mirrorlist =
+#baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-kernel/testing/%{_arch}/
+mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb-kernel
 enabled = 0
 protect = 0
 gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -58,5 +58,8 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb-kernel.repo
 
 %changelog
+* Wed May 27 2009 David Hrbáč <david@hrbac.cz> - 0.1-2
+- new mirrors
+
 * Sat Jan  3 2009 David Hrbáč <david@hrbac.cz> - 0.1-1
 - Initial package. 

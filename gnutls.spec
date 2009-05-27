@@ -1,7 +1,7 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
-Version: 2.2.5
-Release: 4%{?dist}
+Version: 2.6.5
+Release: 1%{?dist}
 License: LGPL
 Group: System Environment/Libraries
 BuildRequires: libgcrypt-devel >= 1.3.1, gettext
@@ -150,8 +150,11 @@ fi
 %{_mandir}/man1/*
 
 %changelog
+* Tue May 19 2009 David Hrbáč <david@hrbac.cz> - 2.6.5-1
+- new upstream version
+
 * Tue May 19 2009 David Hrbáč <david@hrbac.cz> - 2.2.5-4
-- dependecy issue
+- dependency issue
 - library symlinks
 
 * Tue May 19 2009 David Hrbáč <david@hrbac.cz> - 2.2.5-3
