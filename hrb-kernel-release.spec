@@ -26,20 +26,20 @@ Release file for hrb-kernel repository.
 # URL: http://www.hrbac.cz/repository.htm
 [hrb-kernel-stable]
 name = hrb-kernel
-#aseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-kernel/stable/%{_arch}/
-mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb-kernel
+#aseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-kernel/stable/%{_arch}/
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-kernel
 enabled = 1
 protect = 0
-gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 
 [hrb-kernel-testing]
 name = hrb-kernel-test
-#baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-kernel/testing/%{_arch}/
-mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb-kernel
+#baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-kernel/testing/%{_arch}/
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-kernel
 enabled = 0
 protect = 0
-gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 EOF
 

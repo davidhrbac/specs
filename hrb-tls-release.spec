@@ -26,20 +26,20 @@ Release file for hrb-tls repository.
 # URL: http://www.hrbac.cz/repository.htm
 [hrb-tls-stable]
 name = hrb-tls
-#baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-tls/stable/%{_arch}/
-mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb-tls
+#baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-tls/stable/%{_arch}/
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-tls
 enabled = 1
 protect = 0
-gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 
 [hrb-tls-testing]
 name = hrb-tls-test
-#baseurl = http://fs12.vsb.cz/hrb33/el%centos_ver/hrb-tls/testing/%{_arch}/
-mirrorlist = http://fs12.vsb.cz/hrb33/mirrors-hrb-tls
+#baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-tls/testing/%{_arch}/
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-tls
 enabled = 0
 protect = 0
-gpgkey = http://fs12.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 EOF
 
