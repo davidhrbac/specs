@@ -1,6 +1,6 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
-Version: 2.8.1
+Version: 2.6.6
 Release: 1%{?dist}
 License: LGPL
 Group: System Environment/Libraries
@@ -150,7 +150,7 @@ fi
 %{_mandir}/man1/*
 
 %changelog
-* Sun Jun 14 2009 David Hrbáč <david@hrbac.cz> - 2.8.1-1
+* Sun Jun 14 2009 David Hrbáč <david@hrbac.cz> - 2.6.6-1
 - new upstream version
 
 * Tue May 19 2009 David Hrbáč <david@hrbac.cz> - 2.6.5-1
