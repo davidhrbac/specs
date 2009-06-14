@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.36
+Version:        0.7.59
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -49,7 +49,7 @@ Patch0:     nginx-auto-cc-gcc.patch
 
 # configuration patch to match all the Fedora paths for logs, pid files
 # etc.
-Patch1:     nginx-conf.patch
+#Patch1:     nginx-conf.patch
 
 %description
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
@@ -61,7 +61,7 @@ One third party module, nginx-upstream-fair, has been added.
 %setup -q
 
 %patch0 -p0
-%patch1 -p0
+#%patch1 -p0
 %{__tar} zxvf %{SOURCE5}
 
 %build
@@ -181,6 +181,9 @@ fi
 
 
 %changelog
+* Thu Jun  4 2009 David Hrbáč <david@hrbac.cz> - 0.6.37-1
+- new upstream version
+
 * Wed May  6 2009 David Hrbáč <david@hrbac.cz> - 0.6.36-1
 - new upstream version
 

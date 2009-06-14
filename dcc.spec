@@ -2,7 +2,7 @@
 %define cgibindir %{_datadir}/%{name}/cgi-bin
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
-Version: 1.3.103
+Version: 1.3.105
 Release: 1%{?dist}
 License: GPL
 Group: Applications/System
@@ -67,6 +67,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Sat May 30 2009 David Hrbáč <david@hrbac.cz> - 1.3.105-1
+- new upstream version
+
 * Thu Apr 28 2009 David Hrbáč <david@hrbac.cz> - 1.3.103-1
 - new upstream version
 
