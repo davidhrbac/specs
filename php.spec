@@ -43,7 +43,7 @@ BuildRequires: gmp-devel, aspell-devel >= 0.50.0
 BuildRequires: httpd-devel >= 2.0.46-1, libjpeg-devel, libpng-devel, pam-devel
 BuildRequires: libstdc++-devel, openssl-devel, sqlite-devel >= 3.0.0
 #BuildRequires: zlib-devel, pcre-devel >= 6.6, smtpdaemon, readline-devel
-BuildRequires: zlib-devel, pcre-devel, smtpdaemon, readline-devel
+BuildRequires: zlib-devel, smtpdaemon, readline-devel
 BuildRequires: bzip2, perl, libtool >= 1.4.3, gcc-c++
 Obsoletes: php-dbg, php3, phpfi, stronghold-php
 # Enforce Apache module ABI compatibility
@@ -358,8 +358,13 @@ cat `aclocal --print-ac-dir`/libtool.m4 > build/libtool.m4
 # Regenerate configure scripts (patches change config.m4's)
 ./buildconf --force
 
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
-#CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
+%if "%{centos_ver}" == "4"
+  CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+%endif
+
+%if "%{centos_ver}" == "5"
+  CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
+%endif
 export CFLAGS
 
 # Install extension modules in %{_libdir}/php/modules.
@@ -633,6 +638,10 @@ rm files.* macros.php
 %files pdo -f files.pdo
 
 %changelog
+* Thu Jun 25 2009 David Hrbáč <david@hrbac.cz> - 5.2.9-2
+- use internal pcre library
+- C4 build hack
+
 * Wed Apr 15 2009 Joe Orton <jorton@redhat.com> 5.2.9-2.el5s2
 - update to r3 of systzdata patch
 
