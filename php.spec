@@ -42,7 +42,8 @@ BuildRequires: bzip2-devel, curl-devel >= 7.9, db4-devel, expat-devel
 BuildRequires: gmp-devel, aspell-devel >= 0.50.0
 BuildRequires: httpd-devel >= 2.0.46-1, libjpeg-devel, libpng-devel, pam-devel
 BuildRequires: libstdc++-devel, openssl-devel, sqlite-devel >= 3.0.0
-BuildRequires: zlib-devel, pcre-devel >= 6.6, smtpdaemon, readline-devel
+#BuildRequires: zlib-devel, pcre-devel >= 6.6, smtpdaemon, readline-devel
+BuildRequires: zlib-devel, pcre-devel, smtpdaemon, readline-devel
 BuildRequires: bzip2, perl, libtool >= 1.4.3, gcc-c++
 Obsoletes: php-dbg, php3, phpfi, stronghold-php
 # Enforce Apache module ABI compatibility
@@ -357,7 +358,8 @@ cat `aclocal --print-ac-dir`/libtool.m4 > build/libtool.m4
 # Regenerate configure scripts (patches change config.m4's)
 ./buildconf --force
 
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
+CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+#CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
 export CFLAGS
 
 # Install extension modules in %{_libdir}/php/modules.
