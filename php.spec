@@ -399,7 +399,6 @@ ln -sf ../configure
 	--with-png \
 	--with-pspell \
 	--with-expat-dir=%{_prefix} \
-        --with-pcre-regex=%{_prefix} \
 	--with-zlib \
 	--with-layout=GNU \
 	--enable-exif \
