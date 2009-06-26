@@ -2,13 +2,13 @@
 %define cgibindir %{_datadir}/%{name}/cgi-bin
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
-Version: 1.3.105
+Version: 1.3.111
 Release: 1%{?dist}
 License: GPL
 Group: Applications/System
 Source0: http://rhyolite.com/src/dcc/old/dcc-%{version}.tar.Z
-Patch0:       dcc.patch
-Patch1:       dcc2.patch
+#Patch0:       dcc.patch
+#Patch1:       dcc2.patch
 URL: http://rhyolite.com/anti-spam/dcc/
 BuildRoot: %{_tmppath}/%{name}-root
 #BuildRequires: sendmail-devel
@@ -25,8 +25,8 @@ unsolicited, the DCC client can log, discard, or reject the message.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch -p0
-%patch1 -p0
+#%patch -p0
+#%patch1 -p0
 
 %build
 ./configure \
@@ -67,6 +67,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Fri Jun 26 2009 David Hrbáč <david@hrbac.cz> - 1.3.111-1
+- new upstream version
+
 * Sat May 30 2009 David Hrbáč <david@hrbac.cz> - 1.3.105-1
 - new upstream version
 
