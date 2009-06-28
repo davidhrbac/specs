@@ -3,7 +3,7 @@ Name:		mod_sesehe
 Version:	0.1.0
 Release:	1%{?dist}
 Group:		System Environment/Daemons
-URL:		http://web.god.net.ru/projects/mod_traf_thief/
+URL:		http://jok.is-a-geek.net/mod_sesehe.php
 #Source:		http://jok.is-a-geek.net/code/mod_sesehe.c
 Source:         mod_sesehe.tar.gz
 Source1:	%{name}.conf
@@ -46,5 +46,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/%{name}.so
 
 %changelog
+* Sun Jun 28 2009 David Hrbáč <david@hrbac.cz> - 0.1.0-2
+- updated URL
+
 * Mon Sep 15 2008 David Hrbáč <david@hrbac.cz> - 0.1.0-1
 - initial build
