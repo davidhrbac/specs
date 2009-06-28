@@ -6,6 +6,7 @@ Group:		System Environment/Daemons
 URL:		http://www.modruby.net/
 Source:         http://www.modruby.net/archive/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
+Patch0:		mod_ruby-1.3.0-incnoexec.patch
 License:	BSD
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52 ruby ruby-devel
@@ -21,6 +22,8 @@ will start up much faster than without mod_ruby.
 #%setup -q -n %{name}-4.3_apache22_mod
 %setup -q 
 #n %{name}-4.3 
+%patch0 -p1
+
 %build
 #apxs -c %{name}.c
 #configure 
