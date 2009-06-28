@@ -1,7 +1,7 @@
 Summary:	Simple module allows you to change server header.
 Name:		mod_sesehe
 Version:	0.1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://jok.is-a-geek.net/mod_sesehe.php
 #Source:		http://jok.is-a-geek.net/code/mod_sesehe.c
