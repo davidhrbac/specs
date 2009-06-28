@@ -1,6 +1,6 @@
 Summary:	Mod_ruby is a DSO module for the Apache Web server.
 Name:		mod_ruby 
-Version:	1.2.6
+Version:	1.3.0
 Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.modruby.net/
@@ -52,5 +52,8 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 %attr(0755,root,root) %{_libdir}/httpd/modules/*.so
 
 %changelog
+* Sun Jun 28 2009 David Hrbáč <david@hrbac.cz> - 1.3.0-1
+- new upstream version
+
 * Mon Oct 13 2008 David Hrbáč <david@hrbac.cz> - 1.2.6-1
 - initial build
