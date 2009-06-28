@@ -2,7 +2,7 @@
 
 Summary:     A fast WWW search engine for websites
 Name:        mnogosearch
-Version:     3.3.8
+Version:     3.3.9
 Release:     1.%{mysig}
 License:     GPL
 Group:       Applications/Internet
@@ -10,7 +10,6 @@ Source0:     http://www.%{name}.org/Download/%{name}-%{version}.tar.gz
 URL:         http://www.%{name}.org/
 Buildroot:   /var/tmp/%{name}-root
 Vendor:      Lavtech.Com Corp.
-Packager: David Hrbac <david@hrbac.cz>
 Provides:    %{name}.pp
 #Requires:    mysql openssl oracle-runtime >= 9.2 readline unixODBC
 Requires:    mysql openssl readline 
@@ -141,6 +140,9 @@ ldconfig
 
 
 %changelog
+* Sun Jun 28 2009 David Hrbáč <david@hrbac.cz> - 3.3.9-1
+- new upstream version
+
 * Thu Apr 28 2009 David Hrbáč <david@hrbac.cz> - 3.3.8-1
 - new upstream version
 
