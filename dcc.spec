@@ -3,7 +3,7 @@
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
 Version: 1.3.111
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 Group: Applications/System
 Source0: http://rhyolite.com/src/dcc/old/dcc-%{version}.tar.Z
@@ -54,19 +54,22 @@ install *.8 %{buildroot}%{_mandir}/man8/
 rm -rf %{buildroot}
 
 %files
-%defattr(-, root, root)
+%defattr(-, root, amavis)
 %doc CHANGES LICENSE *.html
 %dir %{homedir}
 %config(noreplace) %{homedir}/*
 %{_bindir}/*
-%attr(4555, root, root) %{_bindir}/cdcc
-%attr(4555, root, root) %{_bindir}/dccproc
+%attr(4555, root, amavis) %{_bindir}/cdcc
+%attr(4555, root, amavis) %{_bindir}/dccproc
 %{_libexecdir}/*
-%attr(4555, root, root) %{_libexecdir}/%{name}/dccsight
+%attr(4555, root, amavis) %{_libexecdir}/%{name}/dccsight
 %{cgibindir}/*
 %{_mandir}/man8/*
 
 %changelog
+* Mon Jun 29 2009 David Hrbáč <david@hrbac.cz> - 1.3.111-2
+- correct permisions
+
 * Fri Jun 26 2009 David Hrbáč <david@hrbac.cz> - 1.3.111-1
 - new upstream version
 
