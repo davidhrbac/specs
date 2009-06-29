@@ -24,7 +24,7 @@
 %define HA_APIGROUP haclient
 %define HA_CCMUID 498
 %define HA_APIGID 496
-%define HB_VERSION 2.1.3
+%define HB_VERSION 2.1.4
 %define SSH /usr/bin/ssh
 %define INITDIR /etc/init.d
 %define OCF_ROOT_DIR /usr/lib/ocf
@@ -721,6 +721,9 @@ true
 true
 ###########################################################
 %changelog
+* Mon Jun 29 2009 David Hrbáč <david@hrbac.cz> - 2.1.4-1
+- new upstream version
+
 * Sat Apr 12 2008 David Hrbáč <david@hrbac.cz>
 - CentOS rebuild
 

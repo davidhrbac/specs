@@ -68,7 +68,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Mon Jun 29 2009 David Hrbáč <david@hrbac.cz> - 1.3.111-2
-- correct permisions
+- correct permissions
 
 * Fri Jun 26 2009 David Hrbáč <david@hrbac.cz> - 1.3.111-1
 - new upstream version
