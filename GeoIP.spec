@@ -3,7 +3,7 @@
 %define data_stamp 20080903
 
 Name:	    GeoIP
-Version:    1.4.5
+Version:    1.4.6
 Release:    1%{?dist}
 Summary:    C library finding what country an IP/hostname originates from
 
@@ -13,7 +13,10 @@ URL:	    http://www.maxmind.com/app/c
 Source0:    http://www.maxmind.com/download/geoip/api/c/%{name}-%{version}.tar.gz
 
 #added by CentOS, newest GeoIP database as a seperate source
-Source1:    http://www.maxmind.com/download/geoip/database/GeoIP.dat.gz
+Source1:    http://www.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+Source2:    http://www.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
+Source3:    http://www.maxmind.com/download/geoip/database/GeoIPv6.dat.gz
+Source4:    http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
 
 Buildrequires: gzip
 Buildrequires: zlib-devel
@@ -50,12 +53,33 @@ Requires: %{name}
 %description data
 This package contain the database for GeoIP.
 
+%package datacsv
+Summary: GeoIP csv file
+Group: System Environment/Libraries
+Version: %{data_stamp}
+Release: %{release}
+Requires: %{name}
+
+%description datacsv
+This package contain the csv file for GeoIP.
+
 %prep
 %setup
 
 #added by CentOS ... use latest GeoIP database 
 %{__cp} -a  %{SOURCE1} data/
 gunzip -f data/GeoIP.dat.gz
+
+%{__mkdir} datacsv
+%{__cp} -a  %{SOURCE2} data/
+unzip data/GeoIPCountryCSV.zip -d data
+
+%{__cp} -a  %{SOURCE3} data/
+gunzip -f data/GeoIPv6.dat.gz
+
+%{__cp} -a  %{SOURCE4} data/
+gunzip -f data/GeoLiteCity.dat.gz
+
 #
 
 %build
@@ -82,6 +106,11 @@ gunzip -f data/GeoIP.dat.gz
 %{__install} -d $RPM_BUILD_ROOT/%{_localstatedir}/lib
 %{__mv} $RPM_BUILD_ROOT/%{_datadir}/%{name} $RPM_BUILD_ROOT/%{_localstatedir}/lib/
 
+%{__cp} data/GeoIPv6.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}
+%{__cp} data/GeoLiteCity.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}
+%{__cp} data/GeoIPCountryWhois.csv $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}
+
+
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
 
@@ -107,9 +136,19 @@ gunzip -f data/GeoIP.dat.gz
 
 %files data
 %defattr(-,root,root)
-%{_localstatedir}/lib/%{name}/*
+%{_localstatedir}/lib/%{name}/*.dat
+
+%files datacsv
+%defattr(-,root,root)
+%{_localstatedir}/lib/%{name}/*.csv
 
 %changelog
+* Thu Jul  2 2009 David Hrbáč <david@hrbac.cz> - 1.4.6-1
+- new upstream version
+- added CVS database
+- added IPV6 database
+- added City Lite database
+
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 1.4.5-1
 - new upstream version
 
