@@ -1,10 +1,15 @@
 %{!?python_sitelib_platform: %define python_sitelib_platform %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
+
 Summary: A fast metadata parser for yum
 Name: yum-metadata-parser
 Version: 1.1.2
-Release: 2%{?dist}
+Release: 12%{?dist}
 Source0: http://linux.duke.edu/projects/yum/download/%{name}/%{name}-%{version}.tar.gz
+Patch0: yum-metadata-parser-1.1.2-null-pkgid.patch
+Patch1: yum-metadata-parser-exclusive-lock.patch
+Patch2: yum-metadata-parser-1.1.2-delay-indexes.patch
+Patch3: yum-metadata-parser-1.1.2-no-updates.patch
 License: GPLv2
 Group: Development/Libraries
 URL: http://linux.duke.edu/projects/yum/
@@ -14,6 +19,7 @@ BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
 BuildRequires: sqlite-devel
 BuildRequires: pkgconfig
+Requires: glib2 >= 2.15
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -21,6 +27,10 @@ Fast metadata parser for yum implemented in C.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{__python} setup.py build
@@ -40,10 +50,43 @@ Fast metadata parser for yum implemented in C.
 %{python_sitelib_platform}/sqlitecachec.pyc
 %{python_sitelib_platform}/sqlitecachec.pyo
 
+#%{python_sitelib_platform}/*egg-info
+
 %changelog
-* Fri Jan 18 2008 James Antill <james.antill@redhat.com> - 1.1.2-2
-- Import into RHEL-5
-- Related: rhbz#384691
+* Thu Jul  9 2009 David Hrbáč <david@hrbac.cz> - 1.1.2-12
+- Centos rebuild
+- removed egg-info
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.2-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> 1.1.2-11
+- Rebuild for Python 2.6
+
+* Tue Oct 14 2008 James Antill <james at fedoraproject.org> 1.1.2-10
+- Add delay indexes and no updates patches from upstream.
+- Resolves: bug 465898
+
+* Thu Feb 14 2008 Seth Vidal <skvidal at fedoraproject.org> 1.1.2-8
+- bump for gcc 
+
+* Fri Jan 25 2008 Seth Vidal <skvidal at fedoraproject.org> 1.1.2-7
+- apply exclusive lock patch
+
+* Thu Jan 24 2008 Seth Vidal <skvidal at fedoraproject.org> 1.1.2-6
+- add explicit dep on glib2 > 2.15
+
+* Tue Jan 22 2008 Seth Vidal <skvidal at fedoraproject.org> 1.1.2-5
+- rebuild
+
+* Tue Jan 08 2008 James Bowes <jbowes@redhat.com> 1.1.2-4
+- egg-info is under the arch specific dir
+
+* Tue Jan 08 2008 James Bowes <jbowes@redhat.com> 1.1.2-3
+- Include the egg-info dir.
+
+* Tue Nov 27 2007 Paul Nasrat <pauln at truemesh.com> 1.1.2-2
+- Fix segmentation fault with no pkgId
 
 * Fri Aug 24 2007 Seth Vidal <skvidal at fedoraproject.org> 1.1.2-1
 - 1.1.2-1
