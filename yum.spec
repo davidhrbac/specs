@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.8
-Release: 9%{?dist}.2.1.4
+Release: 9%{?dist}.2.1.5
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -42,7 +42,7 @@ Patch105: yum-3.2.8-man-page-2008-03-24.patch
 Patch106: opt-config-file-url.patch
 
 #Patch900: yum-C4-3.2.8-allowrun.patch
-Patch900: yum-C4-3.2.8-allowrun3.patch
+Patch900: yum-C4-3.2.8-allowrun4.patch
 
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
@@ -174,6 +174,9 @@ rm -rf $RPM_BUILD_ROOT
 find /var/cache/yum/ -name '*.sqlite' -o -name '*.sqlite.bz2' | xargs rm
 
 %changelog
+* Thu Jul  9  2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.5
+- patch bug fix
+
 * Thu Jul  9  2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.4
 - major improvements
 - better Set import
