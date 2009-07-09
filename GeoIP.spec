@@ -1,6 +1,6 @@
 # data_stamp should be the date of the included database as Source1.
 # When a new database is included, this should be changed.
-%define data_stamp 20080903
+%define data_stamp 20090702
 
 Name:	    GeoIP
 Version:    1.4.6
@@ -17,6 +17,7 @@ Source1:    http://www.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.
 Source2:    http://www.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
 Source3:    http://www.maxmind.com/download/geoip/database/GeoIPv6.dat.gz
 Source4:    http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+Source5:    geoip-fetch
 
 Buildrequires: gzip
 Buildrequires: zlib-devel
@@ -106,9 +107,10 @@ gunzip -f data/GeoLiteCity.dat.gz
 %{__install} -d $RPM_BUILD_ROOT/%{_localstatedir}/lib
 %{__mv} $RPM_BUILD_ROOT/%{_datadir}/%{name} $RPM_BUILD_ROOT/%{_localstatedir}/lib/
 
-%{__cp} data/GeoIPv6.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}
-%{__cp} data/GeoLiteCity.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}
-%{__cp} data/GeoIPCountryWhois.csv $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}
+install -D -m 0644 data/GeoIPv6.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/GeoIPv6.dat
+install -D -m 0644 data/GeoLiteCity.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/GeoLiteCity.dat
+install -D -m 0644 data/GeoIPCountryWhois.csv $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/GeoIPCountryWhois.csv
+install -D -m 0755 %{SOURCE5} %{buildroot}%{_sbindir}/geoip-fetch
 
 
 %clean
@@ -122,6 +124,7 @@ gunzip -f data/GeoLiteCity.dat.gz
 %doc AUTHORS COPYING ChangeLog README TODO conf/GeoIP.conf.default
 %attr(0755,root,root) %{_libdir}/*.so.*
 %{_bindir}/*
+%{_sbindir}/geoip-fetch
 %config(noreplace) %{_sysconfdir}/*
 %exclude %{_sysconfdir}/*.default
 %dir %{_localstatedir}/lib/%{name}
@@ -148,6 +151,7 @@ gunzip -f data/GeoLiteCity.dat.gz
 - added CVS database
 - added IPV6 database
 - added City Lite database
+- new GeoIP data fetch tool (geoip-fetch)
 
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 1.4.5-1
 - new upstream version

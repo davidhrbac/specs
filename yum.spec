@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.8
-Release: 9%{?dist}.2.1.3
+Release: 9%{?dist}.2.1.4
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -42,7 +42,7 @@ Patch105: yum-3.2.8-man-page-2008-03-24.patch
 Patch106: opt-config-file-url.patch
 
 #Patch900: yum-C4-3.2.8-allowrun.patch
-Patch900: yum-C4-3.2.8-allowrun2.patch
+Patch900: yum-C4-3.2.8-allowrun3.patch
 
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
@@ -120,8 +120,14 @@ can notify you when they are available via email, syslog or dbus.
 
 #sed -i '/\[catchSqliteException\]/{N; s/:$/:\n        pass/}'  yum/sqlitesack.py
 sed -i -e 's/@catchSqliteException/\[catchSqliteException\]/g' -e '/\[catchSqliteException\]/{N; s/:\s*$/:\n        pass/}' yum/sqlitesack.py
+
+# test python 2.3 compat
+#sed 's/self.assertFalse/self.failIf/g' test/packagetests.py -i
+#sed 's/self.assertTrue/self.failUnless/g' test/packagetests.py -i
+
 %build
 make
+#make test
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -168,6 +174,13 @@ rm -rf $RPM_BUILD_ROOT
 find /var/cache/yum/ -name '*.sqlite' -o -name '*.sqlite.bz2' | xargs rm
 
 %changelog
+* Thu Jul  9  2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.4
+- major improvements
+- better Set import
+- resolved finally @staticmethod
+- make tests python 2.3 compatible
+- passes all tests
+
 * Thu Mar  4 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.3
 - Improved @catchSqliteException
 - Solved sqlite location_base error
