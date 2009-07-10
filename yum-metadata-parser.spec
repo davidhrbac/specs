@@ -4,7 +4,7 @@
 Summary: A fast metadata parser for yum
 Name: yum-metadata-parser
 Version: 1.1.2
-Release: 12%{?dist}
+Release: 12%{?dist}.1
 Source0: http://linux.duke.edu/projects/yum/download/%{name}/%{name}-%{version}.tar.gz
 Patch0: yum-metadata-parser-1.1.2-null-pkgid.patch
 Patch1: yum-metadata-parser-exclusive-lock.patch
@@ -19,7 +19,7 @@ BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
 BuildRequires: sqlite-devel
 BuildRequires: pkgconfig
-Requires: glib2 >= 2.15
+Requires: glib2
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -53,6 +53,9 @@ Fast metadata parser for yum implemented in C.
 #%{python_sitelib_platform}/*egg-info
 
 %changelog
+* Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 1.1.2-12.1
+- downgrade glib2 version
+
 * Thu Jul  9 2009 David Hrbáč <david@hrbac.cz> - 1.1.2-12
 - Centos rebuild
 - removed egg-info

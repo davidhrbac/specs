@@ -2,65 +2,79 @@
 
 Summary: RPM installer/updater
 Name: yum
-Version: 3.2.8
-Release: 9%{?dist}.2.1.5
+Version: 3.2.19
+Release: 18%{?dist}
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
-Source1: yum.conf.fedora
+Source1: yum.conf.centos
 Source2: yum-updatesd.conf.fedora
 
+#  See: http://people.redhat.com/jantill/gits/yum branch el-5.3-master
+# and the el5.3* branches for the individual patches.
+
+# Fedora patches we might as well carry
 Patch0: installonlyn-enable.patch
-Patch1: yum-gpg-userid.patch
-Patch2: yum-disk-space.patch
-Patch3: yum-not-pascal.patch
-Patch4: yum-3.2.8-livecd-work.patch
-Patch5: yum-sqlite2repoerror.patch
-Patch6: yum-yes-no.patch
-Patch7: yum-empty-trans.patch
-Patch8: yum-seconds-opt.patch
-Patch9: yum-higher-metadata-expire.patch
-Patch10: yum--1-metadata-expire.patch
-Patch11: yum-MS-__len__.patch
-Patch12: yum-MS-__len__2.patch
-Patch13: yum-MS-__len__3.patch
-Patch14: yum-MS-__len__4.patch
-Patch15: yum-search-print.patch
-Patch16: yum-split-args.patch
-Patch17: yum-log-makedirs1.patch
-Patch18: yum-log-makedirs2.patch
-Patch19: yum-http-user-agent.patch
-Patch20: yum-committer.patch
-Patch21: yum-multilib-fix.patch
+Patch1: yum-mirror-priority.patch
+Patch2: yum-manpage-files.patch
+Patch3: yum-ia64-multilib.patch
+# NOTE: We don't carry this as it'd change the policy mid cycle
+# Patch3: yum-multilib-policy-best.patch
 
-
-Patch101: yum-3.2.8-RH-len-1.patch
+# Work around python-2.4.z's gettext ... maybe not needed post 5.3
 Patch102: yum-hack-python-gettext-workaround.patch
+# SSL, although it's still done in RHN-plugin
 Patch103: yum-ssl-ca-cert.patch
-Patch104: yum-pkg-lists-patterns.patch
-Patch105: yum-3.2.8-man-page-2008-03-24.patch
-Patch106: opt-config-file-url.patch
 
-#Patch900: yum-C4-3.2.8-allowrun.patch
-Patch900: yum-C4-3.2.8-allowrun4.patch
+# Python-2.* is just too sucky to enable this
+Patch104: yum-i18n-off.patch
+
+# Minor post 3.2.19 release changes (probably almost 3.2.20)
+Patch105: yum-exclude-arch-obs.patch
+Patch106: yum-configparser-compat.patch
+Patch107: yum-search-full-arch.patch
+Patch108: yum-rm-only-ts.patch
+Patch109: yum-install-single-provider.patch
+Patch110: yum-total-download-cb-log.patch
+Patch111: yum-complete-trans-warn.patch
+Patch112: yum-large-patterns-speed-fix.patch
+Patch113: yum-includepkgs-speed-fix.patch
+Patch114: yum-loaded-plugins-ui.patch
+Patch115: yum-dynamic-columns-ui.patch
+Patch116: yum-check-signals-exit.patch
+Patch117: yum-wrap-rpm-callbacks.patch
+Patch118: yum-rpm-no-progress-quiet.patch
+Patch119: yum-timestamp_check.patch
+Patch120: yum-shell-repo-manpage.patch
+Patch121: yum-shell-rm+inst.patch
+Patch122: yum-i18n-info.patch
 
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
 BuildRequires: python
 BuildRequires: gettext
+BuildRequires: intltool
 Conflicts: pirut < 1.1.4
-#Requires: python >= 2.4, rpm-python, rpm >= 0:4.4.2
+Requires: python >= 2.4, rpm-python, rpm >= 0:4.4.2
 Requires: python-iniparse
 Requires: python-sqlite
-#Requires: urlgrabber >= 3.1.0
-Requires: urlgrabber
+Requires: urlgrabber >= 3.1.0
 Requires: python-elementtree
 Requires: yum-fastestmirror
 # Make sure metadata code is updated too
 Requires: yum-metadata-parser >= 1.1.0
 Conflicts: yum-rhn-plugin < 0.5.2-1.el5
-Obsoletes: yum-repolist
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Obsoletes: yum-skip-broken
+Conflicts: yum-skip-broken
+Obsoletes: yum-basearchonly
+Obsoletes: yum-repolist
+Conflicts: yum-basearchonly
+# yum-complete-transaction from 1.1.10-9.el5 has problems:
+Conflicts: yum-utils < 1.1.16-11
+# We don't require this in RHEL, although it'll use it if you have it
+# suggests would be ok, if it worked and if pygpgme wasn't in EPEL :).
+# Requires: pygpgme
 
 %description
 Yum is a utility that can check for and automatically download and
@@ -85,52 +99,40 @@ can notify you when they are available via email, syslog or dbus.
 %prep
 %setup -q
 
-%patch0 -p0 -b .installonly
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
 
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-
-%patch101 -p1
 %patch102 -p1
 %patch103 -p1
+
 %patch104 -p1
+
 %patch105 -p1
 %patch106 -p1
-
-%patch900 -p1
-
-#sed -i '/\[catchSqliteException\]/{N; s/:$/:\n        pass/}'  yum/sqlitesack.py
-sed -i -e 's/@catchSqliteException/\[catchSqliteException\]/g' -e '/\[catchSqliteException\]/{N; s/:\s*$/:\n        pass/}' yum/sqlitesack.py
-
-# test python 2.3 compat
-#sed 's/self.assertFalse/self.failIf/g' test/packagetests.py -i
-#sed 's/self.assertTrue/self.failUnless/g' test/packagetests.py -i
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+%patch116 -p1
+%patch117 -p1
+%patch118 -p1
+%patch119 -p1
+%patch120 -p1
+%patch121 -p1
+%patch122 -p1
 
 %build
 make
-#make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
+[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install
 install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/etc/yum.conf
 
@@ -147,10 +149,14 @@ rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/dbus-1/system.d/yum-updatesd.conf
 rm -f $RPM_BUILD_ROOT/%{_sbindir}/yum-updatesd
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man*/yum-updatesd*
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+rm -f $RPM_BUILD_ROOT/%{_datadir}/yum-cli/yumupd.py*
 
-%files
+%find_lang %name
+
+%clean
+[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
+
+%files -f %{name}.lang
 %defattr(-, root, root, -)
 %doc README AUTHORS COPYING TODO INSTALL ChangeLog
 %config(noreplace) %{_sysconfdir}/yum.conf
@@ -170,42 +176,90 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/yum/pluginconf.d 
 %dir /usr/lib/yum-plugins
 
-%post
-find /var/cache/yum/ -name '*.sqlite' -o -name '*.sqlite.bz2' | xargs rm
-
 %changelog
-* Thu Jul  9  2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.5
-- patch bug fix
+* Thu Jan 22 2009 Karanbir Singh <kbsingh@centos.org> - 3.2.19-18.el5.centos
+- Make yum require fastestmirror
+- Obsolete for yum-repolist ( no longer needed )
 
-* Thu Jul  9  2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.4
-- major improvements
-- better Set import
-- resolved finally @staticmethod
-- make tests python 2.3 compatible
-- passes all tests
+* Tue Nov 25 2008 James Antill <jantill@redhat.com> - 3.2.19-18
+- Fix utf8 in redhat-logos license
+- Resolves: rhbz#472375
 
-* Thu Mar  4 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.3
-- Improved @catchSqliteException
-- Solved sqlite location_base error
+* Mon Nov 10 2008 James Antill <jantill@redhat.com> - 3.2.19-16
+- Fix ia64 multilib for RHEL-5
+- Resolves: rhbz#469271
 
-* Wed Mar  4 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.2
-- Resolves urlgrubber
+* Tue Oct 28 2008 James Antill <jantill@redhat.com> - 3.2.19-14
+- Fix yum shell when doing remove commands first.
+- Resolves: rhbz#468754
 
-* Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1.1
-- Patch to work on C4
+* Thu Oct 23 2008 James Antill <jantill@redhat.com> - 3.2.19-13
+- Add the timestamp_check option, so we can have repoids to random stuff
+- Resolves: rhbz#466176
+- Fix yum shell man page for repo command.
+- Resolves: rhbz#467415
+- Resolves: rhbz#454882
 
-* Tue Mar  3 2009 David Hrbáč <david@hrbac.cz> - 3.2.8-9.el4.hrb.2.1
-- initial rebuild
-- drop python >= 2.4, rpm-python, rpm >= 0:4.4.2
+* Thu Oct 16 2008 James Antill <jantill@redhat.com> - 3.2.19-11
+- Don't show rpm progress when in super quiet mode
+- Resolves: rhbz#466911
+- Resolves: rhbz#454882
 
-* Sat Jun 21 2008 Karanbir Singh <kbsingh@centos.org> - 3.2.8-9.el5.centos.2.1
-- Roll in CentOS changes
-- make yum require yum-fastestmirror
-- make yum obsolete yum-repolist 
+* Mon Sep 29 2008 James Antill <jantill@redhat.com> - 3.2.19-10
+- Fix/hide exceptions on rpm callbacks, to make rpm happier.
+- Resolves: rhbz#463447
+- Resolves: rhbz#454882
 
-* Mon Mar 24 2008 James Antill <jantill@redhat.com> - 3.2.8-9{?dist}.1
+* Fri Sep 19 2008 James Antill <jantill@redhat.com> - 3.2.19-9
+- Fix typo in checkSignals, we rpm has got a signal.
+- Resolves: rhbz#462784
+- Resolves: rhbz#454882
+
+* Tue Sep 16 2008 James Antill <jantill@redhat.com> - 3.2.19-8
+- Allow yum remove to work without downloading pkgSack MD.
+- Only install a single package from a provider.
+- Fix total download cb to use the logger.
+- Add incomplete transactions warning.
+- Speed fix for large patterns (notably large package name excludes).
+- Speed fix for includepkgs.
+- UI tweak for loaded plugins line.
+- Dynamic columns support and list/groupinfo-v changes to use it.
+- Add conflicts as well as obsoletes, so you can't reinstall skip-broken.
+- Resolves: rhbz#462086
+- Resolves: rhbz#454882
+
+* Fri Aug 29 2008 James Antill <jantill@redhat.com> - 3.2.19-6
+- Fix list searches for name.arch
+- Resolves: rhbz#454882
+
+* Thu Aug 28 2008 James Antill <jantill@redhat.com> - 3.2.19-5
+- Fix minor API gitch in 3.2.19
+- Obsolete yum-skip-broken, so it auto goes away on update
+- Resolves: rhbz#454882
+
+* Wed Aug 27 2008 James Antill <jantill@redhat.com> - 3.2.19-4
+- Fix minor API gitch in 3.2.19
+- Resolves: rhbz#454882
+
+* Tue Aug 26 2008 James Antill <jantill@redhat.com> - 3.2.19-2
+- Import next upstream 3.2.19.
+- What will be in Fedora 9 soon.
+- Resolves: rhbz#454882
+
+* Wed Aug  6 2008 James Antill <jantill@redhat.com> - 3.2.17-0_beta_18_2
+- Import next upstream 3.2.18 beta.
+- What will be in Fedora 9 soon.
+- Lots of bug fixes, changes for gpgcheck/repo_gpgcheck/update-minimal/etc.
+- Resolves: rhbz#454882
+
+* Mon Jul 21 2008 James Antill <jantill@redhat.com> - 3.2.17-0_beta_18_1
+- Import upstream 3.2.18 beta.
+- What will be in Fedora 9 soon.
+- Resolves: rhbz#454882
+
+* Mon Mar 24 2008 James Antill <jantill@redhat.com> - 3.2.8-10
 - Allow URLs to work as arguments to -c (config. file)
-- Resolves: rhbz#447398
+- Resolves: rhbz#447271
 
 * Mon Mar 24 2008 James Antill <jantill@redhat.com> - 3.2.8-9
 - Minor man page fix
