@@ -49,13 +49,16 @@ Patch120: yum-shell-repo-manpage.patch
 Patch121: yum-shell-rm+inst.patch
 Patch122: yum-i18n-info.patch
 
+Patch900: yum-C4-3.2.19-allowrun.patch
+
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
 BuildRequires: python
 BuildRequires: gettext
 BuildRequires: intltool
 Conflicts: pirut < 1.1.4
-Requires: python >= 2.4, rpm-python, rpm >= 0:4.4.2
+#Requires: python >= 2.4, rpm-python, rpm >= 0:4.4.2
+Requires: python, rpm-python, rpm
 Requires: python-iniparse
 Requires: python-sqlite
 Requires: urlgrabber >= 3.1.0
@@ -128,6 +131,8 @@ can notify you when they are available via email, syslog or dbus.
 %patch121 -p1
 %patch122 -p1
 
+%patch900 -p1
+
 %build
 make
 
@@ -177,6 +182,10 @@ rm -f $RPM_BUILD_ROOT/%{_datadir}/yum-cli/yumupd.py*
 %dir /usr/lib/yum-plugins
 
 %changelog
+* Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.2.1
+- initial rebuild
+- drop python >= 2.4, rpm-python, rpm >= 0:4.4.2
+
 * Thu Jan 22 2009 Karanbir Singh <kbsingh@centos.org> - 3.2.19-18.el5.centos
 - Make yum require fastestmirror
 - Obsolete for yum-repolist ( no longer needed )
