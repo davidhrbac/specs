@@ -30,10 +30,13 @@ Patch6: subversion-1.6.0-pie.patch
 Patch7: subversion-1.1.3-java.patch
 Patch8: subversion-1.6.2-kwallet.patch
 BuildRequires: autoconf, libtool, python, python-devel, texinfo, which
-BuildRequires: db4-devel >= 4.1.25, swig >= 1.3.24, gettext
-BuildRequires: apr-devel >= 1.3.0, apr-util-devel >= 1.3.0
+#BuildRequires: db4-devel >= 4.1.25, swig >= 1.3.24, gettext
+BuildRequires: db4-devel, swig, gettext
+#BuildRequires: apr-devel >= 1.3.0, apr-util-devel >= 1.3.0
+BuildRequires: apr-devel, apr-util-devel
 BuildRequires: neon-devel >= 0:0.24.7-1, cyrus-sasl-devel
-BuildRequires: sqlite-devel >= 3.4.0
+#BuildRequires: sqlite-devel >= 3.4.0
+BuildRequires: sqlite-devel
 BuildRequires: gnome-keyring-devel, dbus-devel, kdelibs-devel >= 4.0.0
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Provides: svn = %{version}-%{release}
@@ -94,7 +97,8 @@ using HTTP, via the Apache httpd server.
 %package perl
 Group: Development/Libraries
 Summary: Perl bindings to the Subversion libraries
-BuildRequires: perl-devel >= 2:5.8.0, perl(ExtUtils::MakeMaker)
+#BuildRequires: perl-devel >= 2:5.8.0, perl(ExtUtils::MakeMaker)
+BuildRequires: perl(ExtUtils::MakeMaker)
 BuildRequires: perl(Test::More), perl(ExtUtils::Embed)
 Requires: %(eval `perl -V:version`; echo "perl(:MODULE_COMPAT_$version)")
 Requires: subversion = %{version}-%{release}
@@ -116,7 +120,8 @@ This package includes the JNI bindings to the Subversion libraries.
 %package ruby
 Group: Development/Libraries
 Summary: Ruby bindings to the Subversion libraries
-BuildRequires: ruby-devel >= 1.8.2, ruby >= 1.8.2
+#BuildRequires: ruby-devel >= 1.8.2, ruby >= 1.8.2
+BuildRequires: ruby-devel, ruby
 Requires: subversion = %{version}-%{release}, ruby-libs >= 1.8.2
 Requires: ruby(abi) = 1.8
 
