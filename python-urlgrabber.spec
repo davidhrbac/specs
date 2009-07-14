@@ -3,7 +3,7 @@
 Summary: A high-level cross-protocol url-grabber
 Name: python-urlgrabber
 Version: 3.1.0
-Release: 5%{?dist}
+Release: 5%{?dist}.1
 Source0: urlgrabber-%{version}.tar.gz
 Patch0: urlgrabber-keepalive.patch
 Patch1: urlgrabber-string-type.patch
@@ -18,7 +18,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildArch: noarch
 Url: http://linux.duke.edu/projects/urlgrabber/
 Provides: urlgrabber = %{version}-%{release}
-Requires: m2crypto >= 0.16-5
+#Requires: m2crypto >= 0.16-5
 
 %description
 A high-level cross-protocol url-grabber for python supporting HTTP, FTP 
@@ -54,7 +54,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/urlgrabber
 
 %changelog
-* Thu Jul 14 2009 David Hrbáč <david@hrbac.cz>  - 3.1.0-5
+* Tue Jul 14 2009 David Hrbáč <david@hrbac.cz>  - 3.1.0-5.el4.hrb.1
+- drop requires m2crypto
+
+* Tue Jul 14 2009 David Hrbáč <david@hrbac.cz>  - 3.1.0-5
 - initial rebuild
 
 * Wed Nov 12 2008 James Antill <jantill@redhat.com> - 3.1.0-5

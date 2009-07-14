@@ -3,13 +3,14 @@
 Summary: Support for using OpenSSL in python scripts
 Name: m2crypto
 Version: 0.16
-Release: 6%{?dist}.2
+Release: 6.el5.3
 Source0: http://wiki.osafoundation.org/pub/Projects/MeTooCrypto/m2crypto-%{version}.tar.gz
 Patch0: m2crypto-0.16-m2urllib2.patch
 Patch1: m2crypto-0.16-proxy-connect.patch
 Patch2: m2crypto-0.16-timeouts.patch
 Patch3: m2crypto-0.16-connect-host.patch
 Patch4: m2crypto-0.16-multisubject.patch
+Patch5: m2crypto-0.16-proxy-ua.patch
 License: BSDish
 Group: System Environment/Libraries
 URL: http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto
@@ -28,6 +29,7 @@ This package allows you to call OpenSSL functions from python scripts.
 %patch2 -p1
 %patch3 -p1 -b .connect-host
 %patch4 -p1 -b .multisubject
+%patch5 -p1 -b .proxy-ua
 
 # Red Hat opensslconf.h #includes an architecture-specific file, but SWIG
 # doesn't follow the #include.
@@ -77,6 +79,13 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitearch}/M2Crypto
 
 %changelog
+* Thu Jul 14 2009 David Hrbáč <david@hrbac.cz> - 0.16-6.el4.hrb.3
+- initial rebuild
+
+* Thu Aug 28 2008 Miloslav Trmač <mitr@redhat.com> - 0.16-6.el5.3
+- Use User-Agent in HTTP proxy CONNECT requests
+  Resolves: #448858
+
 * Fri Jan  4 2008 Miloslav Trmač <mitr@redhat.com> - 0.16-6.el5.2
 - Send the Host: header when using a HTTP/1.1 proxy for https (patch by Karl
   Grindley)
