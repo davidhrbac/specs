@@ -3,16 +3,21 @@
 Summary: A high-level cross-protocol url-grabber
 Name: python-urlgrabber
 Version: 3.1.0
-Release: 2%{?dist}
+Release: 5%{?dist}
 Source0: urlgrabber-%{version}.tar.gz
 Patch0: urlgrabber-keepalive.patch
-License: LGPL
+Patch1: urlgrabber-string-type.patch
+Patch3: urlgrabber-ftp-port.patch
+Patch4: urlgrabber-progress-ui.patch
+Patch5: urlgrabber-grab-no-range.patch
+Patch6: urlgrabber-no-ssl-ok.patch
+Patch7: urlgrabber-keepalive-shared.patch
+License: LGPLv2+
 Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Prefix: %{_prefix}
 BuildArch: noarch
 Url: http://linux.duke.edu/projects/urlgrabber/
-Provides: urlgrabber
+Provides: urlgrabber = %{version}-%{release}
 Requires: m2crypto >= 0.16-5
 
 %description
@@ -21,13 +26,21 @@ and file locations.  Features include keepalive, byte ranges, throttling,
 authentication, proxies and more.
 
 %prep
-%setup -n urlgrabber-%{version}
+%setup -q -n urlgrabber-%{version}
 %patch0 -p0
+%patch1 -p1
+%patch3 -p0
+%patch4 -p1
+%patch5 -p1
+# RHN always needs SSL, so might as well leave this out
+#patch6 -p1
+%patch7 -p1
 
 %build
 python setup.py build
 
 %install
+rm -rf $RPM_BUILD_ROOT
 python setup.py install -O1 --root=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT/%{_docdir}/urlgrabber-%{version}
 
@@ -35,13 +48,34 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/urlgrabber-%{version}
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %doc ChangeLog LICENSE README TODO
-%dir %{python_sitelib}/urlgrabber
-%{python_sitelib}/urlgrabber/*
+%{python_sitelib}/urlgrabber*
 %{_bindir}/urlgrabber
 
 %changelog
+* Thu Jul 14 2009 David Hrbáč <david@hrbac.cz>  - 3.1.0-5
+- initial rebuild
+
+* Wed Nov 12 2008 James Antill <jantill@redhat.com> - 3.1.0-5
+- Fix keepalive for HTTP.
+- Resolves: rhbz#471224
+
+* Mon Jul 21 2008 James Antill <jantill@redhat.com> - 3.1.0-4
+- Import fixes from Fedora, and UI progress tweaks
+- FTP byterange with specified port
+- reget with HTTP servers that don't support Range
+- Dynamic resizing progress, with totals and visible end state
+- Resolves: rhbz#435156
+- Resolves: rhbz#444085
+- Fedora-Bug: 404211
+- Fedora-Bug: 419241
+- Fedora-Bug: 437197
+
+* Fri Jan 18 2008 James Antill <jantill@redhat.com> - 3.1.0-3
+- fix unicode problems
+- Related: rhbz#384691
+
 * Wed Dec  6 2006 Jeremy Katz <katzj@redhat.com> - 3.1.0-2
 - fix keepalive (#218268)
 

@@ -8,7 +8,7 @@
 Summary: Utilities based around the yum package manager
 Name: yum-utils
 Version: 1.1.16
-Release: 13%{?dist}
+Release: 13%{?dist}.1
 License: GPLv2+
 Group: Development/Tools
 Source: http://linux.duke.edu/yum/download/yum-utils/%{name}-%{version}.tar.gz
@@ -27,10 +27,13 @@ Patch12: yum-list-data-groups-help.patch
 Patch13: yum-utils-timestamp_check.patch
 Patch14: yum-complete-trans-import.patch
 Patch15: yum-utils-changelog-no-datetime.patch
+
+Patch99: yum-utils-C4-1.1.16-allowrun.path
+
 URL: http://linux.duke.edu/yum/download/yum-utils/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
-Requires: python >= 2.4 , yum >= 3.2.19-16
+Requires: python, yum >= 3.2.19-16
 # yum-3.0.1-5.el5     is the dist-5E             version
 # yum-3.2.8-9.el5     is the dist-5E-U2          version
 # yum-3.2.8-9.el5_2.1 is the dist-5E-U3-fastrack version
@@ -320,6 +323,8 @@ a lot) yum will recheck it's cached data a lot.
 %patch14 -p1
 %patch15 -p1
 
+%patch99 -p1
+
 %install
 rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install
@@ -575,6 +580,10 @@ fi
 /etc/NetworkManager/dispatcher.d/*
 
 %changelog
+* Mon Jun 13 2009 David Hrbáč <david@hrbac.cz> - 1.1.16-13.el4.hrb.1
+- initial rebuild
+- drop python >= 2.4
+
 * Thu Jan 22 2009 Karanbir Singh <kbsingh@centos.org> - 1.1.16-13.el5.centos
 - Enable all plugins
 
