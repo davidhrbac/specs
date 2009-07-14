@@ -79,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitearch}/M2Crypto
 
 %changelog
-* Thu Jul 14 2009 David Hrbáč <david@hrbac.cz> - 0.16-6.el4.hrb.3
+* Tue Jul 14 2009 David Hrbáč <david@hrbac.cz> - 0.16-6.el4.hrb.3
 - initial rebuild
 
 * Thu Aug 28 2008 Miloslav Trmač <mitr@redhat.com> - 0.16-6.el5.3
