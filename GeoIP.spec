@@ -60,7 +60,7 @@ Summary: GeoIP csv to bin file
 Group: System Environment/Libraries
 Version: %{data_stamp}
 Release: %{release}
-Requires: %{name}
+#Requires: %{name}
 
 %description databin
 This package contains the csv file convertet to bin for ipt_geoip.
@@ -70,7 +70,7 @@ Summary: GeoIP csv file
 Group: System Environment/Libraries
 Version: %{data_stamp}
 Release: %{release}
-Requires: %{name}
+#Requires: %{name}
 
 %description datacsv
 This package contains the csv file for GeoIP.
