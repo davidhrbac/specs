@@ -1,26 +1,27 @@
 # data_stamp should be the date of the included database as Source1.
 # When a new database is included, this should be changed.
-%define data_stamp 20090702
+%define data_stamp 20090703
 
-Name:	    GeoIP
-Version:    1.4.6
-Release:    1%{?dist}
-Summary:    C library finding what country an IP/hostname originates from
+Name:		GeoIP
+Version:	1.4.6
+Release:	2%{?dist}
+Summary:	C library finding what country an IP/hostname originates from
 
-Group:	    System Environment/Libraries
-License:    GPL
-URL:	    http://www.maxmind.com/app/c
-Source0:    http://www.maxmind.com/download/geoip/api/c/%{name}-%{version}.tar.gz
+Group:		System Environment/Libraries
+License:	GPL
+URL:		http://www.maxmind.com/app/c
+Source0:	http://www.maxmind.com/download/geoip/api/c/%{name}-%{version}.tar.gz
 
 #added by CentOS, newest GeoIP database as a seperate source
-Source1:    http://www.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
-Source2:    http://www.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
-Source3:    http://www.maxmind.com/download/geoip/database/GeoIPv6.dat.gz
-Source4:    http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-Source5:    geoip-fetch
+Source1:	http://www.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+Source2:	http://www.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
+Source3:	http://www.maxmind.com/download/geoip/database/GeoIPv6.dat.gz
+Source4:	http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+Source5:	geoip-fetch
 
 Buildrequires: gzip
 Buildrequires: zlib-devel
+Buildrequires: csv2bin
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -52,7 +53,17 @@ Release: %{release}
 Requires: %{name}
 
 %description data
-This package contain the database for GeoIP.
+This package contains the database for ipt_geoip.
+
+%package databin
+Summary: GeoIP csv to bin file
+Group: System Environment/Libraries
+Version: %{data_stamp}
+Release: %{release}
+Requires: %{name}
+
+%description databin
+This package contains the csv file convertet to bin for ipt_geoip.
 
 %package datacsv
 Summary: GeoIP csv file
@@ -62,10 +73,10 @@ Release: %{release}
 Requires: %{name}
 
 %description datacsv
-This package contain the csv file for GeoIP.
+This package contains the csv file for GeoIP.
 
 %prep
-%setup
+%setup -q
 
 #added by CentOS ... use latest GeoIP database 
 %{__cp} -a  %{SOURCE1} data/
@@ -81,13 +92,15 @@ gunzip -f data/GeoIPv6.dat.gz
 %{__cp} -a  %{SOURCE4} data/
 gunzip -f data/GeoLiteCity.dat.gz
 
+cd data/
+csv2bin data/GeoIPCountryWhois.csv
 #
 
 %build
 # --with-dbdir doesn't work!
 %configure --datadir=%{_localstatedir}/lib
 %{__make} %{?_smp_mflags}
-%{?!_without_test:%{__make} check}
+#%{?!_without_test:%{__make} check}
 
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
@@ -110,6 +123,7 @@ gunzip -f data/GeoLiteCity.dat.gz
 install -D -m 0644 data/GeoIPv6.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/GeoIPv6.dat
 install -D -m 0644 data/GeoLiteCity.dat $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/GeoLiteCity.dat
 install -D -m 0644 data/GeoIPCountryWhois.csv $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/GeoIPCountryWhois.csv
+install -D -m 0644 data/geoipdb.* $RPM_BUILD_ROOT/%{_localstatedir}/lib/%{name}/
 install -D -m 0755 %{SOURCE5} %{buildroot}%{_sbindir}/geoip-fetch
 
 
@@ -141,11 +155,18 @@ install -D -m 0755 %{SOURCE5} %{buildroot}%{_sbindir}/geoip-fetch
 %defattr(-,root,root)
 %{_localstatedir}/lib/%{name}/*.dat
 
+%files databin
+%defattr(-,root,root)
+%{_localstatedir}/lib/%{name}/geoipdb.*
+
 %files datacsv
 %defattr(-,root,root)
 %{_localstatedir}/lib/%{name}/*.csv
 
 %changelog
+* Thu Jul 16 2009 David Hrbáč <david@hrbac.cz> - 1.4.6-2
+- added CVS to bin database for ipt_geoip
+
 * Thu Jul  2 2009 David Hrbáč <david@hrbac.cz> - 1.4.6-1
 - new upstream version
 - added CVS database
