@@ -9,11 +9,11 @@ Source1:	mod_gnutls.conf
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
-BuildRequires:  gnutls >= 2.4, gnutls-devel >= 2.4, gnutls-utils >= 2.4, apr-devel
+BuildRequires:	gnutls >= 2.4, gnutls-devel >= 2.4, gnutls-utils >= 2.4, apr-devel
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
-Requires:       gnutls >= 2.4
-#Requires:       gnutls >= 2.1, httpd >= 2.0.52
-Requires:       httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
+Requires:	gnutls >= 2.4
+#Requires:	gnutls >= 2.1, httpd >= 2.0.52
+Requires:	httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
 
 %description
 mod_gnutls uses the GnuTLS library to provide SSL v3, TLS 1.0 and TLS 1.1
@@ -40,8 +40,7 @@ install -m755 src/.libs/lib%{name}.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules
 
 # Install the config file and the rsa and dh keys
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
-install -m 644 %{SOURCE1} \
-   $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf
 #install -m 640 data/{dh,rsa}file \
  #  $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf/

@@ -1,11 +1,12 @@
 Summary:	A robust log colorizer
 Name:		ccze
 Version:	0.2.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	GPL
 Group:		Applications/Text
 Source0:	ftp://bonehunter.rulez.org/pub/ccze/stable/%{name}-%{version}.tar.gz
 # Source0-md5:	221966bce7c5f011eca38157241a0432
+Patch0:		ccze-0.2.1-nosegfault-1.patch
 URL:		http://bonehunter.rulez.org/CCZE.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -30,6 +31,7 @@ Header file for CCZE plugins.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__aclocal}
@@ -68,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man7/ccze-plugin.7*
 
 %changelog
+* Tue Jul 14 2009  David Hrbáč <david@hrbac.cz> - 0.2.1-2
+- segfault patch
+
 * Wed Jun 10 2009 David Hrbáč <david@hrbac.cz> - 0.2.1-1
 - initial build
 

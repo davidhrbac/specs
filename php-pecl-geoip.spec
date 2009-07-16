@@ -28,7 +28,7 @@ City, State, Country, Longitude, Latitude, and other information as
 all, such as ISP and connection type.
 
 %prep
-%setup -n %{pecl_name}-%{version}
+%setup -q -n %{pecl_name}-%{version}
 
 
 %build
