@@ -1,12 +1,12 @@
 Name:		gammu
-Version:        1.22.95
+Version:	1.25.05
 Release:        1%{?dist}
 Summary:        Command Line utility to work with mobile phones
 
 Group:          Applications/System
 License:        GPLv2+
 URL:            http://cihar.com/gammu/
-Source0:        ftp://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
+Source0:        http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	autoconf, gettext, cmake
@@ -120,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 17 2009 David Hrbáč <david@hrbac.cz> - 1.25.0-1
+- new upstream release
+
 * Tue Feb 26 2009 David Hrbáč <david@hrbac.cz> - 1.22.95-1
 - Update release.
 
