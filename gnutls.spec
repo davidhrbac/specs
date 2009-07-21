@@ -1,12 +1,16 @@
+%define _with_guile 0
+ 
 Summary: A TLS protocol implementation.
 Name: gnutls
 Version: 2.8.1
 Release: 1%{?dist}
-License: LGPL
+# The libgnutls library is LGPLv2+, utilities and remaining libraries are GPLv3+
+License: GPLv3+ and LGPLv2+
 Group: System Environment/Libraries
 BuildRequires: libgcrypt-devel >= 1.3.1, gettext
-BuildRequires: zlib-devel, readline-devel, libtasn1-devel
-BuildRequires: lzo-devel, libtool, automake
+BuildRequires: zlib-devel, readline-devel
+BuildRequires: libtool, automake
+#BuildRequires: guile-devel
 URL: http://www.gnutls.org/
 Source0: ftp://ftp.gnutls.org/pub/gnutls/%{name}-%{version}.tar.bz2
 #Source1: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.gz.sig
@@ -41,11 +45,19 @@ Requires: %{name} = %{version}-%{release}
 Requires: libgcrypt-devel
 Requires: zlib-devel
 Requires: pkgconfig
+Requires(post): /sbin/install-info
+Requires(preun): /sbin/install-info
 
 %package utils
 Summary: Command line tools for TLS protocol.
 Group: Applications/System
 Requires: %{name} = %{version}-%{release}
+
+%package guile
+Summary: Guile bindings for the GNUTLS library
+Group: Development/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: guile
 
 %description
 GnuTLS is a project that aims to develop a library which provides a secure 
@@ -66,6 +78,12 @@ the proposed standards by the IETF's TLS working group.
 This package contains command line TLS client and server and certificate
 manipulation tools.
 
+%description guile
+GnuTLS is a project that aims to develop a library which provides a secure
+layer, over a reliable transport layer. Currently the GnuTLS library implements
+the proposed standards by the IETF's TLS working group.
+This package contains Guile bindings for the library.
+
 %prep
 %setup -q
 
@@ -75,8 +93,9 @@ done
 
 %build
 #autoreconf
-%configure --with-libtasn1-prefix=%{_prefix} 
-#           --with-included-libcfg
+#%configure --with-libtasn1-prefix=%{_prefix} \
+%configure --with-included-libcfg
+#           --enable-guile
 #           --disable-srp-authentication
 make
 cp lib/COPYING COPYING.LIB
@@ -96,6 +115,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/srptool.1
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/*srp*
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/libguile*.a
 %find_lang libgnutls
 
 cd $RPM_BUILD_ROOT%{_libdir}
@@ -133,6 +153,10 @@ if [ $1 = 0 -a -f %{_infodir}/gnutls.info.gz ]; then
    /sbin/install-info --delete %{_infodir}/gnutls.info.gz %{_infodir}/dir
 fi
 
+%post guile -p /sbin/ldconfig
+
+%postun guile -p /sbin/ldconfig
+
 %files -f libgnutls.lang
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
@@ -156,6 +180,14 @@ fi
 %{_bindir}/gnutls*
 %{_mandir}/man1/*
 %doc doc/certtool.cfg
+
+%if %{_with_guile}
+%files guile
+%defattr(-,root,root,-)
+%{_libdir}/libguile*.so*
+%{_datadir}/guile/site/gnutls
+%{_datadir}/guile/site/gnutls.scm
+%endif
 
 %changelog
 * Mon Jul 20 2009 David Hrbáč <david@hrbac.cz> - 2.8.1-1
