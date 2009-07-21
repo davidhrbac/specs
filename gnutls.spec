@@ -1,16 +1,18 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
-Version: 2.6.6
+Version: 2.8.1
 Release: 1%{?dist}
 License: LGPL
 Group: System Environment/Libraries
 BuildRequires: libgcrypt-devel >= 1.3.1, gettext
-BuildRequires: zlib-devel, readline-devel, libtermcap-devel
+BuildRequires: zlib-devel, readline-devel, libtasn1-devel
+BuildRequires: lzo-devel, libtool, automake
 URL: http://www.gnutls.org/
 Source0: ftp://ftp.gnutls.org/pub/gnutls/%{name}-%{version}.tar.bz2
 #Source1: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.gz.sig
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgcrypt >= 1.3.1
+Source1: libgnutls-config
 
 %if "%{centos_ver}" == "4"
   %ifarch x86_64
@@ -72,8 +74,12 @@ for i in auth_srp_rsa.c auth_srp_sb64.c auth_srp_passwd.c auth_srp.c gnutls_srp.
 done
 
 %build
-%configure
+#autoreconf
+%configure --with-libtasn1-prefix=%{_prefix} 
+#           --with-included-libcfg
+#           --disable-srp-authentication
 make
+cp lib/COPYING COPYING.LIB
 
 %install
 rm -fr $RPM_BUILD_ROOT
@@ -84,13 +90,13 @@ rm -fr $RPM_BUILD_ROOT
 
 rm -f $RPM_BUILD_ROOT%{_bindir}/srptool
 rm -f $RPM_BUILD_ROOT%{_bindir}/gnutls-srpcrypt
-#cp -f %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/libgnutls-config
-#cp -f %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/libgnutls-extra-config
+cp -f %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/libgnutls-config
+cp -f %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/libgnutls-extra-config
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/srptool.1
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/*srp*
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-%find_lang %{name}
+%find_lang libgnutls
 
 cd $RPM_BUILD_ROOT%{_libdir}
 
@@ -127,29 +133,34 @@ if [ $1 = 0 -a -f %{_infodir}/gnutls.info.gz ]; then
    /sbin/install-info --delete %{_infodir}/gnutls.info.gz %{_infodir}/dir
 fi
 
-%files -f %{name}.lang
-%defattr(-,root,root)
+%files -f libgnutls.lang
+%defattr(-,root,root,-)
 %{_libdir}/*.so.*
+%doc COPYING COPYING.LIB README AUTHORS
 
 %files devel
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %{_bindir}/libgnutls*-config
 %{_includedir}/*
 %{_libdir}/*.a
 %{_libdir}/*.so
-%{_datadir}/aclocal/*
+#%{_datadir}/aclocal/*
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
 %{_infodir}/gnutls*
 
 %files utils
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %{_bindir}/certtool
 %{_bindir}/psktool
 %{_bindir}/gnutls*
 %{_mandir}/man1/*
+%doc doc/certtool.cfg
 
 %changelog
+* Mon Jul 20 2009 David Hrbáč <david@hrbac.cz> - 2.8.1-1
+- new upstream version
+
 * Sun Jun 14 2009 David Hrbáč <david@hrbac.cz> - 2.6.6-1
 - new upstream version
 
