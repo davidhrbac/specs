@@ -21,8 +21,8 @@
 Summary: Linux module for time.
 Name:    kmod-time
 
-Version:  
-#Version: %{k2version}
+#Version:  
+Version: %{k2version}
 Release: 0.%{pversion}.%{mysig}
 License: GPL
 Group:   System Environment/Kernel

@@ -92,8 +92,9 @@ gunzip -f data/GeoIPv6.dat.gz
 %{__cp} -a  %{SOURCE4} data/
 gunzip -f data/GeoLiteCity.dat.gz
 
-cd data/
+
 csv2bin data/GeoIPCountryWhois.csv
+%{__cp} -a geoipdb.* data/
 #
 
 %build
