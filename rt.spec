@@ -31,7 +31,7 @@
 %define _use_internal_dependency_generator 0
 Summary: RT is an enterprise-grade issue tracking system
 Name: rt
-Version: 3.4.5
+Version: 3.8.4
 Release: 2
 Group: Applications/Internet
 License: GPL
@@ -41,8 +41,8 @@ Packager: Paulo Matos <paulo.matos@fct.unl.pt>
 Source: http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 BuildRoot: /var/tmp/%{name}-%{version}-root
 BuildArch: noarch
-Patch0: %{name}-%{version}-Makefile.in.patch
-Patch1: %{name}-%{version}-rh-layout.patch
+#Patch0: %{name}-%{version}-Makefile.in.patch
+#Patch1: %{name}-%{version}-rh-layout.patch
 Source1: %{name}-%{version}-modperl1-httpd.conf
 Source2: %{name}-%{version}-modperl2-httpd.conf
 Source3: rt-escalate-tickets.sh
@@ -248,8 +248,8 @@ fi
 # unpack rt-mail-dispatcher
 %setup -D -T -a 5
 
-%patch0 -p1
-%patch1 -p1
+#patch0 -p1
+#patch1 -p1
 
 # bugs
 #%patch5 -p1

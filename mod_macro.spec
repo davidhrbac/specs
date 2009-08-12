@@ -36,10 +36,6 @@ mkdir -p $RPM_BUILD_ROOT%{_libdir}/httpd/modules
 install -m755 %{name}.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules
 install -Dp -m0644 %{name}.conf %{buildroot}%{_sysconfdir}/httpd/conf.d/%{name}.conf
 
-
-# Install the config file
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
-    
 #install %{SOURCE1} README
     
 %clean
