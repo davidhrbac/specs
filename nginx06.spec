@@ -8,8 +8,8 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.7.61
-Release:        1%{?dist}
+Version:        0.6.38
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -181,7 +181,7 @@ fi
 
 
 %changelog
-* Wed Aug 12 2009 David Hrbáč <david@hrbac.cz> - 0.7.61-1
+* Wed Aug 12 2009 David Hrbáč <david@hrbac.cz> - 0.6.38-2
 - new upstream version
 
 * Fri Jun 26 2009 David Hrbáč <david@hrbac.cz> - 0.6.38-1
