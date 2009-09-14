@@ -1,11 +1,11 @@
 Summary:	A backend data gatherer for cacti
 Name:		cacti-spine
-Version:	0.8.7a
+Version:	0.8.7e
 Release:	3.20080923svn%{?dist}
 License:	GPL
 Group:		Applications
-#Source0:	http://www.cacti.net/downloads/spine/%{name}-%{version}.tar.gz
-Source0:        cacti-spine-SVN20080923.tar.gz
+Source0:	http://www.cacti.net/downloads/spine/%{name}-%{version}.tar.gz
+#Source0:        cacti-spine-SVN20080923.tar.gz
 URL:		http://www.cacti.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -25,7 +25,7 @@ replacement for cacti's cmd.php. It is almost 100% compatible with the
 legacy cmd.php processor.
 
 %prep
-%setup -q -n cacti
+%setup -q  
 #%patch0 -p0
 
 %build
