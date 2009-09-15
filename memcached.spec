@@ -2,8 +2,8 @@
 %define selinux_policyver %(sed -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp)
 %define modulename memcached
 
-%define username   memcached
-%define groupname  memcached
+%define username  memcached
+%define groupname memcached
 
 Name:           memcached
 Version:        1.4.1
@@ -22,7 +22,8 @@ Source1:        memcached.sysv
 Source10:       %{modulename}.te
 Source11:       %{modulename}.fc
 Source12:       %{modulename}.if
-
+Patch0:         memcached-test.patch
+Patch1:         memcached-macro.patch
 # Fixes
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -43,6 +44,7 @@ system, generic in nature, but intended for use in speeding up dynamic
 web applications by alleviating database load.
 
 
+%if "%{centos_ver}" == "5"
 %package selinux
 Summary:        SELinux policy module supporting memcached
 Group:          System Environment/Base
@@ -57,6 +59,7 @@ Requires(postun): policycoreutils
 
 %description selinux
 SELinux policy module supporting memcached.
+%endif%
 
 %package devel
 Summary:	Files needed for development using memcached protocol
@@ -68,15 +71,20 @@ memcached binary include files.
 
 %prep
 %setup -q
+%patch0 -p0 -b .test
+%patch1 -p0 -b .macro
+
+%if "%{centos_ver}" == "5"
 mkdir SELinux
 cp -p %{SOURCE10} %{SOURCE11} %{SOURCE12} SELinux/
-
+%endif%
 
 %build
 %configure --enable-threads
 
 make %{?_smp_mflags}
 
+%if "%{centos_ver}" == "5"
 pushd SELinux
 for selinuxvariant in %{selinux_variants}; do
     make NAME=${selinuxvariant} -f /usr/share/selinux/devel/Makefile
@@ -84,7 +92,7 @@ for selinuxvariant in %{selinux_variants}; do
     make NAME=${selinuxvariant} -f /usr/share/selinux/devel/Makefile clean
 done
 popd
-
+%endif%
 
 %check
 # remove failing test that doesn't work in
@@ -117,6 +125,7 @@ EOF
 # pid directory
 mkdir -p %{buildroot}/%{_localstatedir}/run/memcached
 
+%if "%{centos_ver}" == "5"
 # Install SELinux policy modules
 pushd SELinux
 for selinuxvariant in %{selinux_variants}; do
@@ -128,7 +137,7 @@ popd
 
 # Hardlink identical policy module packages together
 /usr/sbin/hardlink -cv %{buildroot}%{_datadir}/selinux
-
+%endif%
 
 %clean
 rm -rf %{buildroot}
@@ -160,7 +169,7 @@ if [ "$1" -ge 1 ]; then
 fi
 exit 0
 
-
+%if "%{centos_ver}" == "5"
 %post selinux
 # Install SELinux policy modules
 for selinuxvariant in %{selinux_variants}
@@ -183,7 +192,7 @@ if [ $1 -eq 0 ]; then
   done
   /sbin/fixfiles -R %{name} restore || :
 fi
-
+%endif%
 
 %files
 %defattr(-,root,root,-)
@@ -196,17 +205,23 @@ fi
 %{_mandir}/man1/memcached.1*
 %{_initrddir}/memcached
 
-
+%if "%{centos_ver}" == "5"
 %files selinux
 %defattr(-,root,root,0755)
 %doc SELinux/*.te SELinux/*.fc SELinux/*.if
 %{_datadir}/selinux/*/%{modulename}.pp
+%endif%
 
 %files devel
 %defattr(-,root,root,0755)
 %{_includedir}/memcached/*
 
 %changelog
+* Mon Sep 14 2009 David Hrbáč <david@hrbac.cz>  - 1.4.1-1
+- initial rebuild
+- patch to tests
+- C5 build patch
+
 * Sat Aug 29 2009 Paul Lindner <lindner@inuus.com> - 1.4.1-1
 - Upgrade to 1.4.1 
 - http://code.google.com/p/memcached/wiki/ReleaseNotes141
