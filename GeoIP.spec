@@ -1,6 +1,6 @@
 # data_stamp should be the date of the included database as Source1.
 # When a new database is included, this should be changed.
-%define data_stamp 20090703
+%define data_stamp %(date +\%Y\%m\%d)
 
 Name:		GeoIP
 Version:	1.4.6
