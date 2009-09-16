@@ -1,10 +1,17 @@
-%{!?__pear: %{expand: %%global __pear %{_bindir}/pear}}
+# default values when new /etc/rpm/macros.pear not present
+%{!?__pear:       %define __pear       %{_bindir}/pear}
+%{!?pear_phpdir:  %define pear_phpdir  %(%{__pear} config-get php_dir  2> /dev/null || echo undefined)}
+%{!?pear_docdir:  %define pear_docdir  %(%{__pear} config-get doc_dir  2> /dev/null || echo undefined)}
+%{!?pear_testdir: %define pear_testdir %(%{__pear} config-get test_dir 2> /dev/null || echo undefined)}
+%{!?pear_datadir: %define pear_datadir %(%{__pear} config-get data_dir 2> /dev/null || echo undefined)}
+%{!?pear_xmldir:  %define pear_xmldir  %{pear_phpdir}/.pkgxml}
+
 %define pear_name wsdl2php
 
 Name:           php-pear-wsdl2php
 Version:        0.2.1
 Release:        1%{?dist}
-Summary:        PHP coding standards enforcement tool
+Summary:        wsdl2php generator tool
 
 Group:          Development/Tools
 License:        BSD
@@ -13,7 +20,7 @@ Source0:        http://downloads.sourceforge.net/project/wsdl2php/wsdl2php/wsdl2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-BuildRequires:  php-pear >= 1:1.4.9-1.2
+BuildRequires:  php-pear
 Requires:       php-pear(PEAR)
 Requires(post): %{__pear}
 Requires(postun): %{__pear}

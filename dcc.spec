@@ -2,8 +2,8 @@
 %define cgibindir %{_datadir}/%{name}/cgi-bin
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
-Version: 1.3.111
-Release: 2%{?dist}
+Version: 1.3.115
+Release: 1%{?dist}
 License: GPL
 Group: Applications/System
 Source0: http://rhyolite.com/src/dcc/old/dcc-%{version}.tar.Z
@@ -67,6 +67,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Tue Sep 15 2009 David Hrbáč <david@hrbac.cz> - 1.3.115-1
+- new upstream version
+
 * Mon Jun 29 2009 David Hrbáč <david@hrbac.cz> - 1.3.111-2
 - correct permissions
 
