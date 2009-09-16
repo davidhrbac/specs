@@ -1,7 +1,7 @@
 Summary:	A backend data gatherer for cacti
 Name:		cacti-spine
 Version:	0.8.7e
-Release:	3.20080923svn%{?dist}
+Release:	1%{?dist}
 License:	GPL
 Group:		Applications
 Source0:	http://www.cacti.net/downloads/spine/%{name}-%{version}.tar.gz
@@ -48,7 +48,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}
 	DESTDIR=$RPM_BUILD_ROOT
 
 #install spine.conf.dist $RPM_BUILD_ROOT%{_sysconfdir}
-mv $RPM_BUILD_ROOT%{_sysconfdir}/spine.conf.dist $RPM_BUILD_ROOT%{_sysconfdir}/spine.conf
+#mv $RPM_BUILD_ROOT%{_sysconfdir}/spine.conf.dist $RPM_BUILD_ROOT%{_sysconfdir}/spine.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
