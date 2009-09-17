@@ -1,6 +1,6 @@
 Name:       pure-ftpd
 Version:    1.0.22
-Release:    3%{?dist}
+Release:    4%{?dist}
 Summary:    Lightweight, fast and secure FTP server
 
 Group:      System Environment/Daemons
@@ -31,11 +31,12 @@ Patch22:    dchannel_enc_tls.diff
 Patch23:    dchannel_enc_parse.diff
 Patch24:    dchannel_enc_xfer.diff
 
+Patch30:    pure-ftpd-1.0.22-geoip.patch
 
 
 Provides:   ftpserver
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  pam-devel, perl, python, libcap-devel
+BuildRequires:  pam-devel, perl, python, libcap-devel, GeoIP-devel
 %{!?_without_ldap:BuildRequires:  openldap-devel}
 %{!?_without_mysql:BuildRequires: mysql-devel}
 %{!?_without_pgsql:BuildRequires: postgresql-devel}
@@ -44,7 +45,7 @@ BuildRequires:  pam-devel, perl, python, libcap-devel
 Requires(post):   chkconfig
 Requires(preun):  chkconfig, initscripts
 Requires(postun): initscripts
-Requires:   logrotate, usermode
+Requires:   logrotate, usermode, GeoIP
 
 
 %description
@@ -79,6 +80,8 @@ Rebuild switches:
 %patch22 -p1 -b .paminclude2
 %patch23 -p1 -b .paminclude3
 %patch24 -p1 -b .paminclude4
+
+%patch30 -p1 -b .geoip
 
 %ifarch x86_64
   perl -pi -e "s|/lib\b|/%{_lib}|g" configure*
@@ -224,6 +227,10 @@ fi
 
 
 %changelog
+* Thu Sep 17 2009 David Hrbáč <david@hrbac.cz> - 1.0.22-4
+- geoip client restriction patch
+- /etc/pure-ftpd/pureftpd-restricted-countries.txt
+
 * Wed Nov 21 2007 David Hrbáč <david@hrbac.cz> - 1.0.22-3.el4.hrb
 - check if make-dummy-cert exists
 
