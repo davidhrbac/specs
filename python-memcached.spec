@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/python_memcached-%{version}-py*.egg-info/
 
 %changelog
+* Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.43-5
+- initial rebuild
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.43-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

@@ -132,6 +132,9 @@ fi
 
 
 %changelog
+* Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 3.0.4-3
+- initial rebuild
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.4-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

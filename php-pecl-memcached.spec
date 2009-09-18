@@ -1,4 +1,5 @@
 %{!?__pecl:     %{expand: %%global __pecl     %{_bindir}/pecl}}
+%{!?php_extdir: %{expand: %%global php_extdir %(php-config --extension-dir)}}
 
 %define pecl_name memcached
 
@@ -15,13 +16,13 @@ Source:       http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # 5.2.10 required to HAVE_JSON enabled
-BuildRequires: php-devel >= 5.2.10, php-pear
+BuildRequires: php-devel, php-pear
 BuildRequires: libmemcached-devel, zlib-devel
 
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 
-Requires:     php-common >= 5.2.10
+Requires:     php-common 
 Requires:     php(zend-abi) = %{php_zend_api}
 Requires:     php(api) = %{php_core_api}
 
@@ -99,6 +100,9 @@ fi
 
 
 %changelog
+* Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.0.0-2
+- initial rebuild
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
