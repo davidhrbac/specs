@@ -7,7 +7,7 @@
 
 Name:           memcached
 Version:        1.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        High Performance, Distributed Memory Object Cache
 
 Group:          System Environment/Daemons
@@ -16,7 +16,7 @@ URL:            http://www.danga.com/memcached/
 Source0:        http://www.danga.com/memcached/dist/%{name}-%{version}.tar.gz
 
 # custom init script
-Source1:        memcached.sysv
+Source1:        memcached.sysv.patched
 
 # SELinux files
 Source10:       %{modulename}.te
@@ -217,6 +217,9 @@ fi
 %{_includedir}/memcached/*
 
 %changelog
+* Fri Sep 18 2009 David Hrbáč <david@hrbac.cz>  - 1.4.1-2
+- patched init script to work
+
 * Mon Sep 14 2009 David Hrbáč <david@hrbac.cz>  - 1.4.1-1
 - initial rebuild
 - patch to tests
