@@ -1,12 +1,13 @@
 %{!?__pecl:     %{expand: %%global __pecl     %{_bindir}/pecl}}
 %{!?php_extdir: %{expand: %%global php_extdir %(php-config --extension-dir)}}
+%global php_apiver  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP API => //p') | tail -1)
 
 %define pecl_name memcached
 
 Summary:      Extension to work with the Memcached caching daemon
 Name:         php-pecl-memcached
 Version:      1.0.0
-Release:      2%{?dist}
+Release:      3%{?dist}
 License:      PHP
 Group:        Development/Languages
 URL:          http://pecl.php.net/package/%{pecl_name}
@@ -23,8 +24,13 @@ Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 
 Requires:     php-common 
+
+%if %{?php_zend_api}0
 Requires:     php(zend-abi) = %{php_zend_api}
 Requires:     php(api) = %{php_core_api}
+%else
+Requires:     php-api = %{php_apiver}
+%endif
 
 Provides:     php-pecl(%{pecl_name}) = %{version}-%{release}
 
@@ -100,6 +106,9 @@ fi
 
 
 %changelog
+* Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.0.0-3
+- sort out dependecy
+
 * Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.0.0-2
 - initial rebuild
 
