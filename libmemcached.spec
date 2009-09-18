@@ -105,6 +105,9 @@ you will need to install %{name}-devel.
 
 
 %changelog
+* Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 0.30-2
+- initial rebuild
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.30-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
