@@ -5,7 +5,7 @@
 %define pecl_name xdebug
 
 Name:           php-pecl-xdebug
-Version:        2.0.3
+Version:        2.0.5
 Release:        1%{?dist}
 Summary:        PECL package for debugging PHP scripts
 
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Sep 20 2009 David Hrbáč <david@hrbac.cz> - 2.0.5-1
+- new upstream version
+
 * Mon Sep  8 2008 David Hrbáč <david@hrbac.cz> - 2.0.3-1
 - new upstream version 
 
