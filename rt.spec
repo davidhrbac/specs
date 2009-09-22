@@ -9,7 +9,7 @@
 # Webserver setup
 %define webusr apache
 %define webgrp apache
-%define rtname rt
+%define rtname apache
 %define rtuid 87
 %define rtgid 87
 
@@ -31,8 +31,8 @@
 %define _use_internal_dependency_generator 0
 Summary: RT is an enterprise-grade issue tracking system
 Name: rt
-Version: 3.8.4
-Release: 2
+Version: 3.6.9
+Release: 1%{?dist}
 Group: Applications/Internet
 License: GPL
 Url: http://www.bestpractical.com/rt/
@@ -197,7 +197,8 @@ Vendor: None
 Summary: RT mail dispatcher account
 Group: Applications/Internet
 Url:     http://www.geert.triple-it.nl/rt_procmail.html
-Requires: rt, procmail, sendmail
+Requires: rt
+#, procmail, sendmail
 
 %description mail-dispatcher
 This is a setup for a RT mail dispatcher using sendmail and procmail.
@@ -389,8 +390,8 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc docs Changelog COPYING README README.Oracle UPGRADING
-%doc rt-mail-dispatcher/README.mail-dispatcher
+%doc docs COPYING README README.Oracle UPGRADING
+#%doc rt-mail-dispatcher/README.mail-dispatcher
 %attr(-,-,rt) /usr/bin/*
 /usr/sbin/*
 %attr(-,-,rt)/usr/lib/rt
@@ -426,62 +427,5 @@ fi
 
 
 %changelog
-* Mon Mar  6 2006 Paulo Matos <paulo.matos@fct.unl.pt>
-- Fixed Copyright tag, now is License;
-- Fixed small issue with group creation;
-* Fri Jan 13 2006 Paulo Matos <paulo.matos@fct.unl.pt>
-- Updated to 3.4.5 
-- Fixed dependencies (mostly DBIx::SearchBuilder and it's subdeps) 
-* Wed Jan 11 2006 Paulo Matos <paulo.matos@fct.unl.pt>
-- After small test period public release
-- Added https configuration to rt.conf
-* Mon Nov 28 2005 Paulo Matos <paulo.matos@fct.unl.pt>
-- Updated httpd.conf for use with modperl>=2.0.0
-* Sun Sep 25 2005 Paulo Matos <paulo.matos@fct.unl.pt>
-- Fixed modperl2 dependency. 
-* Mon Sep 12 2005 Paulo Matos <paulo.matos@fct.unl.pt>
-- Upgraded to version 3.4.4.
-- Fixed rh-layout, Makefile patches.
-- Removed HOWTO from filelist.
-- Removed all bugfix patches, all were incorporated.
-- Built under RHEL 4 environment.
-* Tue Jun 22 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- rollback conditional dependency beteween perl-5.8.1 and perl-CGI-2.92
-  since rpm lacks a 'logical or' on this scope. It caused an erroneus dep
-  of 'or'.
-* Tue May 18 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- Soved dependency problem for perl-CGI under FC1.
-* Sat May  8 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- Added rt-escalate-tickets.sh
-* Wed Apr 28 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- Prepared patch to add feature #5569. Solve conflict
-  with previous patch.
-- Applied updated v2 patch to solve bug #5286.
-- Applied patches to solve bugs #5587 and #5594.
-* Wed Apr 21 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- Set BuildArch to noarch, since rt is arch independent.
-- Added new package mail-dispatcher, so it supports mail
-  addresses in the form:
-         {queuename,queuename-comment}@rt.yourdomain.com
-
-- Applied patches to solve bugs #5135, #5286 and #5401.
-- Prepare for future conditional builds with other DBs.
-* Wed Apr 14 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- added suport for conditionalbuilds:
-  --with <mysql|Pg|Informix>
-  --with <modperl1|modperl2>
-- Changed to work with apache2+mod_perl2
-- patch Makefile.in removed chgrp
-- patch Makefile.in so it use always "mkdir -p" on install tags
-- Fixed local path to /usr/local/rt on RH layout patch
-- Changed everything to 'rt' instead of 'rt3'
-- Now built under WBEL/RHEL 3 environment.
-- Changed to 3.0.10
-* Tue Jan  6 2004 Paulo Matos <paulo.matos@fct.unl.pt>
-- Adapted to 3.0.8
-- renamed RH73 layout to RH, fix corresponding patch and spec
-* Thu Jul 31 2003 Paulo Matos <paulo.matos@fct.unl.pt>
-- Made initial setup for version 3.0.3
-- Added some macros to help make this more portable
-- Built to RedHat 7.3, might work on 7.x
-
+* Mon Sep 21 2009 David Hrbáč <david@hrbac.cz> - 3.6.9-1
+- initial build 
