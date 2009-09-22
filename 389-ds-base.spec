@@ -173,6 +173,9 @@ fi
 %{_libdir}/%{pkgname}/*.so
 
 %changelog
+* Tue Sep 22 2009 David Hrbáč <david@hrbac.cz> - 1.2.2-3
+- initial build
+
 * Tue Sep 08 2009 Nathan Kinder <nkinder@redhat.com> - 1.2.2-3
 - removed BuildRequires for lm_sensors on s390 and s390x
 

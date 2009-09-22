@@ -86,6 +86,9 @@ fi
 %{_libdir}/%{pkgname}/dsgw-cgi-bin
 
 %changelog
+* Tue Sep 22 2009 David Hrbáč <david@hrbac.cz> - 1.1.3-1
+- initial build
+
 * Wed Jun  3 2009 Rich Megginson <rmeggins@redhat.com> - 1.1.3-1
 - bump version to 1.1.3 for fedora package review
 

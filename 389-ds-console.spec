@@ -83,6 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc %{_datadir}/%{pkgname}/manual/en/slapd/help/*.html
                                                                                 
 %changelog
+* Tue Sep 22 2009 David Hrbáč <david@hrbac.cz> - 1.2.0-5
+- initial build
+
 * Wed Aug 12 2009 Rich Megginson <rmeggins@redhat.com> 1.2.0-5
 - final rebuild for 1.2.0 release
 

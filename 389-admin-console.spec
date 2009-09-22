@@ -83,6 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc %{_datadir}/%{pkgname}/manual/en/admin/help/*.html
 
 %changelog
+* Tue Sep 22 2009 David Hrbáč <david@hrbac.cz> - 1.1.4-2
+- initial build
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

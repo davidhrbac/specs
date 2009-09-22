@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE
 
 %changelog
+* Tue Sep 22 2009 David Hrbáč <david@hrbac.cz> - 1.1.3-5
+- initial build
+
 * Wed Aug 12 2009 Rich Megginson <rmeggins@redhat.com> 1.1.3-5
 - added doc subpackages
 
