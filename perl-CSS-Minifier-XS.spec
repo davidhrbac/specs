@@ -34,13 +34,13 @@ not just pure Perl.
 %setup -q -n CSS-Minifier-XS-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
+./Build
 
 %install
 rm -rf %{buildroot}
 
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -48,7 +48,7 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
 %{_fixperms} %{buildroot}/*
 
 %check
-make test
+./Build test
 
 %clean
 rm -rf %{buildroot}
@@ -61,15 +61,5 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*.3*
 
 %changelog
-* Tue Aug 11 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.04-1
-- auto-update to 0.04 (by cpan-spec-update 0.01)
-
-* Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.03-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
-
-* Fri Apr 10 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.03-1
-- update for submission
-
-* Fri Apr 10 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.03-0
-- initial RPM packaging
-- generated with cpan2dist (CPANPLUS::Dist::RPM version 0.0.8)
+* Wed Sep 23 2009 David Hrbáč <david@hrbac.cz> - 0.04-1
+- initial build

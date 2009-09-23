@@ -1,6 +1,6 @@
 Name:       perl-CSS-Minifier 
 Version:    0.01 
-Release:    2%{?dist}
+Release:    1%{?dist}
 # lib/CSS/Minifier.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Libraries
@@ -31,6 +31,7 @@ repeatedly is wasteful.
 
 %prep
 %setup -q -n CSS-Minifier-%{version}
+perl -pi -e "s,5.008006,5.008005,g" Makefile.PL
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -58,13 +59,5 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*.3*
 
 %changelog
-* Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.01-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
-
-* Sat Apr 11 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.01-1
-- update for submission
-
-* Sat Apr 11 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.01-0
-- initial RPM packaging
-- generated with cpan2dist (CPANPLUS::Dist::RPM version 0.0.8)
-
+* Wed Sep 23 2009 David Hrbáč <david@hrbac.cz> - 0.01-1
+- initial build
