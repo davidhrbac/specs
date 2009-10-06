@@ -1,6 +1,6 @@
 Name:           mod_substitute
 Version:        2.2.11
-Release:        1.%{?dist}
+Release:        1%{?dist}
 Summary:        An Apache 2.2 module for substituting content sed style
 Group:          System Environment/Daemons
 License:        Apache License 2.0

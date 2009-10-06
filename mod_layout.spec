@@ -1,6 +1,6 @@
 Name:           mod_layout
 Version:        5.1
-Release:        1.%{?dist}
+Release:        1%{?dist}
 Summary:        Add custom header and/or footers for apache
 
 Group:          System Environment/Libraries

@@ -1,6 +1,6 @@
 Name:           mod_slotlimit
 Version:        1.1
-Release:        1.%{?dist}
+Release:        1%{?dist}
 Summary:        An apache module for managing resources by virtualhost
 Group:          System Environment/Daemons
 License:        GPL

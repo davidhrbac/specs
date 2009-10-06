@@ -1,6 +1,6 @@
 Name:           mod_flvx
 Version:        1.0
-Release:        1.%{?dist}
+Release:        1%{?dist}
 Summary:        An Apache 2.2 module for Flash Video Streaming.
 Group:          System Environment/Daemons
 License:        Apache License 2.0
