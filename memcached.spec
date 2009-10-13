@@ -6,14 +6,15 @@
 %define groupname memcached
 
 Name:           memcached
-Version:        1.4.1
-Release:        2%{?dist}
+Version:        1.4.2
+Release:        1%{?dist}
 Summary:        High Performance, Distributed Memory Object Cache
 
 Group:          System Environment/Daemons
 License:        BSD
 URL:            http://www.danga.com/memcached/
-Source0:        http://www.danga.com/memcached/dist/%{name}-%{version}.tar.gz
+#Source0:        http://www.danga.com/memcached/dist/%{name}-%{version}.tar.gz
+Source0:        http://memcached.googlecode.com/files/%{name}-%{version}.tar.gz
 
 # custom init script
 Source1:        memcached.sysv.patched
@@ -23,7 +24,7 @@ Source10:       %{modulename}.te
 Source11:       %{modulename}.fc
 Source12:       %{modulename}.if
 Patch0:         memcached-test.patch
-Patch1:         memcached-macro.patch
+#Patch1:         memcached-macro.patch
 # Fixes
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -72,7 +73,7 @@ memcached binary include files.
 %prep
 %setup -q
 %patch0 -p0 -b .test
-%patch1 -p0 -b .macro
+#%patch1 -p0 -b .macro
 
 %if "%{centos_ver}" == "5"
 mkdir SELinux
@@ -196,7 +197,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS ChangeLog COPYING NEWS README TODO doc/CONTRIBUTORS doc/*.txt
+%doc AUTHORS ChangeLog COPYING NEWS README doc/CONTRIBUTORS doc/*.txt
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 
 %dir %attr(755,%{username},%{groupname}) %{_localstatedir}/run/memcached
@@ -217,6 +218,9 @@ fi
 %{_includedir}/memcached/*
 
 %changelog
+* Tue Oct 13 2009 David Hrbáč <david@hrbac.cz> - 1.4.2-1
+- new upstream version
+  
 * Fri Sep 18 2009 David Hrbáč <david@hrbac.cz>  - 1.4.1-2
 - patched init script to work
 
