@@ -1,7 +1,7 @@
 Summary: GreenSQL open source database firewall solution.
 Name: greensql-fw
 Version: 1.0.0
-Release: 1
+Release: 1%{dist}
 License: GPL
 Group: Applications/Databases
 URL: http://www.greensql.net/
@@ -35,7 +35,7 @@ matrix as well as blocking known db administrative commands
 
 %prep
 %setup -q
-perl -pi -e "s|<pcre.h>|<pcre\/pcre.h>|g" src/patterns.hpp
+%{?el4: perl -pi -e "s|<pcre.h>|<pcre\/pcre.h>|g" src/patterns.hpp}
 
 %build
 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
