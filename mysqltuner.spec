@@ -1,6 +1,6 @@
 Name:           mysqltuner
-Version:        1.1.0
-Release:        2%{?dist}
+Version:        1.1.1
+Release:        1%{?dist}
 Summary:        MySQL high performance tuning script
 
 Group:          Applications/Databases
@@ -8,7 +8,8 @@ License:        GPLv3+
 URL:            http://mysqltuner.com/
 #ource0:        http://mysqltuner.com/releases/mysqltuner-%{version}.pl
 #ource0:        http://github.com/rackerhacker/MySQLTuner-perl/tarball/master
-Source0:        http://mysqltuner.pl/mysqltuner.pl
+#Source0:        http://mysqltuner.pl/mysqltuner.pl
+Source0:        http://github.com/rackerhacker/MySQLTuner-perl/tree/v%{version}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -45,6 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 07 2009 David Hrbáč <david@hrbac.cz> - 1.1.1-1
+- new upstream version
+
 * Wed Sep 16 2009 David Hrbáč <david@hrbac.cz> - 1.1.0-1
 - new upstream version
 

@@ -1,6 +1,6 @@
 Name:           maatkit
-Version:        2725
-Release:        3%{?dist}
+Version:        4790
+Release:        1%{?dist}
 Summary:        Essential command-line utilities for MySQL
 
 Group:          Applications/Databases
@@ -50,12 +50,17 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING INSTALL Changelog*
 %{_bindir}/*
 %{_mandir}/man1/*.1*
-%{_mandir}/man3/*.3*
-%{perl_vendorlib}/maatkit.pm
-%{perl_vendorlib}/maatkitdsn.pm
+%{perl_vendorlib}/maatkit.pod
+
+#%{_mandir}/man3/*.3*
+#%{perl_vendorlib}/maatkit.pm
+#%{perl_vendorlib}/maatkitdsn.pm
 
 
 %changelog
+* Wed Oct 07 2009 David Hrbáč <david@hrbac.cz> - 4790-1
+- new upstream version
+
 * Tue Sep 22 2009 David Hrbáč <david@hrbac.cz> - 2725-3
 - initial build
 
