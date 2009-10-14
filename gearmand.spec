@@ -11,7 +11,7 @@ Source1:        gearmand.init
 Source2:        gearmand.sysconfig
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  libevent-devel, libmemcached-devel, memcached
+BuildRequires:  libevent-devel, e2fsprogs-devel, libmemcached-devel, memcached
 #BuildRequires:  libevent-devel, libuuid-devel, libmemcached-devel, memcached
 
 %ifnarch ppc64 sparc64
@@ -52,7 +52,8 @@ Development libraries for %{name}
 
 %prep
 %setup -q
-
+perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" configure
+perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" m4/pandora_have_libmemcached.m4
 
 %build
 %ifarch ppc64 sparc64
