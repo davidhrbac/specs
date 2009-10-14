@@ -131,6 +131,9 @@ fi
 
 
 %changelog
+* Wed Oct 14 2009 David Hrbáč <david@hrbac.cz> - 0.9-1
+- initial build
+
 * Fri Jul 31 2009 Ruben Kerkhof <ruben@rubenkerkhof.com> 0.9-1
 - Upstream released new version
 
