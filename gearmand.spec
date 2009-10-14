@@ -11,11 +11,12 @@ Source1:        gearmand.init
 Source2:        gearmand.sysconfig
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  libevent-devel, libuuid-devel, libmemcached-devel, memcached
+BuildRequires:  libevent-devel, libmemcached-devel, memcached
+#BuildRequires:  libevent-devel, libuuid-devel, libmemcached-devel, memcached
 
 %ifnarch ppc64 sparc64
 # no google perftools
-BuildRequires: google-perftools-devel
+#BuildRequires: google-perftools-devel
 %endif
 Requires(pre):   shadow-utils
 Requires(post):  chkconfig
