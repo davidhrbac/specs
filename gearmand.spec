@@ -1,5 +1,5 @@
 Name:           gearmand
-Version:        0.9
+Version:        0.10
 Release:        1%{?dist}
 Summary:        A distributed job system
 
@@ -50,10 +50,12 @@ Group:          Development/Libraries
 Development libraries for %{name}
 
 
+
 %prep
 %setup -q
-perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" configure
-perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" m4/pandora_have_libmemcached.m4
+#perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" configure
+#perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" m4/pandora_have_libmemcached.m4
+perl -pi -e "s|-Wno-attributes||g" configure
 
 %build
 %ifarch ppc64 sparc64
@@ -63,8 +65,8 @@ perl -pi -e "s|memcached_version\(\)|memcached_lib_version\(\)|g" m4/pandora_hav
 %configure --disable-static --enable-tcmalloc
 %endif
 
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 make %{?_smp_mflags}
 
 
@@ -124,6 +126,10 @@ fi
 %{_libdir}/pkgconfig/gearmand.pc
 %{_libdir}/libgearman.so
 %{_mandir}/man3/gearman*.3.gz
+%dir %{_includedir}/libgearman-server
+%{_includedir}/libgearman-server/*.h
+%{_libdir}/libgearman-server.la
+%{_libdir}/libgearman-server.so.0.0.0
 
 %files -n libgearman
 %defattr(-,root,root,-)
@@ -132,6 +138,10 @@ fi
 
 
 %changelog
+* Wed Oct 14 2009 David Hrbáč <david@hrbac.cz> - 0.10-1
+- new upstream version
+- patch to build
+
 * Wed Oct 14 2009 David Hrbáč <david@hrbac.cz> - 0.9-1
 - initial build
 
