@@ -129,7 +129,7 @@ fi
 %dir %{_includedir}/libgearman-server
 %{_includedir}/libgearman-server/*.h
 %{_libdir}/libgearman-server.la
-%{_libdir}/libgearman-server.so.0.0.0
+%{_libdir}/libgearman-server.so*
 
 %files -n libgearman
 %defattr(-,root,root,-)
