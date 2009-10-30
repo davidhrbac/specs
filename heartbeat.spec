@@ -17,7 +17,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:    glib2-devel
 BuildRequires:    iputils
 BuildRequires:    libnet-devel
-BuildRequires:    libtool-ltdl-devel
+#BuildRequires:    libtool-ltdl-devel
 BuildRequires:    net-snmp-devel 
 BuildRequires:    bzip2-devel 
 BuildRequires:    ncurses-devel
@@ -341,6 +341,9 @@ fi
 %{_bindir}/hb_gui
 
 %changelog
+* Fri Oct 30 2009 David Hrbáč <david@hrbac.cz> - 2.1.4-6
+- Rebuild
+
 * Tue Feb 24 2009 Kevin Fenzi <kevin@tummy.com> - 2.1.4-6
 - Remove symlink thats no longer needed. 
 
