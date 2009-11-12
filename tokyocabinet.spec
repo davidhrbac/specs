@@ -70,6 +70,9 @@ rm -rf %{buildroot}
 %doc doc/*
 
 %changelog
+* Wed Nov 11 2009 David Hrbáč <david@hrbac.cz> - 1.4.33-1
+- initial rebuild
+
 * Wed Sep 30 2009 Deji Akingunola <dakingun@gmail.com> - 1.4.33-1
 - Update to 1.4.33
 

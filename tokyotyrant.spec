@@ -134,6 +134,9 @@ fi
 %{_mandir}/man3/t*.gz
 
 %changelog
+* Wed Nov 11 2009 David Hrbáč <david@hrbac.cz> - 1.1.34-1
+- initial rebuild
+
 * Mon Sep 07 2009 Silas Sewell <silas@sewell.ch> - 1.1.34-1
 - Update to 1.1.34
 

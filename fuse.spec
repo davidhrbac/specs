@@ -13,7 +13,7 @@ Source2:        fuse-makedev.d-fuse
 Patch0:         fuse-udev_rules.patch
 Patch1:         fuse-openfix.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires:       kernel >= 2.6.14
+Requires:       kernel
 Requires:       which
 BuildRequires:  libselinux-devel
 
@@ -134,6 +134,9 @@ fi
 %{_includedir}/fuse
 
 %changelog
+* Wed Nov 11 2009 David Hrbáč <david@hrbac.cz> - 2.8.1-1
+- initial rebuild
+
 * Thu Sep 17 2009 Peter Lemenkov <lemenkov@gmail.com> 2.8.1-1
 - Ver. 2.8.1
 
