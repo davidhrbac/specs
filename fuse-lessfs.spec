@@ -1,8 +1,8 @@
 %define real_name lessfs
 Summary:	Lessfs is an inline data deduplicating filesystem
 Name:		fuse-lessfs
-Version:	0.8.2
-Release:	2%{?dist}
+Version:	0.8.3
+Release:	1%{?dist}
 License:	GPLv3
 Group:		Applications/System
 URL:            http://www.lessfs.com
