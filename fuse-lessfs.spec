@@ -53,11 +53,13 @@ rm -rf %{buildroot}
 %{_sbindir}/defrag_lessfs
 %{_sbindir}/lessfsck
 %{_sbindir}/listdb
-%{_mandir}/man1/lessfs.1.gz
+%{_mandir}/man1/lessfs*
 /etc/init.d/lessfs
-/etc/lessfs.cfg
+%config(noreplace) /etc/lessfs.cfg
 
 %changelog
+* Tue Nov 17 2009 David Hrbáč <david@hrbac.cz> - 0.8.3-1
+- new upstream release
 * Mon Nov 16 2009 David Hrbáč <david@hrbac.cz> - 0.8.2-2
 - initial rebuild
 * Wed Nov 11 2009 Pekka Panula <pekka.panula@sofor.fi> - 0.8.2-2

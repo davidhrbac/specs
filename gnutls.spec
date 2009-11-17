@@ -2,7 +2,7 @@
  
 Summary: A TLS protocol implementation.
 Name: gnutls
-Version: 2.8.4
+Version: 2.8.5
 Release: 1%{?dist}
 # The libgnutls library is LGPLv2+, utilities and remaining libraries are GPLv3+
 License: GPLv3+ and LGPLv2+
@@ -190,6 +190,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 17 2009 David Hrbáč <david@hrbac.cz> - 2.8.5-1
+- new upstream version
+
 * Tue Nov 17 2009 David Hrbáč <david@hrbac.cz> - 2.8.4-1
 - new upstream version
 
