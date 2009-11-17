@@ -1,24 +1,27 @@
+%define real_name lessfs
 Summary:	Lessfs is an inline data deduplicating filesystem
-Name:		lessfs
+Name:		fuse-lessfs
 Version:	0.8.2
 Release:	2%{?dist}
 License:	GPLv3
 Group:		Applications/System
 URL:            http://www.lessfs.com
-Source:         http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source:         http://downloads.sourceforge.net/%{real_name}/%{real_name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  tokyocabinet-devel 
 BuildRequires:  openssl-devel
 BuildRequires:  fuse-devel
 BuildRequires:  autoconf
-Packager:	Pekka Panula <pekka.panula@sofor.fi>
 Requires: fuse
+
+Obsoletes: %{real_name} <= %{name}-%{version}
+Provides: %{real_name} = %{name}-%{version}
 
 %description
 Lessfs is an inline data deduplicating filesystem.
 
 %prep
-%setup -q
+%setup -q -n %{real_name}-%{version}
 
 %build
 autoconf
@@ -55,6 +58,8 @@ rm -rf %{buildroot}
 /etc/lessfs.cfg
 
 %changelog
+* Mon Nov 16 2009 David Hrbáč <david@hrbac.cz> - 0.8.2-2
+- initial rebuild
 * Wed Nov 11 2009 Pekka Panula <pekka.panula@sofor.fi> - 0.8.2-2
 - Configure with --with-sha3
 * Tue Nov 10 2009 Pekka Panula <pekka.panula@sofor.fi> - 0.8.2-1
