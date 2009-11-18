@@ -6,7 +6,7 @@
 %define groupname memcached
 
 Name:           memcached
-Version:        1.4.2
+Version:        1.4.3
 Release:        1%{?dist}
 Summary:        High Performance, Distributed Memory Object Cache
 
@@ -218,6 +218,9 @@ fi
 %{_includedir}/memcached/*
 
 %changelog
+* Wed Nov 18 2009 David Hrbáč <david@hrbac.cz> - 1.4.3-1
+- new upstream version
+
 * Tue Oct 13 2009 David Hrbáč <david@hrbac.cz> - 1.4.2-1
 - new upstream version
   
