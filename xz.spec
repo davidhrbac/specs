@@ -3,8 +3,7 @@
 Summary:	LZMA compression utilities
 Name:		xz
 Version:	4.999.9
-#Release:	0.1.beta.%{git_date}git%{?dist}
-Release:	0.1.beta%{?dist}
+Release:	0.1.beta.%{git_date}git%{?dist}
 License:	LGPLv2+
 Group:		Applications/File
 # source created as "make dist" in checked out GIT tree
@@ -108,6 +107,9 @@ rm -rf %{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 18 2009 David Hrbáč <david@hrbac.cz> - 4.999.9-0.1.20091007.beta
+- sync with upstream
+
 * Wed Nov 18 2009 David Hrbáč <david@hrbac.cz> - 4.999.9-0.1.beta
 - initial rebuild
 
