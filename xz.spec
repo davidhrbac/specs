@@ -4,7 +4,7 @@ Summary:	LZMA compression utilities
 Name:		xz
 Version:	4.999.9
 #Release:	0.1.beta.%{git_date}git%{?dist}
-Release:       0.1.beta%{?dist}
+Release:	0.1.beta%{?dist}
 License:	LGPLv2+
 Group:		Applications/File
 # source created as "make dist" in checked out GIT tree
