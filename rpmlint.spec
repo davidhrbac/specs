@@ -1,5 +1,5 @@
 Name:           rpmlint
-Version:        0.90
+Version:        0.92
 Release:        1%{?dist}
 Summary:        Tool for checking common errors in RPM packages
 
@@ -10,39 +10,39 @@ Source0:        http://rpmlint.zarb.org/download/%{name}-%{version}.tar.bz2
 Source1:        %{name}.config
 Source2:        %{name}-CHANGES.package.old
 Source3:        %{name}-etc.config
-# Fedora specific, not upstreamable
-Patch0:         %{name}-0.85-compile.patch
-# From upstream svn
-Patch1:         %{name}-0.85-configs.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-BuildRequires:  python >= 2.2
-BuildRequires:  rpm-python
+BuildRequires:  python >= 2.4
+BuildRequires:  rpm-python >= 4.4
 BuildRequires:  sed >= 3.95
-Requires:       rpm-python
-Requires:       python >= 2.2
+Requires:       rpm-python >= 4.4
+Requires:       python >= 2.4
+# python-magic and python-enchant are actually optional dependencies, but
+# they bring quite desirable features.
+Requires:       python-magic
+Requires:       python-enchant
 Requires:       cpio
 Requires:       binutils
 Requires:       desktop-file-utils
-Requires:       file
+Requires:       gzip
+Requires:       bzip2
+Requires:       xz
 
 %description
 rpmlint is a tool for checking common errors in RPM packages.  Binary
-and source packages can be checked.
+and source packages as well as spec files can be checked.
 
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p0
 sed -i -e /MenuCheck/d Config.py
 install -pm 644 %{SOURCE2} CHANGES.package.old
 install -pm 644 %{SOURCE3} config
 
 
 %build
-make
+make COMPILE_PYC=1
 
 
 %install
@@ -51,6 +51,10 @@ touch rpmlint.pyc rpmlint.pyo # just for the %%exclude to work everywhere
 make install DESTDIR=$RPM_BUILD_ROOT ETCDIR=%{_sysconfdir} MANDIR=%{_mandir} \
   LIBDIR=%{_datadir}/rpmlint BINDIR=%{_bindir}
 install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/rpmlint/config
+
+
+#%check
+#make check
 
 
 %clean
@@ -70,138 +74,71 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Jul 15 2009 David Hrbáč <david@hrbac.cz>  - 0.90-1
-- new upstream version
+* Mon Nov  2 2009 Ville Skyttä <ville.skytta@iki.fi> - 0.92-1
+- Update to 0.92; fixes #528535, and #531102 (partially).
+- Python byte compile patch applied/superseded upstream.
+- Add <lua> to list of valid scriptlet shells.
+- Sync Fedora license list with Wiki revision 1.53.
 
-* Wed Jul 15 2009 David Hrbáč <david@hrbac.cz>  - 0.85-3.1
-- initial rebuild
+* Mon Sep 14 2009 Ville Skyttä <ville.skytta@iki.fi> - 0.91-1
+- Update to 0.91; fixes #513811, #515185, #516492, #519694, and #521630.
+- Add dependencies on gzip, bzip2, and xz.
+- Sync Fedora license list with Wiki revision 1.49.
+- Move pre-2008 %%changelog entries to CHANGES.package.old.
 
-* Thu Feb 05 2009 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.85-3.1
-- Bump release to express relationship with the rawhide version.
-  No other changes.
+* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.90-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
-* Sat Jan 24 2009 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.85-1
-- Sync with Fedora rawhide version 0.85-3, including:
--- Update to upstream version 0.85
--- Apply upstream patch to load all *config from /etc/rpmlint.
-- Sync Fedora license list as Wiki revision 1.34
-- Filter out "filename-too-long-for-joliet" and "symlink-should-be-*"
-   warnings in default config.
+* Mon Jun 29 2009 Ville Skyttä <ville.skytta@iki.fi> - 0.90-1
+- 0.90; fixes #508683.
 
-* Sat Oct  18 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.84-3
+* Sun Jun 21 2009 Ville Skyttä <ville.skytta@iki.fi> - 0.89-1
+- Update to 0.89; fixes #461610, #496735, #496737 (partially), #498107,
+  #491188, and #506957.
+- Sync Fedora license list with Wiki revision 1.44.
+- Parse list of standard users and groups from the setup package's uidgid file.
+
+* Thu Mar 19 2009 Ville Skyttä <ville.skytta@iki.fi> - 0.87-1
+- 0.87; fixes #480664, #483196, #483199, #486748, #488146, #488930, #489118.
+- Sync Fedora license list with Wiki revision 1.38.
+- Configs patch included upstream.
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.85-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Tue Jan 20 2009 Ville Skyttä <ville.skytta@iki.fi>
+- Sync Fedora license list with Wiki revision 1.34.
+- Filter out filename-too-long-for-joliet and symlink-should-be-* warnings in
+  default config.
+
+* Mon Dec 01 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.85-3
+- Rebuild for Python 2.6
+
+* Thu Oct 30 2008 Ville Skyttä <ville.skytta@iki.fi> - 0.85-2
+- Apply upstream patch to load all *config from /etc/rpmlint.
+
+* Thu Oct 23 2008 Ville Skyttä <ville.skytta@iki.fi> - 0.85-1
+- 0.85, fixes #355861, #450011, #455371, #456843, #461421, #461423, #461434.
+- Mute some explicit-lib-dependency false positives (#458290).
+- Sync Fedora license list with Wiki revision 1.19.
+- Dist regex patch applied/superseded upstream.
+
+* Fri Sep 12 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 0.84-3
 - Sync Fedora license list with Wiki revision 1.09
 
-* Wed Sep 10 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.84-2.1
-- rebuild with proper changelog
-
-* Sat Jul 26 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.84-2
+* Sat Jul 26 2008 Ville Skyttä <ville.skytta@iki.fi> - 0.84-2
 - 0.84, fixes #355861, #456304.
 - Sync Fedora license list with Wiki revision "16:08, 18 July 2008".
 - Rediff patches.
 
-* Tue May 27 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.83-1
-- resync, bump release to match
+* Tue May 27 2008 Ville Skyttä <ville.skytta@iki.fi> - 0.83-1
+- 0.83, fixes #237204, #428096, #430206, #433783, #434694, #444441.
+- Fedora licensing patch applied upstream.
+- Move pre-2007 changelog entries to CHANGES.package.old.
+- Sync Fedora license list with Revision 0.88.
 
-* Tue May 27 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.83-0.1
-- Sync with rawhide:
---Tue May 27 2008  Ville Skyttä
---- bump release to 0.83, fixes #237204, #428096, #430206, #433783, #434694, #444441.
---- Fedora licensing patch applied upstream.
---- Move pre-2007 changelog entries to CHANGES.package.old.
--- Tue May 20 2008 Todd Zullinger
---- Sync Fedora license list with Revision 0.83 (Wiki rev 131).
+* Tue May 20 2008 Todd Zullinger <tmz@pobox.com> 
+- Sync Fedora license list with Revision 0.83 (Wiki rev 131).
 
-* Mon Mar  3 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.82-3
-- Sync with rawhide:
--- Sync Fedora license list with Revision 0.69 (Wiki rev 110) (#434690).
-
-* Mon Mar  3 2008 Ville Skyttä <ville.skytta at iki.fi> - 0.82-3
+* Mon Mar  3 2008 Ville Skyttä <ville.skytta@iki.fi> - 0.82-3
 - Sync Fedora license list with Revision 0.69 (Wiki rev 110) (#434690).
-
-* Thu Dec  6 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.82-2
-- Remove leftover "Affero GPL" from last license list sync (Todd Zullinger).
-
-* Thu Dec  6 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.82-1
-* Sun Jan 13 2008 Manuel Wolfshant <wolfy at fedoraproject.org> - 0.82-1
-- Sync with current rawhide:
--- 0.82, fixes #362441, #388881, #399871, #409941.
--- Sync Fedora license list with Revision 0.61 (Wiki rev 98).
--- Remove leftover "Affero GPL" from last license list sync (Todd Zullinger).
-
-* Sat Oct 06 2007 Todd Zullinger <tmz@pobox.com>
-- Sync Fedora license list with Revision 0.55 (Wiki rev 92).
-
-* Tue Sep 11 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.81-2
-- Sync Fedora license list with Wiki rev 90.
-
-* Mon Sep  3 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.81-1
-- 0.81, fixes #239611, #240840, #241471, #244835.
-- Improve Fedora license check (Todd Zullinger).
-- Sync Fedora license list with Wiki rev 87.
-
-* Wed Aug 29 2007 Ville Skyttä <ville.skytta at iki.fi>
-- Sync Fedora license list with Wiki rev 84 (Todd Zullinger).
-
-* Thu Aug 16 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.80-3
-- Sync Fedora license list with Wiki rev 68.
-- Move pre-2006 changelog entries to CHANGES.package.old.
-
-* Tue Jul 31 2007 Tom "spot" Callaway <tcallawa@redhat.com> - 0.80-2
-- new fedora licensing scheme
-
-* Thu May 31 2007 Ville Skyttä <ville.skytta at iki.fi>
-- Filter hardcoded-library-path errors for /lib/udev.
-
-* Thu Apr 12 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.80-1
-- 0.80, fixes #227389, #228645, #233795.
-- Accept "Redistributable, no modification permitted" as a valid license.
-- Filter messages about doc file dependencies on /bin/sh.
-- Add missing dependency on file.
-
-* Fri Feb  2 2007 Ville Skyttä <ville.skytta at iki.fi> - 0.79-1
-- 0.79, fixes #211417, #212491, #214605, #218250, #219068, #220061, #221116,
-  #222585, and #226879.
-- Accept *.elX disttags in default config.
-
-* Sun Oct 15 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.78-2
-- Accumulated bugfixes since 0.78: #209876, #209889, #210110, 210261.
-- Filter messages about gpg-pubkeys for now.
-
-* Sun Sep 24 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.78-1
-- 0.78, fixes #198605, #198616, #198705, #198707, #200032, #206383.
-- /etc/profile.d/* filtering no longer needed.
-
-* Sat Sep 16 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.77-2
-- Filter false positives for /etc/profile.d/* file modes.
-- Ship *.pyc and *.pyo as usual.
-
-* Thu Jun 29 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.77-1
-- 0.77, fixes #194466, #195962, #196008, #196985.
-- Make "disttag" configurable using the DistRegex config file option.
-- Sync standard users and groups with the FC setup package.
-- Disable MenuCheck by default, it's currently Mandriva specific.
-- Use upstream default valid License tag list, fixes #191078.
-- Use upstream default valid Group tag list (dynamically retrieved from
-  the GROUPS file shipped with rpm).
-- Allow /usr/libexec, fixes #195992.
-
-* Tue Apr 11 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.76-1
-- 0.76.
-
-* Mon Mar 27 2006 Ville Skyttä <ville.skytta at iki.fi>
-- Don't pass -T to objdump for *.debug files (#185227).
-- lib64 library path fixes (#185228).
-
-* Wed Mar 15 2006 Ville Skyttä <ville.skytta at iki.fi>
-- Accept zlib License (#185501).
-
-* Tue Feb 28 2006 Ville Skyttä <ville.skytta at iki.fi>
-- Accept Ruby License (#183384) and SIL Open Font License (#176405).
-
-* Sat Feb 18 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.75-1
-- 0.75 + -devel Epoch version check patch from CVS.
-
-* Tue Jan 17 2006 Ville Skyttä <ville.skytta at iki.fi> - 0.71-3
-- Sync with upstream CVS as of 2006-01-15, includes improved versions of
-  most of the earlier patches.
-- Add dependency on binutils.

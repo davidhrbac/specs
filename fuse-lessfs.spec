@@ -7,6 +7,8 @@ License:	GPLv3
 Group:		Applications/System
 URL:            http://www.lessfs.com
 Source:         http://downloads.sourceforge.net/%{real_name}/%{real_name}-%{version}.tar.gz
+Patch0:         lessfs-init.patch
+Patch1:         lessfs-init-4096.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  tokyocabinet-devel 
 BuildRequires:  openssl-devel
@@ -22,6 +24,16 @@ Lessfs is an inline data deduplicating filesystem.
 
 %prep
 %setup -q -n %{real_name}-%{version}
+
+# Fix permissions on ChangeLog
+chmod -x ChangeLog
+
+# For some reason a couple source files are executable.
+chmod -x *.c
+
+# patch for init script
+%patch0
+%patch1
 
 %build
 autoconf
@@ -60,6 +72,9 @@ rm -rf %{buildroot}
 %changelog
 * Tue Nov 17 2009 David Hrbáč <david@hrbac.cz> - 0.8.3-1
 - new upstream release
+- remove x bit on files
+- patch init script to include status
+- patch to use 4096 block
 * Mon Nov 16 2009 David Hrbáč <david@hrbac.cz> - 0.8.2-2
 - initial rebuild
 * Wed Nov 11 2009 Pekka Panula <pekka.panula@sofor.fi> - 0.8.2-2
