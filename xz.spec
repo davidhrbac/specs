@@ -7,8 +7,8 @@ Release:	0.1.beta.%{git_date}git%{?dist}
 License:	LGPLv2+
 Group:		Applications/File
 # source created as "make dist" in checked out GIT tree
-#Source0:	http://tukaani.org/%{name}/%{name}-%{version}beta.%{git_date}git.tar.xz
-Source0:        http://tukaani.org/xz/xz-4.999.9beta.tar.gz
+Source0:	http://tukaani.org/%{name}/%{name}-%{version}beta.%{git_date}git.tar.xz
+#Source0:        http://tukaani.org/xz/xz-4.999.9beta.tar.gz
 URL:		http://tukaani.org/%{name}/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:	%{name}-libs = %{version}-%{release}
