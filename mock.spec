@@ -1,7 +1,7 @@
 # next four lines substituted by autoconf
-%define major 0
-%define minor 9
-%define sub 14
+%define major 1
+%define minor 0
+%define sub 0
 %define extralevel %{nil}
 %define release_name mock
 %define release_version %{major}.%{minor}.%{sub}%{extralevel}
@@ -11,7 +11,7 @@
 Summary: Builds packages inside chroots
 Name: mock
 Version: %{release_version}
-Release: 3%{?dist}
+Release: 1%{?dist}
 License: GPLv2+
 Group: Development/Tools
 Source: https://fedorahosted.org/mock/attachment/wiki/MockTarballs/%{name}-%{version}.tar.gz
@@ -99,6 +99,9 @@ fi
 %attr(02775, root, mock) %dir /var/cache/mock
 
 %changelog
+* Tue Nov 24 2009 David Hrbáč <david@hrbac.cz> - 1.0.0-1
+- new upstream release
+
 * Wed Feb 29 2009 Dennis Gilmore <dennis@ausil.us> - 0.9.14-3
 - add patch defaulting i386 to build i586 on rawhide 
 
