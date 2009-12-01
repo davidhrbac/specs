@@ -1,7 +1,7 @@
 # next four lines substituted by autoconf
 %define major 1
 %define minor 0
-%define sub 0
+%define sub 1
 %define extralevel %{nil}
 %define release_name mock
 %define release_version %{major}.%{minor}.%{sub}%{extralevel}
@@ -99,6 +99,11 @@ fi
 %attr(02775, root, mock) %dir /var/cache/mock
 
 %changelog
+* Tue Dec 01 2009 David Hrbáč <david@hrbac.cz> - 1.0.1-1
+- new upstream release
+- Patch from Paul Howarth to fix intermittent problems generating
+  root cache tarball (BZ# 540997)
+
 * Tue Nov 24 2009 David Hrbáč <david@hrbac.cz> - 1.0.0-1
 - new upstream release
 

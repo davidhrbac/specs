@@ -6,8 +6,8 @@
 
 Summary:      A bytecode compiler
 Name:         php-pecl-%{php_pecl_name}
-Version:      0.8
-Release:      2%{?dist}
+Version:      0.9.1
+Release:      1%{?dist}
 License:      PHP License
 Group:        Development/Languages
 URL:          http://pecl.php.net/package/%{php_pecl_name}
@@ -68,5 +68,8 @@ EOF
 %{php_extdir}/%{php_pecl_name}.so
 
 %changelog
+* Sun Nov 29 2009 David Hrbáč <david@hrbac.cz> - 0.9.1-1
+- new upstream release
+
 * Mon Dec  8 2008 David Hrbáč <david@hrbac.cz> 0.8-2
 - initial spec created for CentOS
