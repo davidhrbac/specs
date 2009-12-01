@@ -3,13 +3,14 @@
 
 Summary: HA monitor built upon LVS, VRRP and service pollers
 Name: keepalived
-Version: 1.1.18
+Version: 1.1.19
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
 URL: http://www.keepalived.org/
 Source: http://www.keepalived.org/software/keepalived-%{version}.tar.gz
 Patch0: keepalived-1.1.14-installmodes.patch
+Patch1: keepalived-1.1.19-fix-ipvs-loading.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires(post): /sbin/chkconfig
 Requires(preun): /sbin/service, /sbin/chkconfig
@@ -38,6 +39,7 @@ healthchecks and LVS directors failover.
 %prep
 %setup -q
 %patch0 -p1 -b .installmodes
+%patch1 -p1 -b .fix-ipvs-loading
 # Fix file mode (600 as of 1.1.13)
 %{__chmod} a+r doc/samples/sample.misccheck.smbcheck.sh
 # Included as doc, so disable its dependencies
@@ -104,6 +106,10 @@ fi
 
 
 %changelog
+* Tue Dec 01 2009 David Hrbáč <david@hrbac.cz> - 1.1.19-1
+- new upstream release
+- Include patch to remove obsolete -k option to modprobe (#528465).
+
 * Tue Dec 01 2009 David Hrbáč <david@hrbac.cz> - 1.1.18-1
 - new upstream release
 
