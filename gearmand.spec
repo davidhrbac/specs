@@ -1,5 +1,5 @@
 Name:           gearmand
-Version:        0.10
+Version:        0.11
 Release:        1%{?dist}
 Summary:        A distributed job system
 
@@ -138,6 +138,9 @@ fi
 
 
 %changelog
+* Wed Dec 02 2009 David Hrbáč <david@hrbac.cz> - 0.11-1
+- new upstream release
+
 * Wed Oct 14 2009 David Hrbáč <david@hrbac.cz> - 0.10-1
 - new upstream version
 - patch to build
