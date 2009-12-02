@@ -1,6 +1,6 @@
 Name:           perl-Cache-Memcached
-Version:        1.26
-Release:        4%{?dist}
+Version:        1.28
+Release:        1%{?dist}
 Summary:        Perl client for memcached
 
 Group:          Development/Libraries
@@ -54,6 +54,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Dec 02 2009 David Hrbáč <david@hrbac.cz> - 1.28-1
+- new upstream release
+
 * Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.26-4
 - initial rebuild
 

@@ -1,8 +1,8 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           python-memcached
-Version:        1.43
-Release:        5%{?dist}
+Version:        1.45
+Release:        1%{?dist}
 Summary:        A Python memcached client library
 
 Group:          Development/Languages
@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/python_memcached-%{version}-py*.egg-info/
 
 %changelog
+* Wed Dec 02 2009 David Hrbáč <david@hrbac.cz> - 1.43-1
+- new upstream release
+
 * Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.43-5
 - initial rebuild
 
