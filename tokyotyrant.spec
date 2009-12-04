@@ -67,7 +67,7 @@ autoconf
 %{__make} DESTDIR=%{buildroot} install
 # Install sysconfig and init files
 %{__install} -p -m 0644 -D %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
-%{__install} -p -m 0755 -D %{SOURCE2} %{buildroot}%{_initddir}/%{name}
+%{__install} -p -m 0755 -D %{SOURCE2} %{buildroot}%{_initrddir}/%{name}
 %{__install} -p -m 0644 -D %{SOURCE3} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -m 0755 -d %{buildroot}%{_localstatedir}/log/%{name}
 %{__install} -p -m 0755 -d %{buildroot}%{_localstatedir}/run/%{name}
@@ -113,7 +113,7 @@ fi
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %{_bindir}/t*
 %{_datadir}/%{name}
-%{_initddir}/%{name}
+%{_initrddir}/%{name}
 %attr(0755,tokyotyrant,tokyotyrant) %dir %{_localstatedir}/log/%{name}
 %attr(0755,tokyotyrant,tokyotyrant) %dir %{_localstatedir}/run/%{name}
 %{_mandir}/man1/t*.gz
