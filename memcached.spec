@@ -12,7 +12,7 @@ Summary:        High Performance, Distributed Memory Object Cache
 
 Group:          System Environment/Daemons
 License:        BSD
-URL:            http://www.danga.com/memcached/
+URL:            http://memcached.org/
 #Source0:        http://www.danga.com/memcached/dist/%{name}-%{version}.tar.gz
 Source0:        http://memcached.googlecode.com/files/%{name}-%{version}.tar.gz
 
