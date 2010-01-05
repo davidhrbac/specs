@@ -6,7 +6,7 @@
 
 Summary:      A bytecode compiler
 Name:         php-pecl-%{php_pecl_name}
-Version:      0.9.1
+Version:      0.9.2
 Release:      1%{?dist}
 License:      PHP License
 Group:        Development/Languages
@@ -68,6 +68,9 @@ EOF
 %{php_extdir}/%{php_pecl_name}.so
 
 %changelog
+* Tue Jan 05 2010 David Hrbáč <david@hrbac.cz> - 0.9.2-1
+- new upstream release
+
 * Sun Nov 29 2009 David Hrbáč <david@hrbac.cz> - 0.9.1-1
 - new upstream release
 
