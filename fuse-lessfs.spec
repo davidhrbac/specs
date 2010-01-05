@@ -1,7 +1,7 @@
 %define real_name lessfs
 Summary:	Lessfs is an inline data deduplicating filesystem
 Name:		fuse-lessfs
-Version:	0.8.3
+Version:	0.9.2
 Release:	1%{?dist}
 License:	GPLv3
 Group:		Applications/System
@@ -70,6 +70,12 @@ rm -rf %{buildroot}
 %config(noreplace) /etc/lessfs.cfg
 
 %changelog
+* Tue Jan 05 2010 David Hrbáč <david@hrbac.cz> - 0.9.2-1
+- new upstream release
+
+* Tue Jan 05 2010 David Hrbáč <david@hrbac.cz> - 0.9.0-1
+- new upstream release
+
 * Tue Nov 17 2009 David Hrbáč <david@hrbac.cz> - 0.8.3-1
 - new upstream release
 - remove x bit on files
