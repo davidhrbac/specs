@@ -1,11 +1,11 @@
 Summary:	A modern implementation of a DBM
 Name:		tokyocabinet
-Version:	1.4.33
+Version:	1.4.41
 Release:	1%{?dist}
 License:	LGPLv2+
 Group:		Development/Libraries
-URL:		http://tokyocabinet.sourceforge.net/
-Source:		http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+URL:		http://1978th.net/
+Source:         http://1978th.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		tokyocabinet-fedora.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	pkgconfig zlib-devel bzip2-devel autoconf
@@ -70,6 +70,9 @@ rm -rf %{buildroot}
 %doc doc/*
 
 %changelog
+* Thu Jan 07 2010 David Hrbáč <david@hrbac.cz> - 1.4.41-1
+- new upstream release
+
 * Wed Nov 11 2009 David Hrbáč <david@hrbac.cz> - 1.4.33-1
 - initial rebuild
 
