@@ -31,7 +31,7 @@
 %define _use_internal_dependency_generator 0
 Summary: RT is an enterprise-grade issue tracking system
 Name: rt
-Version: 3.6.9
+Version: 3.6.10
 Release: 1%{?dist}
 Group: Applications/Internet
 License: GPL
