@@ -12,7 +12,6 @@ Group: Development/Languages
 URL: http://blitz.lighttpd.net/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: php
-Provides: php-zend_extension
 BuildRequires: php, php-devel
 BuildRequires: autoconf, automake, libtool
 Source:  http://downloads.sourceforge.net/project/blitz-templates/blitz-templates/%{version}/blitz-%{version}.tar.gz
@@ -22,7 +21,7 @@ Blitzs is extremely fast and powerfull template engine for very big
 internet projects.
 
 %prep
-%setup -n blitz-%{version}
+%setup -q -n blitz-%{version}
 
 %build
 phpize
@@ -41,10 +40,8 @@ phpize
 extension=%{php_pecl_name}.so
 EOF
 
-
 %clean
 %{__rm} -rf %{buildroot}
-
 
 %files
 %defattr(-, root, root, 0755)
