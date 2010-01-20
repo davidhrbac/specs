@@ -5,7 +5,7 @@
 
 Summary: The PHP HTML-embedded scripting language
 Name: php
-Version: 5.2.9
+Version: 5.2.12
 Release: 2%{?dist}
 License: PHP
 Group: Development/Languages
