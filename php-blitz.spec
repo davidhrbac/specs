@@ -1,6 +1,8 @@
 %define php_extdir %(php-config --extension-dir 2>/dev/null || echo %{default_extdir})
 %{!?php_version:%define php_version %(php-config --version 2>/dev/null || echo %{default_version})}
 
+%define php_pecl_name blitz
+
 Summary: Extremely fast and powerfull template engine
 Name: php-blitz
 Version: 0.6.10
@@ -33,7 +35,11 @@ phpize
 %{__make} install INSTALL_ROOT=%{buildroot}
 
 # Drop in the bit of configuration
-#%{__install} -D -m 0644 blitz.ini %{buildroot}%{_sysconfdir}/php.d/blitz.ini
+%{__mkdir_p} %{buildroot}%{_sysconfdir}/php.d
+%{__cat} > %{buildroot}%{_sysconfdir}/php.d/%{php_pecl_name}.ini << 'EOF'
+; Enable %{php_pecl_name} extension module
+extension=%{php_pecl_name}.so
+EOF
 
 
 %clean
@@ -43,8 +49,8 @@ phpize
 %files
 %defattr(-, root, root, 0755)
 #%doc blitz.ini admin/
-#%config(noreplace) %{_sysconfdir}/php.d/blitz.ini
-#%config %{_sysconfdir}/php.d/blitz.ini
+%config(noreplace) %{_sysconfdir}/php.d/%{php_pecl_name}.ini
+%{php_extdir}/%{php_pecl_name}.so
 %{php_extdir}/blitz.so
 
 %changelog
