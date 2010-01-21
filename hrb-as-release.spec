@@ -1,7 +1,7 @@
 Summary: Repository hrb-as release file and package configuration
 Name: hrb-as-release
 Version: 0.1
-Release: 1%{?dist} 
+Release: 2%{?dist} 
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -36,7 +36,7 @@ gpgcheck = 1
 [hrb-as-testing]
 name = hrb-as-test
 #baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-as/testing/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-as
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-testing-hrb-as
 enabled = 0
 protect = 0
 gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -58,5 +58,8 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb-as.repo
 
 %changelog
+* Thu Jan 21 2010 David Hrbáč <david@hrbac.cz> - 0.1-2
+- fixed testing mirrorlist
+
 * Fri Jun 26 2009 David Hrbáč <david@hrbac.cz> - 0.1-1
 - Initial package. 

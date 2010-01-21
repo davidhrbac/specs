@@ -1,7 +1,7 @@
 Summary: Repository hrb-fw release file and package configuration
 Name: hrb-fw-release
 Version: 0.1
-Release: 2%{?dist} 
+Release: 3%{?dist} 
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -36,7 +36,7 @@ gpgcheck = 1
 [hrb-fw-testing]
 name = hrb-fw-test
 #aseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-fw/testing/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-fw
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-testing-hrb-fw
 enabled = 0
 protect = 0
 gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -58,6 +58,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb-fw.repo
 
 %changelog
+* Thu Jan 21 2010 David Hrbáč <david@hrbac.cz> - 0.1-3
+- fixed testing mirrorlist
+
 * Wed May 27 2009 David Hrbáč <david@hrbac.cz> - 0.1-2
 - new mirrors
 

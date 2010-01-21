@@ -1,7 +1,7 @@
 Summary: Repository hrb release file and package configuration
 Name: hrb-release
 Version: 0.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -36,7 +36,7 @@ gpgcheck = 1
 [hrb-testing]
 name = hrb-test
 #baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb/testing/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb
+mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-testing-hrb
 enabled = 0
 protect = 0
 gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
@@ -58,6 +58,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb.repo
 
 %changelog
+* Thu Jan 21 2010 David Hrbáč <david@hrbac.cz> - 0.1-4
+- fixed testing mirrorlist
+
 * Wed May 27 2009 David Hrbáč <david@hrbac.cz> - 0.1-3
 - new mirrors
  
