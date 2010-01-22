@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.19
-Release: 18%{?dist}
+Release: 18%{?dist}.1
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -182,7 +182,10 @@ rm -f $RPM_BUILD_ROOT/%{_datadir}/yum-cli/yumupd.py*
 %dir /usr/lib/yum-plugins
 
 %changelog
-* Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.2.1
+* Fri Jan 22 2010 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.1
+- fixed patch
+
+* Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb
 - initial rebuild
 - drop python >= 2.4, rpm-python, rpm >= 0:4.4.2
 
