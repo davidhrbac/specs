@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.19
-Release: 18%{?dist}.1
+Release: 18%{?dist}.2
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -50,6 +50,7 @@ Patch121: yum-shell-rm+inst.patch
 Patch122: yum-i18n-info.patch
 
 Patch900: yum-C4-3.2.19-allowrun.patch
+Patch901: yum-C4-3.2.19-allowrun2.patch
 
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
@@ -132,6 +133,7 @@ can notify you when they are available via email, syslog or dbus.
 %patch122 -p1
 
 %patch900 -p1
+%patch901 -p1
 
 %build
 make
@@ -182,6 +184,9 @@ rm -f $RPM_BUILD_ROOT/%{_datadir}/yum-cli/yumupd.py*
 %dir /usr/lib/yum-plugins
 
 %changelog
+* Fri Jan 22 2010 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.2
+- better patch
+
 * Fri Jan 22 2010 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.1
 - fixed patch
 
