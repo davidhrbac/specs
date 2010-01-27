@@ -3,7 +3,7 @@
 Summary: RPM installer/updater
 Name: yum
 Version: 3.2.19
-Release: 18%{?dist}.5
+Release: 18%{?dist}.6
 License: GPLv2+
 Group: System Environment/Base
 Source0: http://linux.duke.edu/projects/yum/download/3.2/%{name}-%{version}.tar.gz
@@ -53,6 +53,7 @@ Patch900: yum-C4-3.2.19-allowrun.patch
 Patch901: yum-C4-3.2.19-allowrun2.patch
 Patch902: yum-C4-3.2.19-allowrun3.patch
 Patch903: yum-C4-3.2.19-parse-exit.patch
+Patch904: yum-C4-3.2.19-logrotate.patch
 
 URL: http://linux.duke.edu/yum/
 BuildArchitectures: noarch
@@ -138,6 +139,7 @@ can notify you when they are available via email, syslog or dbus.
 %patch901 -p1
 %patch902 -p1
 %patch903 -p1
+%patch904 -p1
 
 %build
 make
@@ -188,6 +190,9 @@ rm -f $RPM_BUILD_ROOT/%{_datadir}/yum-cli/yumupd.py*
 %dir /usr/lib/yum-plugins
 
 %changelog
+* Wed Jan 27 2010 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.6
+- logrotate script fix
+
 * Fri Jan 22 2010 David Hrbáč <david@hrbac.cz> - 3.2.19-18.el4.hrb.5
 - better parser exit exception handling
 
