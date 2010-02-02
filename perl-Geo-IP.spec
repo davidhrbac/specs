@@ -8,6 +8,8 @@ URL:            http://search.cpan.org/dist/Geo-IP/
 Source0:        http://www.cpan.org/authors/id/B/BO/BORISZ/Geo-IP-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+BuildRequires:  GeoIP-data
+BuildRequires:  GeoIP-devel, GeoIP-data
 
 %description
 This module uses a file based database. This database simply contains IP
