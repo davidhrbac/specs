@@ -1,15 +1,14 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:           python-GeoIP
-Version:        1.2.1
-Release:        12%{?dist}
+Version:        1.2.4
+Release:        1%{?dist}
 Summary:        Python bindings for the GeoIP geographical lookup libraries
 
 Group:          Development/Languages
 License:        GPLv2+
 URL:            http://www.maxmind.com/download/geoip/api/python/
 Source0:        http://www.maxmind.com/download/geoip/api/python/GeoIP-Python-%{version}.tar.gz
-Patch0:		GeoIP-Python-1.2.1-ccodes.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python-devel GeoIP-devel
@@ -20,7 +19,6 @@ location lookups to country, city and organization level within Python code.
 
 %prep
 %setup -q -n GeoIP-Python-%{version}
-%patch0 -p1 -b .ccodes
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -44,6 +42,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 02 2010 David Hrbáč <david@hrbac.cz> - 1.2.4-1
+- new upstream release
+
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 1.2.1-12
 - initial rebuild
 

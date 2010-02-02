@@ -1,7 +1,7 @@
 Summary: GeoIP module for the Apache HTTP Server
 Name: mod_geoip
 Version: 1.2.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Apache Software License
 Group: System Environment/Daemons
 URL: http://www.maxmind.com/app/mod_geoip
@@ -9,6 +9,7 @@ Source: http://www.maxmind.com/download/geoip/api/mod_geoip2/mod_geoip2_%{versio
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires: GeoIP httpd httpd-mmn = %([ -a %{_includedir}/httpd/.mmn ] && cat %{_includedir}/httpd/.mmn || echo missing)
 BuildRequires: httpd-devel GeoIP-devel
+Patch0: mod_geoip-ipv6.patch
 
 %description
 mod_geoip is an Apache module for finding the country that a web request
@@ -18,6 +19,7 @@ the lookup.  It is free software, licensed under the Apache license.
 %prep
 
 %setup -n mod_geoip2_%{version}
+%patch0 -p0
 
 %build
 /usr/sbin/apxs -Wc,"%{optflags}" -Wl,"-lGeoIP" -c mod_geoip.c
@@ -31,7 +33,9 @@ LoadModule geoip_module modules/mod_geoip.so
 
 <IfModule mod_geoip.c>
   GeoIPEnable On
-  GeoIPDBFile /usr/share/GeoIP/GeoIP.dat
+  GeoIPEnableUTF8 On
+  GeoIPDBFile /var/lib/GeoIP/GeoIP.dat
+  GeoIPDBFile /var/lib/GeoIP/GeoIPv6.dat
 </IfModule>
 
 EOF
@@ -46,6 +50,11 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/mod_geoip.conf
 
 %changelog
+* Fri Jan 29 2010 David Hrbáč <david@hrbac.cz> - 1.2.5-2
+- better mod_geoip.conf
+- experimental support for GEOIP_COUNTRY_EDITION_V6
+- experimental support for GeoIPUseLastXForwardedForIP
+
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 1.2.5-1
 - new upstream version
 
