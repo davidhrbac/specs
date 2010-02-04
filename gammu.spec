@@ -1,8 +1,8 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:		gammu
-Version:	1.24.0
-Release:	2%{?dist}
+Version:	1.27.90
+Release:	1%{?dist}
 Summary:	Command Line utility to work with mobile phones
 
 Group:		Applications/System
@@ -108,7 +108,7 @@ mkdir devel_docs
 mkdir -p docs/symbian
 cp -pR $RPM_BUILD_ROOT%{_docdir}/%{name}/devel/* devel_docs
 cp -pR $RPM_BUILD_ROOT%{_docdir}/%{name}/symbian/* docs/symbian
-cp -pR $RPM_BUILD_ROOT%{_docdir}/%{name}/examples/* docs/examples
+#cp -pR $RPM_BUILD_ROOT%{_docdir}/%{name}/examples/* docs/examples
 cp -p $RPM_BUILD_ROOT%{_docdir}/%{name}/*.* .
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 
@@ -155,6 +155,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 04 2010 David Hrbáč <david@hrbac.cz> - 1.27.90-1
+- new upstream release
+
 * Thu May  7 2009 Ville Skyttä <ville.skytta at iki.fi> - 1.24.0-2
 - Build with $RPM_OPT_FLAGS, use %%cmake macro.
 
