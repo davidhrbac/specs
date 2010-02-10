@@ -234,7 +234,7 @@ echo > ../%{name}.lang
 %{__tar} xjf %{SOURCE2}
 for langpack in `ls firefox-langpacks/*.xpi`; do
   language=`basename $langpack .xpi`
-  extensiondir=$RPM_BUILD_ROOT/%{mozappdir}/langpacks/langpack-$language@firefox.mozilla.org
+  extensiondir=$RPM_BUILD_ROOT/%{mozappdir}/extensions/langpack-$language@firefox.mozilla.org
   %{__mkdir_p} $extensiondir
   unzip $langpack -d $extensiondir
   find $extensiondir -type f | xargs chmod 644
