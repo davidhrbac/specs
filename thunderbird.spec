@@ -288,7 +288,7 @@ touch %{name}.lang
 %{__tar} xjf %{SOURCE1}
 for langpack in `ls thunderbird-langpacks/*.xpi`; do
   language=`basename $langpack .xpi`
-  extensiondir=$RPM_BUILD_ROOT%{mozappdir}/langpacks/langpack-$language@thunderbird.mozilla.org
+  extensiondir=$RPM_BUILD_ROOT%{mozappdir}/extensions/langpack-$language@thunderbird.mozilla.org
   %{__mkdir_p} $extensiondir
   unzip $langpack -d $extensiondir
   find $extensiondir -type f | xargs chmod 644
