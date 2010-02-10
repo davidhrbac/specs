@@ -1,4 +1,4 @@
-%define homepage http://start.fedoraproject.org/
+%define homepage http://www.google.com/
 %define default_bookmarks_file %{_datadir}/bookmarks/default-bookmarks.html
 %define firefox_app_id \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 
@@ -59,12 +59,12 @@ Patch1:         mozilla-jemalloc-526152.patch
 
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:  desktop-file-utils
-BuildRequires:  system-bookmarks
+#BuildRequires:  system-bookmarks
 BuildRequires:  xulrunner-devel >= %{xulrunner_version}
 
 Requires:       xulrunner >= %{xulrunner_version}
 Conflicts:      xulrunner >= %{xulrunner_version_max}
-Requires:       system-bookmarks
+#Requires:       system-bookmarks
 Obsoletes:      mozilla <= 37:1.7.13
 Provides:       webclient
 
@@ -107,6 +107,14 @@ sed -e 's/__RPM_VERSION_INTERNAL__/%{internal_version}/' %{P:%%PATCH0} \
 # Set up SDK path
 echo "ac_add_options --with-libxul-sdk=\
 `pkg-config --variable=sdkdir libxul`" >> .mozconfig
+
+sed -i 's/ac_add_options --with-system-nss/#ac_add_options --with-system-nss/' .mozconfig
+sed -i 's/ac_add_options --with-system-nspr/#ac_add_options --with-system-nspr/' .mozconfig
+sed -i 's/ac_add_options --enable-system-hunspell/#ac_add_options --enable-system-hunspell/' .mozconfig
+sed -i 's/ac_add_options --enable-system-sqlite/#ac_add_options --enable-system-sqlite/' .mozconfig
+sed -i 's/ac_add_options --enable-system-cairo/#ac_add_options --enable-system-cairo/' .mozconfig
+
+./configure --disable-system-hunspell --disable-system-sqlite --disable-system-cairo
 
 #---------------------------------------------------------------------
 
@@ -348,6 +356,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 #---------------------------------------------------------------------
 
 %changelog
+* Wed Feb 10 2010 David Hrbáč <david@hrbac.cz> - 3.6.1-1
+- CentOS rebuild
+
 * Wed Jan 18 2010 Martin Stransky <stransky@redhat.com> - 3.6.1-1
 - Update to 3.6
 

@@ -29,6 +29,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/skel/.mozilla
 
 %changelog
+* Wed Feb 10 2010 David Hrbáč <david@hrbac.cz> - 1.9-5
+- CentOS rebuild
+
 * Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

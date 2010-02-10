@@ -45,9 +45,9 @@ Patch100:       mozilla-ps-pdf-simplify-operators.patch
 # ---------------------------------------------------
 
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-BuildRequires:  nspr-devel >= %{nspr_version}
-BuildRequires:  nss-devel >= %{nss_version}
-BuildRequires:  cairo-devel >= %{cairo_version}
+#BuildRequires:  nspr-devel >= %{nspr_version}
+#BuildRequires:  nss-devel >= %{nss_version}
+#BuildRequires:  cairo-devel >= %{cairo_version}
 BuildRequires:  libpng-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  zip
@@ -63,17 +63,17 @@ BuildRequires:  pango-devel
 BuildRequires:  freetype-devel >= %{freetype_version}
 BuildRequires:  libXt-devel
 BuildRequires:  libXrender-devel
-BuildRequires:  hunspell-devel
-BuildRequires:  sqlite-devel >= %{sqlite_version}
+#BuildRequires:  hunspell-devel
+#BuildRequires:  sqlite-devel >= %{sqlite_version}
 BuildRequires:  startup-notification-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  autoconf213
 
 Requires:       mozilla-filesystem
-Requires:       nspr >= %{nspr_version}
-Requires:       nss >= %{nss_version}
-Requires:       sqlite >= %{sqlite_build_version}
+#Requires:       nspr >= %{nspr_version}
+#Requires:       nss >= %{nss_version}
+#Requires:       sqlite >= %{sqlite_build_version}
 Provides:       gecko-libs = %{version}
 
 %description
@@ -89,9 +89,9 @@ Provides: gecko-devel = %{version}
 Provides: gecko-devel-unstable = %{version}
 
 Requires: xulrunner = %{version}-%{release}
-Requires: nspr-devel >= %{nspr_version}
-Requires: nss-devel >= %{nss_version}
-Requires: cairo-devel >= %{cairo_version}
+#Requires: nspr-devel >= %{nspr_version}
+#Requires: nss-devel >= %{nss_version}
+#Requires: cairo-devel >= %{cairo_version}
 Requires: libjpeg-devel
 Requires: zip
 Requires: bzip2-devel
@@ -106,8 +106,8 @@ Requires: pango-devel
 Requires: freetype-devel >= %{freetype_version}
 Requires: libXt-devel
 Requires: libXrender-devel
-Requires: hunspell-devel
-Requires: sqlite-devel
+#Requires: hunspell-devel
+#Requires: sqlite-devel
 Requires: startup-notification-devel
 Requires: alsa-lib-devel
 Requires: libnotify-devel
@@ -141,17 +141,27 @@ sed -e 's/__RPM_VERSION_INTERNAL__/%{version_internal}/' %{P:%%PATCH0} \
 %{__rm} -f .mozconfig
 %{__cp} %{SOURCE10} .mozconfig
 
+sed -i 's/ac_add_options --with-system-nss/#ac_add_options --with-system-nss/' .mozconfig
+sed -i 's/ac_add_options --with-system-nspr/#ac_add_options --with-system-nspr/' .mozconfig
+sed -i 's/ac_add_options --enable-system-hunspell/#ac_add_options --enable-system-hunspell/' .mozconfig
+sed -i 's/ac_add_options --enable-system-sqlite/#ac_add_options --enable-system-sqlite/' .mozconfig
+sed -i 's/ac_add_options --enable-system-cairo/#ac_add_options --enable-system-cairo/' .mozconfig
+
+./configure --disable-system-hunspell --disable-system-sqlite --disable-system-cairo
+sed -i 's/ac_add_options --with-system-nss/#ac_add_options --with-system-nss/' .mozconfig
+sed -i 's/ac_add_options --with-system-nspr/#ac_add_options --with-system-nspr/' .mozconfig
+
 #---------------------------------------------------------------------
 
 %build
-# Do not proceed with build if the sqlite require would be broken:
-# make sure the minimum requirement is non-empty, ...
-sqlite_version=$(expr "%{sqlite_version}" : '\([0-9]*\.\)[0-9]*\.') || exit 1
-# ... and that major number of the computed build-time version matches:
-case "%{sqlite_build_version}" in
-  "$sqlite_version"*) ;;
-  *) exit 1 ;;
-esac
+## Do not proceed with build if the sqlite require would be broken:
+## make sure the minimum requirement is non-empty, ...
+#sqlite_version=$(expr "%{sqlite_version}" : '\([0-9]*\.\)[0-9]*\.') || exit 1
+## ... and that major number of the computed build-time version matches:
+#case "%{sqlite_build_version}" in
+#  "$sqlite_version"*) ;;
+#  *) exit 1 ;;
+#esac
 
 cd %{tarballdir}
 
@@ -322,8 +332,8 @@ EOF
 %{__install} -p -c -m 644 LICENSE $RPM_BUILD_ROOT${MOZ_APP_DIR}
 
 # Use the system hunspell dictionaries
-%{__rm} -rf ${RPM_BUILD_ROOT}${MOZ_APP_DIR}/dictionaries
-ln -s %{_datadir}/myspell ${RPM_BUILD_ROOT}${MOZ_APP_DIR}/dictionaries
+#%{__rm} -rf ${RPM_BUILD_ROOT}${MOZ_APP_DIR}/dictionaries
+#ln -s %{_datadir}/myspell ${RPM_BUILD_ROOT}${MOZ_APP_DIR}/dictionaries
 
 # ghost files
 %{__mkdir_p} $RPM_BUILD_ROOT${MOZ_APP_DIR}/components
@@ -382,6 +392,7 @@ fi
 %{mozappdir}/platform.ini
 %{mozappdir}/dependentlibs.list
 %{_sysconfdir}/ld.so.conf.d/xulrunner*.conf
+%{_libdir}/%{name}*%{version_internal}/*
 
 # XXX See if these are needed still
 %{mozappdir}/updater*
@@ -406,6 +417,9 @@ fi
 #---------------------------------------------------------------------
 
 %changelog
+* Wed Feb 10 2010 David Hrbáč <david@hrbac.cz> - 1.9.2.1-1
+- CentOS rebuild
+
 * Fri Jan 22 2010 Martin Stransky <stransky@redhat.com> 1.9.2.1-1
 - Update to 1.9.2.1
 

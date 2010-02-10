@@ -50,6 +50,7 @@ Patch1:         mozilla-jemalloc.patch
 Patch2:         thunderbird-shared-error.patch
 Patch3:         thunderbird-debuginfo-fix-include.patch
 Patch4:         thunderbird-clipboard-crash.patch
+Patch99:         thunderbird-3.0.1-g_strcmp0.patch
 
 %if %{official_branding}
 # Required by Mozilla Corporation
@@ -63,9 +64,9 @@ Patch4:         thunderbird-clipboard-crash.patch
 
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  nspr-devel >= %{nspr_version}
-BuildRequires:  nss-devel >= %{nss_version}
-BuildRequires:  cairo-devel >= %{cairo_version}
+#BuildRequires:  nspr-devel >= %{nspr_version}
+#BuildRequires:  nss-devel >= %{nss_version}
+#BuildRequires:  cairo-devel >= %{cairo_version}
 BuildRequires:  libpng-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  zip
@@ -81,17 +82,17 @@ BuildRequires:  pango-devel
 BuildRequires:  freetype-devel >= %{freetype_version}
 BuildRequires:  libXt-devel
 BuildRequires:  libXrender-devel
-BuildRequires:  hunspell-devel
-BuildRequires:  sqlite-devel >= %{sqlite_version}
+#BuildRequires:  hunspell-devel
+#BuildRequires:  sqlite-devel >= %{sqlite_version}
 BuildRequires:  startup-notification-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  autoconf213
 BuildRequires:  desktop-file-utils
 
 Requires:       mozilla-filesystem
-Requires:       nspr >= %{nspr_version}
-Requires:       nss >= %{nss_version}
-Requires:       sqlite >= %{sqlite_version}
+#Requires:       nspr >= %{nspr_version}
+#Requires:       nss >= %{nss_version}
+#Requires:       sqlite >= %{sqlite_version}
 
 AutoProv: 0
 %define _use_internal_dependency_generator 0
@@ -169,6 +170,15 @@ sed -e 's/__RPM_VERSION_INTERNAL__/%{version_internal}/' %{P:%%PATCH0} \
 %if %{include_debuginfo}
 %{__cat} %{SOURCE13} >> .mozconfig
 %endif
+
+sed -i 's/ac_add_options --with-system-nss/#ac_add_options --with-system-nss/' .mozconfig
+sed -i 's/ac_add_options --with-system-nspr/#ac_add_options --with-system-nspr/' .mozconfig
+sed -i 's/ac_add_options --enable-system-hunspell/#ac_add_options --enable-system-hunspell/' .mozconfig
+sed -i 's/ac_add_options --enable-system-sqlite/#ac_add_options --enable-system-sqlite/' .mozconfig
+sed -i 's/ac_add_options --enable-system-cairo/#ac_add_options --enable-system-cairo/' .mozconfig
+
+%patch99 -p2 
+#./configure --disable-system-hunspell --disable-system-sqlite --disable-system-cairo
 
 #===============================================================================
 
@@ -406,6 +416,7 @@ fi
 %{mozappdir}/crashreporter.ini
 %{mozappdir}/Throbber-small.gif
 %endif
+%{_libdir}/%{name}*%{version_internal}/*
 
 # TODO: devel package
 #%files devel 
@@ -419,6 +430,9 @@ fi
 #===============================================================================
 
 %changelog
+* Wed Feb 10 2010 David Hrbáč <david@hrbac.cz> - 3.0.1-1
+- CentOS rebuild
+
 * Wed Jan 20 2010 Martin Stransky <stransky@redhat.com> - 3.0.1-1
 - Update to 3.0.1
 
