@@ -1,13 +1,14 @@
 %define svn svn20061123
 Name:           postfix-pfloggrep
 Version:        0.5
-Release:        1.%{svn}%{?dist}
+Release:        2.%{svn}%{?dist}
 Summary:        pfloggrep -- where the heck is my mai
 
 Group: 		System Environment/Daemons
 License:        Own
 URL:            http://www.dt.e-technik.uni-dortmund.de/~ma/postfix/
 Source0:        http://home.pages.de/~mandree/postfix/pfloggrep.sh
+Patch0:         pfloggrep-amavis.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -21,6 +22,7 @@ entry for the given message-IDs) in the log.
 %setup -q -c -T
 cp -p %{SOURCE0} ./pfloggrep.sh
 sed -i 's/log=\/var\/log\/mail/log=\/var\/log\/maillog/'  pfloggrep.sh
+%patch0 -p0
 
 %build
 
@@ -39,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 09 2010 David Hrbáč <david@hrbac.cz> - 0.5-2
+- patch to output Amavis log too
+
 * Thu Jun 11 2009 David Hrbáč <david@hrbac.cz> - 0.5-1
 - initial build
 
