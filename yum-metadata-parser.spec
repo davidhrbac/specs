@@ -3,8 +3,8 @@
 
 Summary: A fast metadata parser for yum
 Name: yum-metadata-parser
-Version: 1.1.2
-Release: 12%{?dist}.1
+Version: 1.1.4
+Release: 1%{?dist}
 Source0: http://linux.duke.edu/projects/yum/download/%{name}/%{name}-%{version}.tar.gz
 Patch0: yum-metadata-parser-1.1.2-null-pkgid.patch
 Patch1: yum-metadata-parser-exclusive-lock.patch
@@ -27,10 +27,10 @@ Fast metadata parser for yum implemented in C.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
 
 %build
 %{__python} setup.py build
@@ -53,6 +53,9 @@ Fast metadata parser for yum implemented in C.
 #%{python_sitelib_platform}/*egg-info
 
 %changelog
+* Mon Feb 15 2010 David Hrbáč <david@hrbac.cz> - 1.1.4-1
+- new upstream release
+
 * Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 1.1.2-12.1
 - downgrade glib2 version
 
