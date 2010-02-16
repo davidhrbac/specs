@@ -10,13 +10,13 @@
 %endif
 
 Name:		mod_fcgid
-Version:	2.2
-Release:	4%{?dist}
+Version:	2.3.5
+Release:	1%{?dist}
 Summary:	Apache2 module for high-performance server-side scripting 
 Group:		System Environment/Daemons
 License:	GPL+
-URL:		http://fastcgi.coremail.cn/
-Source0:	http://downloads.sf.net/mod-fcgid/mod_fcgid.%{version}.tar.gz
+URL:		http://httpd.apache.org/mod_fcgid/
+Source0:	http://www.apache.org/dist/httpd/mod_fcgid/mod_fcgid-%{version}.tar.bz2
 Source1:	fcgid.conf
 Source2:	fastcgi.te
 Source3:	fastcgi.fc
@@ -61,7 +61,7 @@ SELinux policy module supporting FastCGI applications with mod_fcgid.
 %endif
 
 %prep
-%setup -q -n mod_fcgid.%{version}
+%setup -q 
 %{__cp} -p %{SOURCE1} fcgid.conf
 %if 0%{?selinux_policynum} < 20501
 %{__cp} -p %{SOURCE2} fastcgi.te

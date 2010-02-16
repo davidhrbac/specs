@@ -1,7 +1,7 @@
 %define upstream 1.0.7
 %define pkg_version 1.0.7
 %define my_release 7
-%define pkg_release %{my_release}%{?dist}
+%define pkg_release %{my_release}%{?dist}.1
 
 Summary: Dovecot Secure imap server
 Name: dovecot
@@ -245,6 +245,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Feb 15 2010 David Hrbáč <david@hrbac.cz> - 1.0.7-7
+- fixed openssl requirements
+
 * Mon Nov 24 2008 Michal Hlavinka <mhlavink@redhat.com> - 1.0.7-7
 - permissions of deliver and dovecot.conf from 1.0.7-5 reverted
 - password can be stored in different file readable only for root now
