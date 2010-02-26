@@ -14,8 +14,8 @@ Source1:	xml2changelog
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:	noarch
-BuildRequires:	php-pear(PEAR) >= 1.6.0
-Requires:	php-pear(PEAR) >= 1.6.0
+BuildRequires:	php-pear(PEAR)
+Requires:	php-pear(PEAR)
 Requires(post):	%{__pear}
 Requires(postun): %{__pear}
 Provides:	php-pear(Mail_Mime) = %{version}
