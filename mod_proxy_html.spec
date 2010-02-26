@@ -57,6 +57,9 @@ install -m 644 -D proxy_html.conf %{buildroot}/%{confdir}.d/proxy_html.conf
 
 
 %changelog
+* Tue Feb 16 2010 David Hrbáč <david@hrbac.cz> - 3.1.2-6
+- initial rebuild
+
 * Wed Dec 16 2009 Philip Prindeville <philipp@fedoraproject.org> 3.1.2-6
 - Include mod_xml2enc.  Fix sed script to properly uncomment LoadModule lines.
 

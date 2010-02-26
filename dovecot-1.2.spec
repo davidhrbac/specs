@@ -2,7 +2,7 @@ Summary: Secure imap and pop3 server
 Name: dovecot
 Epoch: 1
 Version: 1.2.10
-Release: 2%{?dist}
+Release: 2%{?dist}.2
 #dovecot itself is MIT, a few sources are PD, (manage)sieve is LGPLv2, perfect_maildir.pl is GPLv2+
 License: MIT and LGPLv2 and GPLv2+
 Group: System Environment/Daemons
@@ -28,6 +28,7 @@ Group: System Environment/Daemons
 URL: http://www.dovecot.org/
 Source: http://www.dovecot.org/releases/1.2/%{name}-%{version}.tar.gz
 Source1: dovecot.init
+Source101: dovecot.init-nopid
 Source2: dovecot.pam
 Source3: maildir-migration.txt
 Source4: migrate-folders
@@ -55,7 +56,8 @@ BuildRequires: libtool autoconf automake pkgconfig
 BuildRequires: gettext-devel
 
 # Explicit Runtime Requirements
-Requires: openssl >= 0.9.7f-4
+#Requires: openssl >= 0.9.7f-4
+Requires: openssl
 
 # Package includes an initscript service file, needs to require initscripts package
 Requires: initscripts
@@ -249,15 +251,36 @@ rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-%if %{?fedora}00%{?rhel} < 6
-sed -i 's|password-auth|system-auth|' %{SOURCE2}
-%endif
+#%if %{?fedora}00%{?rhel} < 6
+#sed -i 's|password-auth|system-auth|' %{SOURCE2}
+#%endif
 
 install -p -m 755 src/plugins/convert/convert-tool $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 
+#install -p -D -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_initddir}/dovecot
+
+%if %{?rhel} <= 5
+install -p -D -m 755 %{SOURCE101} $RPM_BUILD_ROOT%{_initddir}/dovecot
+%else
 install -p -D -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_initddir}/dovecot
+%endif
 
 install -p -D -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/dovecot
+
+# Detect whether the system is using pam_stack
+if test -f /%{_lib}/security/pam_stack.so \
+   && ! grep "Deprecated pam_stack module" /%{_lib}/security/pam_stack.so \
+      2>&1 > /dev/null; then
+  perl -pi -e's,include(\s*)(.*),required\1pam_stack.so service=\2,' \
+    $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/dovecot
+  touch -r %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/dovecot
+fi
+# Detect whether the system has /etc/pam.d/password-auth
+if test ! -f %{_sysconfdir}/pam.d/password-auth; then
+  perl -pi -e's,password-auth,system-auth,' \
+    $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/dovecot
+  touch -r %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/dovecot
+fi
 
 install -p -D -m 600 %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/dovecot
 
@@ -462,6 +485,14 @@ fi
 
 
 %changelog
+* Wed Feb 24 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.10-2.2
+- openssl requirement fix
+
+* Wed Feb 24 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.10-2.1
+- initial rebuild
+- modified init script
+- modified pam script
+
 * Mon Jan 25 2010 Michal Hlavinka <mhlavink@redhat.com> - 1:1.2.10-2
 - updated sive and managesieve
 - Added preliminary support for Sieve plugins and added support for
