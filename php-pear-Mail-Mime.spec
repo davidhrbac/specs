@@ -96,6 +96,9 @@ fi
 
 
 %changelog
+* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.6.0-1
+- initial rebuild
+
 * Sat Jan 30 2010 Remi Collet <Fedora@FamilleCollet.com> - 1.6.0-1
 - update to new upstream version (Version 1.6.0 - API 1.4.0)
 - generate CHANGELOG from package.xml

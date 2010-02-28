@@ -96,6 +96,9 @@ fi
 
 
 %changelog
+* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.1.14-5
+- initial rebuild
+
 * Fri Nov 27 2009 Remi Collet <Fedora@FamilleCollet.com> 1.1.14-5
 - Fix CVE-2009-4023 (#540842)
 - rename Mail.xml to php-pear-Mail.xml
