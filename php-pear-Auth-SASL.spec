@@ -87,6 +87,9 @@ fi
 
 
 %changelog
+* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.0.4-1
+- initial rebuild
+
 * Mon Feb 08 2010 Remi Collet <Fedora@FamilleCollet.com> 1.0.4-1
 - update to 1.0.4
 

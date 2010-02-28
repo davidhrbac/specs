@@ -1,10 +1,10 @@
 Summary:	A modern implementation of a DBM
 Name:		tokyocabinet
-Version:	1.4.41
+Version:	1.4.42
 Release:	1%{?dist}
 License:	LGPLv2+
 Group:		Development/Libraries
-URL:		http://1978th.net/
+URL:		http://1978th.net/tokyocabinet/
 Source:         http://1978th.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		tokyocabinet-fedora.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -70,6 +70,9 @@ rm -rf %{buildroot}
 %doc doc/*
 
 %changelog
+* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.4.42-1
+- new upstream release
+
 * Thu Jan 07 2010 David Hrbáč <david@hrbac.cz> - 1.4.41-1
 - new upstream release
 
