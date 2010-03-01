@@ -1,7 +1,7 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:		gammu
-Version:	1.27.90
+Version:	1.27.92
 Release:	1%{?dist}
 Summary:	Command Line utility to work with mobile phones
 
@@ -21,6 +21,12 @@ BuildRequires:	postgresql-devel, mysql-devel
 
 Requires:	bluez-utils, dialog
 
+%package smsd
+Summary:    SMS message daemon
+Requires(post): chkconfig
+Requires(preun): chkconfig
+Requires(preun): initscripts
+Group:              Applications/Communications
 
 %package	libs
 Summary:	Libraries files for %{name}
@@ -51,6 +57,10 @@ with majority of them. Program can work with contacts,
 messages (SMS, EMS and MMS), calendar, todos, filesystem,
 integrated radio, camera, etc.
 It also supports daemon mode to send and receive SMSes.
+
+%description smsd
+This package contains Gammu SMS Daemon and tool to inject messages 
+into the queue.
 
 %description	libs
 The %{name}-libs package contains libraries files that used by %{name}
@@ -127,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
-%doc COPYING ChangeLog README docs/* BUGS SUPPORTERS *.html *.txt
+%doc COPYING ChangeLog README docs/* BUGS *.html *.txt
 %{_bindir}/%{name}*
 %{_bindir}/jadmaker
 %{_mandir}/man1/*.gz
@@ -155,6 +165,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.27.92-1
+- new upstream release
+
 * Thu Feb 04 2010 David Hrbáč <david@hrbac.cz> - 1.27.90-1
 - new upstream release
 

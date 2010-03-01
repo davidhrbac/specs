@@ -2,8 +2,8 @@
 %define pear_name Mail
 
 Name:           php-pear-Mail
-Version:        1.1.14
-Release:        5%{?dist}
+Version:        1.2.0
+Release:        1%{?dist}
 Summary:        Class that provides multiple interfaces for sending emails
 Summary(fr):    Une Classe fournissant des interfaces pour envoyer des emails
 
@@ -13,14 +13,14 @@ URL:            http://pear.php.net/package/Mail
 Source0:        http://pear.php.net/get/%{pear_name}-%{version}.tgz
 Source2:        xml2changelog
 
-# See http://www.debian.org/security/2009/dsa-1938
-Patch0:         %{name}-security.patch 
+## See http://www.debian.org/security/2009/dsa-1938
+#Patch0:         %{name}-security.patch 
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 BuildRequires:  php-pear >= 1:1.4.9-1.2
-Requires:       php-pear(PEAR) >= 1.4.9 php-pear(Net_SMTP) >= 1.1.0
+Requires:       php-pear(PEAR) >= 1.4.9 php-pear(Net_SMTP) >= 1.4.1
 Requires(post): %{__pear}
 Requires(postun): %{__pear}
 Provides:       php-pear(%{pear_name}) = %{version}
@@ -45,7 +45,7 @@ conformité à la RFC822 des liste d'adresses de courrier.
 %prep
 %setup -q -c
 
-%patch0 -p0
+#%patch0 -p0
 
 # Package is still an old V1 one
 #%{__pear} convert package.xml package2.xml 
@@ -96,6 +96,10 @@ fi
 
 
 %changelog
+* Mon Mar 01 2010 David Hrbáč <david@hrbac.cz> - 1.2.0-1
+- new upstream release
+- change dependecy php-pear(Net_SMTP) >= 1.4.1
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.1.14-5
 - initial rebuild
 

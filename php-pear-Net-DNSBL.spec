@@ -3,7 +3,7 @@
 
 Name:           php-pear-Net-DNSBL
 Version:        1.3.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Checks if a given Host or URL is listed on an DNS-based Blackhole List (DNSBL, Real-time Blackhole List or RBL) or Spam URI Realtime Blocklist (SURBL)
 
 Group:          Development/Libraries
@@ -81,3 +81,5 @@ fi
 
 
 %changelog
+* Mon Mar 01 2010 David Hrbáč <david@hrbac.cz> - 1.3.3-1
+- added changelog :o)
