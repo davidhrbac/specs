@@ -1,11 +1,11 @@
 Name:           python-gnutls
-Version:        1.1.4
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Python wrapper for the GNUTLS library
 URL:            http://cheeseshop.python.org/pypi/python-gnutls
 License:        LGPL
 Group:          Development/Libraries/Python
-Source:         %{name}-%{version}.tar.gz
+Source:         http://pypi.python.org/packages/source/p/python-gnutls/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires:  gnutls-devel python-devel
 
@@ -39,5 +39,7 @@ rm -rf %{buildroot}
 %{python_sitearch}/*
 
 %changelog
+* Tue Mar 09 2010 David Hrbáč <david@hrbac.cz> - 1.2.0-1
+- new upstream release
 * Thu Oct 16 2008 David Hrbáč <david@hrbac.cz> - 1.1.4-1
 - initial build
