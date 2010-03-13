@@ -1,6 +1,6 @@
 Summary:	A modern implementation of a DBM
 Name:		tokyocabinet
-Version:	1.4.42
+Version:	1.4.43
 Release:	1%{?dist}
 License:	LGPLv2+
 Group:		Development/Libraries
@@ -70,6 +70,9 @@ rm -rf %{buildroot}
 %doc doc/*
 
 %changelog
+* Sat Mar 13 2010 David Hrbáč <david@hrbac.cz> - 1.4.43-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.4.42-1
 - new upstream release
 
