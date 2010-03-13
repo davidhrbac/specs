@@ -1,12 +1,12 @@
 Name:           nikto
-Version:        2.03
-Release:        3%{?dist}
+Version:        2.1.1
+Release:        1%{?dist}
 Summary:        Web server scanner 
 
 Group:          Applications/Internet
 License:        GPLv2+
 URL:            http://www.cirt.net/code/nikto.shtml
-Source0:        http://www.cirt.net/nikto2/%{name}-%{version}.tar.bz2
+Source0:        http://www.cirt.net/nikto/%{name}-%{version}.tar.bz2
 Source1:        nikto-database-license.txt
 #use system libwhisker2
 Patch0:         nikto-2.03-libwhisker2.patch
@@ -24,8 +24,9 @@ on over 230 servers. Scan items and plugins are frequently updated and
 can be automatically updated (if desired).
 
 %prep
-%setup -qn %{name}
-%patch0 -p1
+#%setup -qn %{name}
+%setup -q
+#%patch0 -p1
 
 #change configfile path
 sed -i 's:$NIKTO{configfile} = "config.txt";:$NIKTO{configfile}="%{_sysconfdir}/nikto/config";:' nikto.pl
