@@ -2,7 +2,7 @@ Summary: Secure imap and pop3 server
 Name: dovecot
 Epoch: 1
 Version: 1.2.11
-Release: 1%{?dist}
+Release: 2%{?dist}
 #dovecot itself is MIT, a few sources are PD, (manage)sieve is LGPLv2, perfect_maildir.pl is GPLv2+
 License: MIT and LGPLv2 and GPLv2+
 Group: System Environment/Daemons
@@ -48,7 +48,7 @@ Patch2: dovecot-1.0.beta2-mkcert-permissions.patch
 Patch3: dovecot-1.0.rc7-mkcert-paths.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: openssl-devel, pam-devel, zlib-devel, libcap-devel
+BuildRequires: openssl-devel, pam-devel, zlib-devel, libcap-devel, bzip2-devel
 BuildRequires: libtool autoconf automake pkgconfig
 
 # gettext-devel is needed for running autoconf because of the
@@ -485,6 +485,9 @@ fi
 
 
 %changelog
+* Mon Mar 15 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.11-2
+- fix missing bzip2 support in zlib plugin (#572797)
+
 * Wed Mar 10 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.11-1
 - new upstream release
  
