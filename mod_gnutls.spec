@@ -1,11 +1,12 @@
 Summary:	mod_gnutls is a DSO module for the apache Web server.
 Name:		mod_gnutls
 Version:	0.5.5
-Release:	1%{?dist}
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.outoforder.cc/projects/apache/mod_gnutls/
 Source:		http://www.outoforder.cc/downloads/mod_gnutls/%{name}-%{version}.tar.bz2
 Source1:	mod_gnutls.conf
+Patch0:		mod_gnutls-POST-limit.patch
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
@@ -22,13 +23,14 @@ not use OpenSSL.
 
 %prep
 %setup -q
+%patch0 -p0 -b .POST-limit
 
 %build
 
-%configure \
-  --with-apxs=%{_sbindir}/apxs \
-  --with-libgnutls=%{_bindir}/libgnutls-config
-
+#%configure \
+#  --with-apxs=%{_sbindir}/apxs \
+#  --with-libgnutls=%{_bindir}/libgnutls-config
+%configure
 
 make
 
@@ -61,6 +63,10 @@ mkdir -p -m 0700 $RPM_BUILD_ROOT%{_var}/cache/mod_gnutls_cache
 %attr(0700, apache, apache) %{_var}/cache/mod_gnutls_cache
 
 %changelog
+* Tue Mar 16 2010 David Hrbáč <david@hrbac.cz> - 0.5.5-2
+- patch to correct Firefox POST limit
+- issue #95 http://issues.outoforder.cc/view.php?id=95
+
 * Sun Jun 14 2009 David Hrbáč <david@hrbac.cz> - 0.5.5-1
 - new upstream release
 

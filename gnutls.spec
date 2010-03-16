@@ -3,7 +3,7 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
 Version: 2.8.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 # The libgnutls library is LGPLv2+, utilities and remaining libraries are GPLv3+
 License: GPLv3+ and LGPLv2+
 Group: System Environment/Libraries
@@ -13,6 +13,7 @@ BuildRequires: libtool, automake
 #BuildRequires: guile-devel
 URL: http://www.gnutls.org/
 Source0: ftp://ftp.gnutls.org/pub/gnutls/%{name}-%{version}.tar.bz2
+Patch0: gnutls-2.8.5-gnutls.pc_URL.patch
 #Source1: ftp://ftp.gnutls.org/pub/gnutls/devel/%{name}-%{version}.tar.gz.sig
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgcrypt >= 1.3.1
@@ -86,6 +87,7 @@ This package contains Guile bindings for the library.
 
 %prep
 %setup -q
+%patch0 -p1 -b .gnutls.pc-URL
 
 for i in auth_srp_rsa.c auth_srp_sb64.c auth_srp_passwd.c auth_srp.c gnutls_srp.c ext_srp.c; do
     touch lib/$i
@@ -190,6 +192,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 16 2010 David Hrbáč <david@hrbac.cz> - 2.8.5-2
+- patch to correct gnutls.pc for C4 build
+
 * Tue Nov 17 2009 David Hrbáč <david@hrbac.cz> - 2.8.5-1
 - new upstream version
 
