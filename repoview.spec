@@ -1,5 +1,5 @@
 Name:           repoview
-Version:        0.6.4
+Version:        0.6.5
 Release:        1%{?dist}
 Summary:        Creates a set of static HTML pages in a yum repository
 
@@ -56,6 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Mar 17 2010 David Hrbáč <david@hrbac.cz> - 0.6.5-1
+- new upstream version, bugfix rhbz#566789
+
 * Wed May 13 2009 David Hrbáč <david@hrbac.cz> - 0.6.3-1
 - new upstream version
 - added requirements
