@@ -3,7 +3,7 @@
 Summary: A TLS protocol implementation.
 Name: gnutls
 Version: 2.8.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 # The libgnutls library is LGPLv2+, utilities and remaining libraries are GPLv3+
 License: GPLv3+ and LGPLv2+
 Group: System Environment/Libraries
@@ -19,7 +19,7 @@ BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgcrypt >= 1.3.1
 Source1: libgnutls-config
 
-%if "%{centos_ver}" == "4"
+%if  %{?rhel} == 4
   %ifarch x86_64
 Provides: libgnutls.so.11(64bit)
 Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)(64bit)
@@ -29,7 +29,7 @@ Provides: libgnutls.so.11(GNUTLS_REL_1_0_9)
   %endif
 %endif
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
   %ifarch x86_64
 Provides: libgnutls.so.13()(64bit)
 Provides: libgnutls.so.13(GNUTLS_1_3)(64bit)
@@ -192,6 +192,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 18 2010 David Hrbáč <david@hrbac.cz> - 2.8.6-2
+- fixed fake provides
+
 * Wed Mar 17 2010 David Hrbáč <david@hrbac.cz> - 2.8.6-1
 - new upstream version
 
