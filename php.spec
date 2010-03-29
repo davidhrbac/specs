@@ -358,11 +358,11 @@ cat `aclocal --print-ac-dir`/libtool.m4 > build/libtool.m4
 # Regenerate configure scripts (patches change config.m4's)
 ./buildconf --force
 
-%if "%{centos_ver}" == "4"
+%if  %{?rhel} == 4
   CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
 %endif
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
   CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
 %endif
 export CFLAGS

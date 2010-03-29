@@ -45,7 +45,7 @@ system, generic in nature, but intended for use in speeding up dynamic
 web applications by alleviating database load.
 
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
 %package selinux
 Summary:        SELinux policy module supporting memcached
 Group:          System Environment/Base
@@ -75,7 +75,7 @@ memcached binary include files.
 %patch0 -p0 -b .test
 #%patch1 -p0 -b .macro
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
 mkdir SELinux
 cp -p %{SOURCE10} %{SOURCE11} %{SOURCE12} SELinux/
 %endif%
@@ -85,7 +85,7 @@ cp -p %{SOURCE10} %{SOURCE11} %{SOURCE12} SELinux/
 
 make %{?_smp_mflags}
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
 pushd SELinux
 for selinuxvariant in %{selinux_variants}; do
     make NAME=${selinuxvariant} -f /usr/share/selinux/devel/Makefile
@@ -126,7 +126,7 @@ EOF
 # pid directory
 mkdir -p %{buildroot}/%{_localstatedir}/run/memcached
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
 # Install SELinux policy modules
 pushd SELinux
 for selinuxvariant in %{selinux_variants}; do
@@ -170,7 +170,7 @@ if [ "$1" -ge 1 ]; then
 fi
 exit 0
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
 %post selinux
 # Install SELinux policy modules
 for selinuxvariant in %{selinux_variants}
@@ -206,7 +206,7 @@ fi
 %{_mandir}/man1/memcached.1*
 %{_initrddir}/memcached
 
-%if "%{centos_ver}" == "5"
+%if  %{?rhel} == 5
 %files selinux
 %defattr(-,root,root,0755)
 %doc SELinux/*.te SELinux/*.fc SELinux/*.if

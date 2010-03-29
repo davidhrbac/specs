@@ -6,8 +6,8 @@
 
 Summary:      Extension to work with the Memcached caching daemon
 Name:         php-pecl-memcached
-Version:      1.0.0
-Release:      3%{?dist}
+Version:      1.0.1
+Release:      1%{?dist}
 License:      PHP
 Group:        Development/Languages
 URL:          http://pecl.php.net/package/%{pecl_name}
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Thu Mar 25 2010 David Hrbáč <david@hrbac.cz> - 1.0.1-1
+- new upstream release
+
 * Fri Sep 18 2009 David Hrbáč <david@hrbac.cz> - 1.0.0-3
 - sort out dependecy
 

@@ -1,5 +1,5 @@
 Name:           maatkit
-Version:        5240
+Version:        5899
 Release:        1%{?dist}
 Summary:        Essential command-line utilities for MySQL
 
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar 29 2010 David Hrbáč <david@hrbac.cz> - 5899-1
+- new upstream version
+
 * Mon Dec 07 2009 David Hrbáč <david@hrbac.cz> - 5240-1
 - new upstream version
 

@@ -7,7 +7,7 @@
 
 %define xulrunner_version       1.9.2.1-1
 %define xulrunner_version_max   1.9.3
-%define internal_version        3.6
+%define internal_version        3.6.2
 
 %define official_branding       1
 %define build_langpacks         1
@@ -20,7 +20,7 @@
 
 Summary:        Mozilla Firefox Web browser
 Name:           firefox
-Version:        3.6.1
+Version:        3.6.2
 Release:        1%{?prever}%{?dist}
 URL:            http://www.mozilla.org/projects/firefox/
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
@@ -28,7 +28,7 @@ Group:          Applications/Internet
 # From ftp://ftp.mozilla.org/pub/firefox/releases/%{version}%{?pretag}/source
 Source0:        firefox-%{internal_version}%{?prever}.source.tar.bz2
 %if %{build_langpacks}
-Source2:        firefox-langpacks-%{version}-20100122.tar.bz2
+Source2:        firefox-langpacks-%{version}-20100323.tar.bz2
 %endif
 Source10:       firefox-mozconfig
 Source11:       firefox-mozconfig-branded
@@ -356,6 +356,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 #---------------------------------------------------------------------
 
 %changelog
+* Wed Mar 24 2010 David Hrbáč <david@hrbac.cz> - 3.6.2-1
+- new upstream release
+
 * Wed Feb 10 2010 David Hrbáč <david@hrbac.cz> - 3.6.1-1
 - CentOS rebuild
 
