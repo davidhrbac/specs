@@ -5,7 +5,7 @@
 Summary:        Python interface for mozilla XPCOM library
 Name:           xulrunner-python
 Version:        1.9.2
-Release:        2.%{hgver}%{?dist}
+Release:        3.%{hgver}%{?dist}
 URL:            http://developer.mozilla.org/en/PyXPCOM
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Group:          Applications/Internet
@@ -46,6 +46,9 @@ autoconf-2.13
 #---------------------------------------------------------------------
 
 %build
+export CFLAGS=$RPM_OPT_FLAGS
+export CXXFLAGS=$RPM_OPT_FLAGS
+
 cd %{objdir} 
 ../configure --with-libxul-sdk=`pkg-config --variable=sdkdir libxul` \
              --with-system-nspr  \
@@ -121,6 +124,8 @@ popd
 #---------------------------------------------------------------------
 
 %changelog
+* Tue Apr 06 2010 David Hrbáč <david@hrbac.cz> - 1.9.2-3.20100111hg
+- set CFLAGS and CXXFLAGS variables to $RPM_OPT_FLAGS
 * Wed Nov 25 2009 Martin Stransky <stransky@redhat.com> 1.9.2-2.20100111hg
 - created as standalone package
 
