@@ -271,6 +271,7 @@ popd
 
 pushd $RPM_BUILD_ROOT/%{_includedir}/${INTERNAL_APP_SDK_NAME}
 install_file "js-config"
+popd
 
 %{__install} -p -c -m 755 dist/bin/xpcshell \
   dist/bin/xpidl \
@@ -395,6 +396,7 @@ fi
 %{mozappdir}/platform.ini
 %{mozappdir}/dependentlibs.list
 %{_sysconfdir}/ld.so.conf.d/xulrunner*.conf
+%{_libdir}/%{name}*%{version_internal}/*
 
 # XXX See if these are needed still
 %{mozappdir}/updater*
