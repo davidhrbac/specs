@@ -3,7 +3,7 @@
 Summary: Distributed Checksum Clearinghouse
 Name: dcc
 Version: 1.3.120
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 Group: Applications/System
 Source0: http://rhyolite.com/src/dcc/old/dcc-%{version}.tar.Z
@@ -12,6 +12,8 @@ Source0: http://rhyolite.com/src/dcc/old/dcc-%{version}.tar.Z
 URL: http://rhyolite.com/anti-spam/dcc/
 BuildRoot: %{_tmppath}/%{name}-root
 #BuildRequires: sendmail-devel
+BuildRequires: amavisd-new
+Requires: amavisd-new
 
 %description
 The idea of the DCC is that if mail recipients could compare the mail they 
@@ -30,7 +32,7 @@ unsolicited, the DCC client can log, discard, or reject the message.
 
 %build
 ./configure \
-      --with-uid=mockbuild \
+      --with-uid=amavis \
       --homedir=%{homedir} \
       --bindir=%{_bindir} \
       --libexecdir=%{_libexecdir}/%{name} \
@@ -67,6 +69,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %changelog
+* Wed Mar 31 2010 David Hrbáč <david@hrbac.cz> - 1.3.120-2
+- added amavisd-new requirement
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.3.120-1
 - new upstream version
 

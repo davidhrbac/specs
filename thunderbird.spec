@@ -5,6 +5,7 @@
 %define sqlite_version 3.6.14
 %define build_langpacks 1
 %define moz_objdir objdir-tb
+%define thunderbird_app_id \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
 
 # The tarball is pretty inconsistent with directory structure.
 # Sometimes there is a top level directory.  That goes here.
@@ -22,8 +23,8 @@
 
 Summary:        Mozilla Thunderbird mail/newsgroup client
 Name:           thunderbird
-Version:        3.0.3
-Release:        1%{?dist}
+Version:        3.0.4
+Release:        2%{?dist}
 URL:            http://www.mozilla.org/projects/thunderbird/
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Group:          Applications/Internet
@@ -34,23 +35,35 @@ Group:          Applications/Internet
 %endif
 Source0:        http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{tarball}
 %if %{build_langpacks}
-Source1:        thunderbird-langpacks-%{version}-20100301.tar.bz2
+# Language package archive is build by RH
+Source1:        thunderbird-langpacks-%{version}-20100330.tar.bz2
 %endif
+# Config file for compilation
 Source10:       thunderbird-mozconfig
+# Config file for branded compilation
 Source11:       thunderbird-mozconfig-branded
+# Default preferences for Thunderbird
 Source12:       thunderbird-redhat-default-prefs.js
+# Config file for debug builds
 Source13:       thunderbird-mozconfig-debuginfo
+# Desktop file
 Source20:       thunderbird.desktop
+# TB execute script
 Source21:       thunderbird.sh.in
+# Script called when user click on link in message
 Source30:       thunderbird-open-browser.sh
+# Finds requirements provided outside of the current file set
 Source100:      find-external-requires
 
+# Fix for version issues
 Patch0:         thunderbird-version.patch
+# Fix for jemalloc
 Patch1:         mozilla-jemalloc.patch
+# Fix for installation fail when building with dynamic linked libraries
 Patch2:         thunderbird-shared-error.patch
-Patch3:         thunderbird-debuginfo-fix-include.patch
-Patch4:         thunderbird-clipboard-crash.patch
-Patch99:         thunderbird-3.0.1-g_strcmp0.patch
+
+#Fix fo CentOS build
+Patch99:	thunderbird-3.0.1-g_strcmp0.patch
 
 %if %{official_branding}
 # Required by Mozilla Corporation
@@ -145,22 +158,13 @@ sed -e 's/__RPM_VERSION_INTERNAL__/%{version_internal}/' %{P:%%PATCH0} \
 %patch1 -p0 -b .jemalloc
 %patch2 -p1 -b .shared-error
 
-%if %{include_debuginfo}
-%patch3 -p1 -b .fix-include
-%endif
-
-%patch4 -p1 -b .clipboard-crash
-
 %if %{official_branding}
 # Required by Mozilla Corporation
-
 
 %else
 # Not yet approved by Mozillla Corporation
 
-
 %endif
-
 
 %{__rm} -f .mozconfig
 %{__cp} %{SOURCE10} .mozconfig
@@ -280,6 +284,10 @@ install -Dm755 %{SOURCE30} $RPM_BUILD_ROOT/%{mozappdir}/open-browser.sh
 # own mozilla plugin dir (#135050)
 %{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins
 
+# own extension directories
+%{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}/mozilla/extensions/%{thunderbird_app_id}
+%{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/mozilla/extensions/%{thunderbird_app_id}
+
 # Install langpacks
 %{__rm} -f %{name}.lang # Delete for --short-circuit option
 touch %{name}.lang
@@ -345,8 +353,12 @@ mkdir -p $RPM_BUILD_ROOT%{_libdir}/debug%{mozappdir}
 cp %{moz_objdir}/mozilla/dist/thunderbird-%{version}.en-US.linux-i686.crashreporter-symbols.zip $RPM_BUILD_ROOT%{_libdir}/debug%{mozappdir}
 %endif
 
+#===============================================================================
+
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
+
+#===============================================================================
 
 %post
 update-desktop-database &> /dev/null || :
@@ -355,6 +367,8 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
+#===============================================================================
+
 %postun
 update-desktop-database &> /dev/null || :
 touch --no-create %{_datadir}/icons/hicolor
@@ -362,10 +376,14 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
+#===============================================================================
+
 %files -f %{tarballdir}/%{name}.lang
 %defattr(-,root,root,-)
 %attr(755,root,root) %{_bindir}/thunderbird
 %attr(644,root,root) %{_datadir}/applications/mozilla-thunderbird.desktop
+%dir %{_datadir}/mozilla/extensions/%{thunderbird_app_id}
+%dir %{_libdir}/mozilla/extensions/%{thunderbird_app_id}
 %dir %{mozappdir}
 %doc %{mozappdir}/LICENSE
 %{mozappdir}/chrome
@@ -430,6 +448,13 @@ fi
 #===============================================================================
 
 %changelog
+* Tue Apr 06 2010 David Hrbáč <david@hrbac.cz> - 3.0.4-2
+- fixed branding
+
+* Wed Mar 31 2010 David Hrbáč <david@hrbac.cz> - 3.0.4-1
+- new upstream release
+- own extension directories (#532132)
+
 * Tue Mar 02 2010 David Hrbáč <david@hrbac.cz> - 3.0.3-1
 - new upstream release
 

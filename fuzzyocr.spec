@@ -1,15 +1,16 @@
 %define svn svn135
 Name:           fuzzyocr
-Version:        3.5.0
-Release:        5.%{svn}%{?dist}
+Version:        3.6.0
+Release:        1%{?dist}
 Summary:        FuzzyOCR is a spamassassin plugin used to identify image spam
 Group:          Applications/Internet
 License:        Apache 2.0
 URL:            http://fuzzyocr.own-hero.net/
-Source0:        http://fuzzyocr.own-hero.net/fuzzyocr-%{version}-%{svn}.tar.bz2
+Source0:        http://users.own-hero.net/~decoder/fuzzyocr/fuzzyocr-%{version}.tar.gz
 Source1:	fuzzyocr.logrotate
 Patch0:         fuzzyocr-log-db.patch
 Patch1:         fuzzyocr-C4-netpbm-10.25.patch
+Patch2:		fuzzyocr-untaint.patch
 BuildArch: 	noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 #Requires:  	spamassassin perl-String-Approx perl-Log-Agent netpbm-progs ocrad gifsicle
@@ -24,9 +25,11 @@ different methods, it analyzes the content and properties of images to
 distinguish between normal mails (Ham) and spam mails.
 
 %prep
-%setup -q -n fuzzyocr-%{version}
+%setup -q -n FuzzyOcr-%{version}
 %patch0 -p1
 %{?build_centos4:%patch1 -p1}
+%patch2 -p1
+
 
 %build
 mkdir docs
@@ -88,6 +91,10 @@ for file in /var/log/fuzzyocr.log /var/amavis/.spamassassin/FuzzyOcr.db /var/ama
 done
 
 %changelog
+* Tue Mar 30 2010 David Hrbáč <david@hrbac.cz> - 3.6.0-1
+- new upstream release
+- fix for SA 3.3.0 - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=568233
+
 * Wed May 13 2009 David Hrbáč <david@hrbac.cz> - 3.5.0-5.svn135
 - changed requirements 
 
