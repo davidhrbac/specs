@@ -1,12 +1,12 @@
 Summary:	mod_gnutls is a DSO module for the apache Web server.
 Name:		mod_gnutls
-Version:	0.5.5
-Release:	3%{?dist}
+Version:	0.5.6
+Release:	1%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.outoforder.cc/projects/apache/mod_gnutls/
 Source:		http://www.outoforder.cc/downloads/mod_gnutls/%{name}-%{version}.tar.bz2
 Source1:	mod_gnutls.conf
-Patch0:		mod_gnutls-POST-limit.patch
+#Patch0:		mod_gnutls-POST-limit.patch
 License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
@@ -23,7 +23,7 @@ not use OpenSSL.
 
 %prep
 %setup -q
-%patch0 -p0 -b .POST-limit
+#%patch0 -p0 -b .POST-limit
 
 %build
 
@@ -63,6 +63,9 @@ mkdir -p -m 0700 $RPM_BUILD_ROOT%{_var}/cache/mod_gnutls_cache
 %attr(0700, apache, apache) %{_var}/cache/mod_gnutls_cache
 
 %changelog
+* Thu Apr 15 2010 David Hrbáč <david@hrbac.cz> - 0.5.6-1
+- new upstream release
+
 * Wed Mar 17 2010 David Hrbáč <david@hrbac.cz> - 0.5.5-3
 - rebuild against gnutls 2.8.6 
 

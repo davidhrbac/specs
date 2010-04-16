@@ -1,5 +1,5 @@
 Name:           gearmand
-Version:        0.12
+Version:        0.13
 Release:        1%{?dist}
 Summary:        A distributed job system
 
@@ -127,7 +127,6 @@ fi
 %{_libdir}/libgearman.so
 %{_mandir}/man3/gearman*.3.gz
 %dir %{_includedir}/libgearman-server
-%{_includedir}/libgearman-server/*.h
 %{_libdir}/libgearman-server.la
 %{_libdir}/libgearman-server.so*
 
@@ -138,6 +137,9 @@ fi
 
 
 %changelog
+* Tue Apr 06 2010 David Hrbáč <david@hrbac.cz> - 0.13-1
+- new upstream release
+
 * Sat Feb 20 2010 David Hrbáč <david@hrbac.cz> - 0.12-1
 - new upstream release
 

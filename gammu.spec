@@ -1,7 +1,7 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:		gammu
-Version:	1.27.92
+Version:	1.27.93
 Release:	1%{?dist}
 Summary:	Command Line utility to work with mobile phones
 
@@ -15,11 +15,12 @@ BuildRequires:	autoconf, gettext, cmake
 #BuildRequires:	libusb1-devel, doxygen
 #BuildRequires:	libcurl-devel
 # Enabling bluetooth fonction
-BuildRequires:	bluez-libs-devel
+#BuildRequires:	bluez-libs-devel
 # Enabling Database sms fonction
 BuildRequires:	postgresql-devel, mysql-devel
 
-Requires:	bluez-utils, dialog
+#Requires:       bluez-utils, dialog
+Requires:       dialog
 
 %package smsd
 Summary:    SMS message daemon
@@ -165,6 +166,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 14 2010 David Hrbáč <david@hrbac.cz> - 1.27.93-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.27.92-1
 - new upstream release
 
