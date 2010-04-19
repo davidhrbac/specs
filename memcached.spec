@@ -6,7 +6,7 @@
 %define groupname memcached
 
 Name:           memcached
-Version:        1.4.4
+Version:        1.4.5
 Release:        1%{?dist}
 Summary:        High Performance, Distributed Memory Object Cache
 
@@ -23,7 +23,7 @@ Source1:        memcached.sysv.patched
 Source10:       %{modulename}.te
 Source11:       %{modulename}.fc
 Source12:       %{modulename}.if
-Patch0:         memcached-test.patch
+#Patch0:         memcached-test.patch
 #Patch1:         memcached-macro.patch
 # Fixes
 
@@ -72,7 +72,7 @@ memcached binary include files.
 
 %prep
 %setup -q
-%patch0 -p0 -b .test
+#%patch0 -p0 -b .test
 #%patch1 -p0 -b .macro
 
 %if  %{?rhel} == 5
@@ -81,7 +81,7 @@ cp -p %{SOURCE10} %{SOURCE11} %{SOURCE12} SELinux/
 %endif%
 
 %build
-%configure --enable-threads
+%configure 
 
 make %{?_smp_mflags}
 
@@ -218,6 +218,9 @@ fi
 %{_includedir}/memcached/*
 
 %changelog
+* Mon Apr 19 2010 David Hrbáč <david@hrbac.cz> - 1.4.5-1
+- new upstream version
+
 * Sun Nov 29 2009 David Hrbáč <david@hrbac.cz> - 1.4.4-1
 - new upstream version
 
