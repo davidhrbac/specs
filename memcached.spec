@@ -23,7 +23,7 @@ Source1:        memcached.sysv.patched
 Source10:       %{modulename}.te
 Source11:       %{modulename}.fc
 Source12:       %{modulename}.if
-#Patch0:         memcached-test.patch
+Patch0:         memcached-test.patch
 #Patch1:         memcached-macro.patch
 # Fixes
 
@@ -72,7 +72,7 @@ memcached binary include files.
 
 %prep
 %setup -q
-#%patch0 -p0 -b .test
+%patch0 -p0 -b .test
 #%patch1 -p0 -b .macro
 
 %if  %{?rhel} == 5
