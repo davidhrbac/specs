@@ -3,14 +3,14 @@
 
 %global xmlrpcver 1.5.3
 %global getoptver 1.2.3
-%global arctarver 1.3.5
+%global arctarver 1.3.7
 %global structver 1.0.3
 %global xmlutil   1.2.1
 
 Summary: PHP Extension and Application Repository framework
 Name: php-pear
-Version: 1.9.0
-Release: 3%{?dist}
+Version: 1.9.1
+Release: 1%{?dist}
 Epoch: 1
 # PEAR, Archive_Tar, XML_Util are BSD
 # XML-RPC, Console_Getopt are PHP
@@ -162,8 +162,15 @@ rm new-pear.conf
 
 
 %changelog
+* Thu May 27 2010 David Hrbáč <david@hrbac.cz> - 1:1.9.1-1
+- new upstream version
+
+* Tue May 04 2010 David Hrbáč <david@hrbac.cz> - 1:1.9.0-4
+- update to Archive_Tar-1.3.7
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1:1.9.0-3
 - initial release
+
 * Fri Jan 01 2010 Remi Collet <Fedora@FamilleCollet.com> 1:1.9.0-3
 - update to XML_RPC-1.5.3
 - fix licenses (multiple)
