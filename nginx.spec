@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.7.62
+Version:        0.7.65
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -91,10 +91,13 @@ export DESTDIR=%{buildroot}
     --with-http_dav_module \
     --with-http_flv_module \
     --with-http_gzip_static_module \
+    --with-http_random_index_module \
+    --with-http_secure_link_module \
     --with-http_stub_status_module \
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
+    --with-ipv6 \
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --add-module=%{_builddir}/nginx-%{version}/nginx-upstream-fair
 make %{?_smp_mflags} 
@@ -164,6 +167,8 @@ fi
 %config(noreplace) %{nginx_confdir}/win-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf.default
 %config(noreplace) %{nginx_confdir}/mime.types.default
+%config(noreplace) %{nginx_confdir}/fastcgi.conf
+%config(noreplace) %{nginx_confdir}/fastcgi.conf.default
 %config(noreplace) %{nginx_confdir}/fastcgi_params
 %config(noreplace) %{nginx_confdir}/fastcgi_params.default
 %config(noreplace) %{nginx_confdir}/koi-win
@@ -177,10 +182,15 @@ fi
 %{perl_vendorarch}/auto/%{name}/%{name}.so
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
-%attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
-
 
 %changelog
+* Tue Apr 20 2010 David Hrbáč <david@hrbac.cz> - 0.7.65-1
+- new upstream version
+- changed ownership of logdir to root:root
+- added support for ipv6 (bug #561248)
+- added random_index_module
+- added secure_link_module
+
 * Wed Aug 12 2009 David Hrbáč <david@hrbac.cz> - 0.7.61-1
 - new upstream version
 
