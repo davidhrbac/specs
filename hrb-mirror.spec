@@ -19,7 +19,7 @@ Script to mirror hrb repositories.
 #rsync --delete-delay --delay-updates --delete -a 158.196.128.251::hrb/ /var/www/html/hrb33/
 rsync --delete-delay --delay-updates --delete -a repository.vsb.cz::hrb /var/www/html/hrb33/
 EOF
-
+%build
 %install
 %{__rm} -rf %{buildroot}
 %{__install} -Dp -m0755 hrb.cron %{buildroot}%{_sysconfdir}/cron.hourly/hrb33
