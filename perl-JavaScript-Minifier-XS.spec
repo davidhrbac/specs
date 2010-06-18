@@ -1,5 +1,5 @@
 Name:           perl-JavaScript-Minifier-XS
-Version:        0.05
+Version:        0.07
 Release:        1%{?dist}
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
@@ -54,5 +54,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jun 10 2010 David Hrbáč <david@hrbac.cz> - 0.07-1
+- new upstream version
+
 * Wed Sep 23 2009 David Hrbáč <david@hrbac.cz> - 0.05-1
 - initial build

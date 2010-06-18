@@ -23,8 +23,8 @@
 
 Summary:        Mozilla Thunderbird mail/newsgroup client
 Name:           thunderbird
-Version:        3.0.4
-Release:        2%{?dist}
+Version:        3.0.5
+Release:        1%{?dist}
 URL:            http://www.mozilla.org/projects/thunderbird/
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Group:          Applications/Internet
@@ -448,6 +448,9 @@ fi
 #===============================================================================
 
 %changelog
+* Fri Jun 18 2010 David Hrbáč <david@hrbac.cz> - 3.0.5-1
+- new upstream release
+
 * Tue Apr 06 2010 David Hrbáč <david@hrbac.cz> - 3.0.4-2
 - fixed branding
 

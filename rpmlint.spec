@@ -1,6 +1,6 @@
 Name:           rpmlint
-Version:        0.92
-Release:        1%{?dist}
+Version:        0.96
+Release:        2%{?dist}
 Summary:        Tool for checking common errors in RPM packages
 
 Group:          Development/Tools
@@ -20,8 +20,8 @@ Requires:       rpm-python >= 4.4
 Requires:       python >= 2.4
 # python-magic and python-enchant are actually optional dependencies, but
 # they bring quite desirable features.
-Requires:       python-magic
-Requires:       python-enchant
+#Requires:       python-magic
+#Requires:       python-enchant
 Requires:       cpio
 Requires:       binutils
 Requires:       desktop-file-utils
@@ -74,6 +74,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 27 2010 David Hrbáč <david@hrbac.cz> - 0.96-2
+- fixed dependencies
+
+* Fri Apr 23 2010 David Hrbáč <david@hrbac.cz> - 0.96-1
+- new upstream version
+
 * Mon Nov  2 2009 Ville Skyttä <ville.skytta@iki.fi> - 0.92-1
 - Update to 0.92; fixes #528535, and #531102 (partially).
 - Python byte compile patch applied/superseded upstream.

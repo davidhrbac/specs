@@ -7,7 +7,7 @@
 
 Name:           mailgraph
 Version:        1.14
-Release:        6%{?dist}%{?repotag:.%{repotag}}
+Release:        7%{?dist}%{?repotag:.%{repotag}}
 Summary:        A RRDtool frontend for Mail statistics
 
 Group:          System Environment/Daemons
@@ -89,7 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__install} -d -m 0775 $RPM_BUILD_ROOT/%{_localstatedir}/cache/mailgraph
 
 %{__install} -p -m 0755 mailgraph.cgi $RPM_BUILD_ROOT/%{_datadir}/mailgraph
-%{__install} -p -m 0644 mailgraph.cgi $RPM_BUILD_ROOT/%{_datadir}/mailgraph
+%{__install} -p -m 0644 mailgraph.css $RPM_BUILD_ROOT/%{_datadir}/mailgraph
 %{__install} -p -m 0755 mailgraph.pl $RPM_BUILD_ROOT/%{_sbindir}/mailgraph
 %{__install} -p -m 0755 %SOURCE1 $RPM_BUILD_ROOT/%{_initrddir}/mailgraph
 %{__install} -p -m 0644 %SOURCE2 $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/
@@ -199,6 +199,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 01 2010 David Hrbáč <david@hrbac.cz> - 1.14-7
+- fixed script permissions
+
 * Tue Jun 01 2010 David Hrbáč <david@hrbac.cz> - 1.14-6
 - fixed missing mailgraph.css
 

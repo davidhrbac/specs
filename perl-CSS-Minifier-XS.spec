@@ -1,5 +1,5 @@
 Name:       perl-CSS-Minifier-XS
-Version:    0.04
+Version:    0.05
 Release:    1%{?dist}
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
@@ -61,5 +61,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*.3*
 
 %changelog
+* Thu Jun 10 2010 David Hrbáč <david@hrbac.cz> - 0.05-1
+- new upstream version
+
 * Wed Sep 23 2009 David Hrbáč <david@hrbac.cz> - 0.04-1
 - initial build

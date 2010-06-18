@@ -1,6 +1,6 @@
 Name:      libmemcached
 Summary:   Client library and command line tools for memcached server
-Version:   0.35
+Version:   0.40
 Release:   1%{?dist}
 License:   BSD
 Group:     System Environment/Libraries
@@ -105,6 +105,9 @@ you will need to install %{name}-devel.
 
 
 %changelog
+* Thu May 06 2010 David Hrbáč <david@hrbac.cz> - 0.40-1
+- new upstream version
+
 * Wed Dec 02 2009 David Hrbáč <david@hrbac.cz> - 0.35-1
 - new upstream version
 

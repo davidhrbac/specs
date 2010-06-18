@@ -1,6 +1,6 @@
 Summary:	A modern implementation of a DBM
 Name:		tokyocabinet
-Version:	1.4.43
+Version:	1.4.44
 Release:	1%{?dist}
 License:	LGPLv2+
 Group:		Development/Libraries
@@ -33,7 +33,7 @@ developing with %{name}.
 
 %build
 autoconf
-%configure CFLAGS="$CFLAGS"
+%configure --enable-off64 CFLAGS="$CFLAGS"
 make %{?_smp_mflags}
 										
 %install
@@ -70,6 +70,12 @@ rm -rf %{buildroot}
 %doc doc/*
 
 %changelog
+* Tue May 04 2010 David Hrbáč <david@hrbac.cz> - 1.4.44-1
+- new upstream release
+
+* Tue May 04 2010 David Hrbáč <david@hrbac.cz> - 1.4.43-2
+- enable 64-bit file offset support
+
 * Sat Mar 13 2010 David Hrbáč <david@hrbac.cz> - 1.4.43-1
 - new upstream release
 
