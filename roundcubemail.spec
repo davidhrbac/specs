@@ -8,17 +8,17 @@ Summary: Round Cube Webmail is a browser-based multilingual IMAP client
 Group: Applications/System         
 License: GPLv2
 URL: http://www.roundcube.net
-Source0: roundcubemail-%{version}-dep.tar.gz
+Source0: http://downloads.sourceforge.net/project/roundcubemail/roundcubemail-dependent/%{version}/roundcubemail-%{version}-dep.tar.gz
 Source1: roundcubemail.conf
 Source2: roundcubemail.logrotate
-Source4: roundcubemail-README.fedora
+#Source4: roundcubemail-README.fedora
 Patch0: roundcubemail-0.2-beta-confpath.patch
 # From upstream, not in a release yet, BZ 476223.
 #Patch1: roundcubemail-0.2-beta-html2text.patch
 # From upstream, not in a release yet, BZ 476830.
 #Patch2: roundcubemail-0.2-beta-CVE-2008-5620.patch
 #Patch3: roundcubemail-0.2-CVE-2009-0413.patch
-Patch4: roundcubemail-0.2-stable-pg-mdb2.patch
+#Patch4: roundcubemail-0.2-stable-pg-mdb2.patch
 Patch5: roundcubemail-0.3.1-CVE-2010-0464.patch
 
 BuildArch: noarch
@@ -53,7 +53,7 @@ interface is fully skinnable using XHTML and CSS 2.
 #%patch1 -p0
 #%patch2 -p0
 #%patch3 -p0
-%patch4 -p0
+#%patch4 -p0
 %patch5 -p0
 
 # fix permissions and remove any .htaccess files
@@ -98,7 +98,7 @@ cp -pr %SOURCE2 %{buildroot}%{_sysconfdir}/logrotate.d/roundcubemail
 
 mkdir -p %{buildroot}/var/log/roundcubemail
 
-cp -pr %SOURCE4 .
+#cp -pr %SOURCE4 .
 
 # use dist files as config files
 mv %{buildroot}%{roundcubedir}/config/db.inc.php.dist %{buildroot}%{_sysconfdir}/roundcubemail/db.inc.php
@@ -135,7 +135,8 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL roundcubemail-README.fedora
+%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL 
+#roundcubemail-README.fedora
 %{roundcubedir}
 %dir %{_sysconfdir}/%{name}
 %attr(0640,root,apache) %config(noreplace) %{_sysconfdir}/%{name}/db.inc.php
@@ -146,6 +147,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/logrotate.d/roundcubemail
 
 %changelog
+* Sun Jun 20 2010 David Hrbáč <david@hrbac.cz> - 0.3.1-2
+- initial release
+
 * Mon Feb 01 2010 Jon Ciesla <limb@jcomserv.net> = 0.3.1-2
 - Patch to fix CVE-2010-0464, BZ 560143.
 

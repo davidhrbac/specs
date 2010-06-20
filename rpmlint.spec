@@ -1,6 +1,6 @@
 Name:           rpmlint
-Version:        0.96
-Release:        2%{?dist}
+Version:        0.97
+Release:        1%{?dist}
 Summary:        Tool for checking common errors in RPM packages
 
 Group:          Development/Tools
@@ -74,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jun 20 2010 David Hrbáč <david@hrbac.cz> - 0.97-1
+- new upstream version
+
 * Tue Apr 27 2010 David Hrbáč <david@hrbac.cz> - 0.96-2
 - fixed dependencies
 
