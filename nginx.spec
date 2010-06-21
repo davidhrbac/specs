@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.7.65
+Version:        0.7.67
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -184,6 +184,9 @@ fi
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 
 %changelog
+* Mon Jun 21 2010 David Hrbáč <david@hrbac.cz> - 0.7.67-1
+- new upstream version
+
 * Tue Apr 20 2010 David Hrbáč <david@hrbac.cz> - 0.7.65-1
 - new upstream version
 - changed ownership of logdir to root:root
