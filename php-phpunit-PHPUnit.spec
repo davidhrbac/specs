@@ -3,7 +3,7 @@
 %global channel pear.phpunit.de
 
 Name:           php-phpunit-PHPUnit
-Version:        3.4.11
+Version:        3.4.14
 Release:        1%{?dist}
 Summary:        Regression testing framework for unit tests
 
@@ -11,6 +11,7 @@ Group:          Development/Libraries
 License:        BSD
 URL:            http://www.phpunit.de
 Source0:        http://pear.phpunit.de/get/%{pear_name}-%{version}.tgz
+Source1:	http://github.com/sebastianbergmann/phpunit/raw/3.4/README.markdown
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -47,8 +48,8 @@ for the creation, execution and analysis of Unit Tests.
 %setup -qc
 # package.xml is V2
 mv package.xml %{pear_name}-%{version}/%{name}.xml
-cd %{pear_name}-%{version}
 
+cp %{SOURCE1} README.markdown
 
 %build
 cd %{pear_name}-%{version}
@@ -97,7 +98,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc %{pear_name}-%{version}/docdir/%{pear_name}/%{pear_name}/*
+%doc %{pear_name}-%{version}/docdir/%{pear_name}/%{pear_name}/* README.markdown
 %{pear_xmldir}/%{name}.xml
 %{pear_phpdir}/%{pear_name}
 %{_bindir}/phpunit
@@ -105,6 +106,9 @@ fi
 
 
 %changelog
+* Wed Jun 23 2010 David Hrbáč <david@hrbac.cz> - 3.4.14-1
+- new upstream release
+
 * Sat Feb 20 2010 David Hrbáč <david@hrbac.cz> - 3.4.11-1
 - new upstream release
 
