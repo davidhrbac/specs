@@ -15,8 +15,8 @@ Source1:	http://github.com/sebastianbergmann/phpunit/raw/3.4/README.markdown
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-#BuildRequires:  php-pear(PEAR) >= 1.8.1
-#BuildRequires:  php-channel(%{channel})
+BuildRequires:  php-pear(PEAR) >= 1.8.1
+BuildRequires:  php-channel(%{channel})
 
 Requires:       php-xml >= 5.1.4
 Requires:       php-pear(PEAR) >= 1.8.1

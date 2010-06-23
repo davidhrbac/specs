@@ -22,15 +22,15 @@
 
 Summary:        Mozilla Firefox Web browser
 Name:           firefox
-Version:        3.6.3
-Release:        2%{?prever}%{?dist}
+Version:        3.6.4
+Release:        1%{?prever}%{?dist}
 URL:            http://www.mozilla.org/projects/firefox/
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Group:          Applications/Internet
 # From ftp://ftp.mozilla.org/pub/firefox/releases/%{version}%{?pretag}/source
 Source0:        firefox-%{version}%{?prever}.source.tar.bz2
 %if %{build_langpacks}
-Source2:        firefox-langpacks-%{version}-20100403.tar.bz2
+Source2:        firefox-langpacks-%{version}-20100622.tar.bz2
 %endif
 Source10:       firefox-mozconfig
 Source11:       firefox-mozconfig-branded
@@ -358,6 +358,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 #---------------------------------------------------------------------
 
 %changelog
+* Wed Jun 23 2010 David Hrbáč <david@hrbac.cz> - 3.6.4-1
+- new upstream release
+
 * Tue Apr 06 2010 David Hrbáč <david@hrbac.cz> - 3.6.3-2
 - rebuild to pick up new xulrunner 
 

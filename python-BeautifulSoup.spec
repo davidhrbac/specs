@@ -4,7 +4,7 @@
 %define oname   BeautifulSoup
 
 Name:           python-BeautifulSoup
-Version:        3.0.8
+Version:        3.0.8.1
 Release:        1%{?dist}
 Summary:        HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -73,5 +73,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Jun 23 2010 David Hrbáč <david@hrbac.cz> - 3.0.8.1-1
+- new upstream version
+
 * Tue Mar 09 2010 David Hrbáč <david@hrbac.cz> - 3.0.8-1
 - initial release
