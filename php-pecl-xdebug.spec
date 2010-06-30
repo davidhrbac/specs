@@ -5,7 +5,7 @@
 %define pecl_name xdebug
 
 Name:           php-pecl-xdebug
-Version:        2.0.5
+Version:        2.1.0
 Release:        1%{?dist}
 Summary:        PECL package for debugging PHP scripts
 
@@ -17,22 +17,22 @@ Source0:        http://pecl.php.net/get/xdebug-%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  automake php-devel php-pear 
 #>= 1:1.4.9-1.2
-%if 0%{?fedora}
+#%if 0%{?fedora}
 BuildRequires:  libedit-devel
-%endif
+#%endif
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 Provides:       php-pecl(Xdebug) = %{version}
 
-%if 0%{?php_zend_api}
+##%if 0%{?php_zend_api}
 %define config_flags --with-libedit
 Requires:       php(zend-abi) = %{php_zend_api}
 Requires:       php(api) = %{php_core_api}
-%else
+##%else
 # for EL-5
-%define config_flags --without-libedit
-Requires:       php-api = %{php_apiver}
-%endif
+##%define config_flags --without-libedit
+##Requires:       php-api = %{php_apiver}
+##%endif
 
 %description
 The Xdebug extension helps you debugging your script by providing a lot
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 30 2010 David Hrbáč <david@hrbac.cz> - 2.1.0-1
+- new upstream version
+
 * Sun Sep 20 2009 David Hrbáč <david@hrbac.cz> - 2.0.5-1
 - new upstream version
 
