@@ -1,8 +1,8 @@
 Summary: Secure imap and pop3 server
 Name: dovecot
 Epoch: 1
-Version: 1.2.11
-Release: 2%{?dist}
+Version: 1.2.12
+Release: 1%{?dist}
 #dovecot itself is MIT, a few sources are PD, (manage)sieve is LGPLv2, perfect_maildir.pl is GPLv2+
 License: MIT and LGPLv2 and GPLv2+
 Group: System Environment/Daemons
@@ -15,8 +15,8 @@ Group: System Environment/Daemons
 
 %define build_sieve 1
 %define build_managesieve 1
-%define ver4mansieve 1.2.10
-%define sieve_version 0.1.15
+%define ver4mansieve 1.2.12
+%define sieve_version 0.1.17
 %define sieve_name dovecot-1.2-sieve
 %define managesieve_version 0.11.11
 %define managesieve_name dovecot-1.2-managesieve
@@ -42,8 +42,7 @@ Source12: dovecot.8
 Source13: dovecotpw.1
 Source14: dovecot.conf.5
 
-# 3x Fedora specific
-Patch1: dovecot-1.1-default-settings.patch
+#Patch1: dovecot-1.2-default-settings.patch
 Patch2: dovecot-1.0.beta2-mkcert-permissions.patch
 Patch3: dovecot-1.0.rc7-mkcert-paths.patch
 
@@ -175,7 +174,7 @@ This package provides the development files for dovecot.
 %setup -q
 
 zcat %{SOURCE11} | patch -p1 --fuzz=0 -s
-%patch1 -p1 -b .default-settings
+#%patch1 -p1 -b .default-settings
 %patch2 -p1 -b .mkcert-permissions
 %patch3 -p1 -b .mkcert-paths
 
@@ -341,6 +340,7 @@ mkdir -p $RPM_BUILD_ROOT/var/lib/dovecot
 %if %{build_sieve}
 # dovecot-sieve
 pushd %{sieve_name}-%{sieve_version}
+install -p -m644 doc/spamtest-virustest.txt $RPM_BUILD_ROOT%{docdir}-%{version}
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 %endif
@@ -424,6 +424,7 @@ fi
 %if %{build_sieve}
 %files sieve
 %defattr(-,root,root,-)
+%doc doc/spamtest-virustest.txt
 #%{_libdir}/%{name}/lda/lib90_cmusieve_plugin.so
 %{_bindir}/sieve-filter
 %{_bindir}/sieve-test
@@ -485,6 +486,9 @@ fi
 
 
 %changelog
+* Tue Jul 13 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.12-1
+- new upstream release
+
 * Mon Mar 15 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.11-2
 - fix missing bzip2 support in zlib plugin (#572797)
 
