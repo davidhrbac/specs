@@ -1,8 +1,8 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?pyver: %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
+%{!?python_version: %define python_version %(%{__python} -c "import sys ; print sys.version[:3]")}
 
 Name:           python-nose
-Version:        0.10.3
+Version:        0.11.2
 Release:        1%{?dist}
 Summary:        A discovery-based unittest extension for Python
 
@@ -24,8 +24,17 @@ nose provides an alternate test discovery and running process for unittest,
 one that is intended to mimic the behavior of py.test as much as is
 reasonably possible without resorting to too much magic.
 
+%package docs
+Summary: Nose Documentation
+Group: Documentation
+
+%description docs
+Documentation for Nose
+
 %prep
 %setup -q -n nose-%{version}
+
+dos2unix examples/attrib_plugin.py 
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -35,18 +44,37 @@ rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT \
         --single-version-externally-managed --install-data=%{_datadir}
 
+pushd doc
+make html
+rm -rf .build/html/.buildinfo .build/html/_sources
+mv .build/html ..
+rm -rf .build
+popd
+cp -a doc reST
+
+%check
+%{__python} selftest.py
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS CHANGELOG lgpl.txt NEWS README.txt
+%doc AUTHORS CHANGELOG html lgpl.txt NEWS README.txt
 %{_bindir}/nosetests
+%{_bindir}/nosetests-%{python_version} 
 %{_mandir}/man1/nosetests.1.gz
-%{python_sitelib}/nose-%{version}-py%{pyver}.egg-info
+%{python_sitelib}/nose-%{version}-py%{python_version}.egg-info
 %{python_sitelib}/nose
 
+%files docs
+%defattr(-,root,root,-)
+%doc html reST examples
+
 %changelog
+* Wed Jul 21 2010 David Hrbáč <david@hrbac.cz> - 0.11.2-1
+- new upstream release
+
 * Sat Aug 02 2008 Luke Macken <lmacken@redhat.com> 0.10.3-1
 - Update to 0.10.3
 
