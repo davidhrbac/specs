@@ -1,7 +1,7 @@
 %define svn svn135
 Name:           fuzzyocr
 Version:        3.6.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        FuzzyOCR is a spamassassin plugin used to identify image spam
 Group:          Applications/Internet
 License:        Apache 2.0
@@ -91,6 +91,9 @@ for file in /var/log/fuzzyocr.log /var/amavis/.spamassassin/FuzzyOcr.db /var/ama
 done
 
 %changelog
+* Wed Jul 28 2010 David Hrbáč <david@hrbac.cz> - 3.6.0-2
+- updated SA 3.3.x patch
+
 * Tue Mar 30 2010 David Hrbáč <david@hrbac.cz> - 3.6.0-1
 - new upstream release
 - fix for SA 3.3.0 - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=568233
