@@ -5,7 +5,7 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.25
+Version:        1.4.8
 Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
@@ -13,7 +13,7 @@ Group:          System Environment/Daemons
 License:        GPLv2+
 
 URL:            http://haproxy.1wt.eu/
-Source0:        http://haproxy.1wt.eu/download/1.3/src/haproxy-%{version}.tar.gz
+Source0:        http://haproxy.1wt.eu/download/1.4/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.init
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
@@ -57,8 +57,20 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}"
+make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1
 
+# build the halog contrib program.  It has 2 version halog64 and halog.  Make
+# sure it is installed as 'halog' no matter what.
+halog="halog"
+%ifarch x86_64
+halog="halog64"
+%endif
+
+pushd contrib/halog
+make ${halog}
+mv ${halog} halog.tmp
+mv halog.tmp halog
+popd
 
 %install
 rm -rf %{buildroot}
@@ -70,6 +82,8 @@ make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
 %{__install} -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
+%{__install} -d -m 0755 %{buildroot}%{_bindir}
+%{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
 
 for httpfile in $(find ./examples/errorfiles/ -type f) 
 do
@@ -119,8 +133,7 @@ fi
 %doc examples/cttproxy-src.cfg
 %doc examples/haproxy.cfg
 %doc examples/tarpit.cfg
-%doc examples/tcp-splicing-sample.cfg
-%doc CHANGELOG CONTRIB LICENSE README
+%doc CHANGELOG LICENSE README
 %dir %{haproxy_datadir}
 %dir %{haproxy_datadir}/*
 %dir %{haproxy_confdir}
@@ -128,11 +141,15 @@ fi
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_initrddir}/%{name}
 %{_sbindir}/%{name}
+%{_bindir}/halog
 %{_mandir}/man1/%{name}.1.gz
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 
 %changelog
+* Fri Aug 27 2010 David Hrbáč <david@hrbac.cz> - 1.4.8-1
+- new upstream release
+
 * Fri Aug 27 2010 David Hrbáč <david@hrbac.cz> - 1.3.25-1
 - new upstream release
 
