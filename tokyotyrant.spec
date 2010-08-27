@@ -1,5 +1,5 @@
 Name:             tokyotyrant
-Version:          1.1.40
+Version:          1.1.41
 Release:          1%{?dist}
 Summary:          A network interface to Tokyo Cabinet
 
@@ -134,6 +134,9 @@ fi
 %{_mandir}/man3/t*.gz
 
 %changelog
+* Fri Aug 27 2010 David Hrbáč <david@hrbac.cz> - 1.1.41-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.1.40-1
 - new upstream release
 

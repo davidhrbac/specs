@@ -19,7 +19,7 @@
 
 Summary: 	Cluster File System
 Name: 		glusterfs
-Version: 	2.0.8
+Version: 	2.0.9
 Release: 	1%{?pre:.%{pre}}%{?dist}
 License: 	GPLv3+
 Group: 		System Environment/Base
@@ -128,6 +128,8 @@ chmod -x libglusterfsclient/src/*.{c,h}
 
 
 %build
+# Temp disable stack-protector until upstream fixes code
+CFLAGS=`echo "%optflags"|sed 's/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=1/'`
 %configure %{?_without_ibverbs} %{?_without_client} %{?_without_python}
 # Remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -212,7 +214,6 @@ fi
 %{_libdir}/*.so.*
 %{_sbindir}/glusterfs
 %{_sbindir}/glusterfsd
-%{_bindir}/glusterfs-volgen
 %{_mandir}/man8/glusterfs.8*
 %dir /var/log/glusterfs/
 
@@ -237,12 +238,17 @@ fi
 %files devel
 %{_includedir}/glusterfs/
 %{_includedir}/libglusterfsclient.h
+%{_datadir}/glusterfs/*
+%{_bindir}/glusterfs-volgen
 %exclude %{_libdir}/*.a
 %exclude %{_libdir}/*.la
 %{_libdir}/*.so
 
 
 %changelog
+* Fri Aug 27 2010 David Hrbáč <david@hrbac.cz> - 2.0.9-1
+- new upstream release
+
 * Thu Nov 19 2009 David Hrbáč <david@hrbac.cz> - 2.0.8-1
 - initial release
 
