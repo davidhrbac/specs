@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.7.67
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -163,6 +163,7 @@ fi
 %{_initrddir}/%{name}
 %dir %{nginx_confdir}
 %dir %{nginx_confdir}/conf.d
+%dir %{nginx_logdir}
 %config(noreplace) %{nginx_confdir}/conf.d/*.conf
 %config(noreplace) %{nginx_confdir}/win-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf.default
@@ -184,6 +185,12 @@ fi
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 
 %changelog
+* Fri Sep 03 2010 David Hrbáč <david@hrbac.cz> - 0.7.67-3
+- better restart handling within init script
+
+* Thu Sep 02 2010 David Hrbáč <david@hrbac.cz> - 0.7.67-2
+- added missing /var/log/nginx/ folder
+ 
 * Mon Jun 21 2010 David Hrbáč <david@hrbac.cz> - 0.7.67-1
 - new upstream version
 

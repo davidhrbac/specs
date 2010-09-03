@@ -1,7 +1,7 @@
 Summary: Secure imap and pop3 server
 Name: dovecot
 Epoch: 1
-Version: 1.2.12
+Version: 1.2.14
 Release: 1%{?dist}
 #dovecot itself is MIT, a few sources are PD, (manage)sieve is LGPLv2, perfect_maildir.pl is GPLv2+
 License: MIT and LGPLv2 and GPLv2+
@@ -340,7 +340,7 @@ mkdir -p $RPM_BUILD_ROOT/var/lib/dovecot
 %if %{build_sieve}
 # dovecot-sieve
 pushd %{sieve_name}-%{sieve_version}
-install -p -m644 doc/spamtest-virustest.txt $RPM_BUILD_ROOT%{docdir}-%{version}
+#install -p -m644 doc/spamtest-virustest.txt $RPM_BUILD_ROOT%{docdir}-%{version}
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 %endif
@@ -424,7 +424,7 @@ fi
 %if %{build_sieve}
 %files sieve
 %defattr(-,root,root,-)
-%doc doc/spamtest-virustest.txt
+%doc sieve/spamtest-virustest.txt
 #%{_libdir}/%{name}/lda/lib90_cmusieve_plugin.so
 %{_bindir}/sieve-filter
 %{_bindir}/sieve-test
@@ -486,6 +486,12 @@ fi
 
 
 %changelog
+* Tue Aug 31 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.14-1
+- new upstream release
+
+* Tue Aug 31 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.13-1
+- new upstream release
+
 * Tue Jul 13 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.12-1
 - new upstream release
 
