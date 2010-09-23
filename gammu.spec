@@ -1,7 +1,7 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:		gammu
-Version:	1.27.93
+Version:	1.28.0
 Release:	1%{?dist}
 Summary:	Command Line utility to work with mobile phones
 
@@ -166,6 +166,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 03 2010 David Hrbáč <david@hrbac.cz> - 1.28.0-1
+- new upstream release
+
 * Wed Apr 14 2010 David Hrbáč <david@hrbac.cz> - 1.27.93-1
 - new upstream release
 
