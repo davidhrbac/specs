@@ -6,7 +6,7 @@
 Summary: The PHP HTML-embedded scripting language
 Name: php
 Version: 5.2.14
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: PHP
 Group: Development/Languages
 URL: http://www.php.net/
@@ -291,6 +291,26 @@ Requires: php-common = %{version}-%{release}
 The php-dba package contains a dynamic shared object that will add
 support for using the DBA database abstraction layer to PHP.
 
+%package mcrypt
+Summary: Standard PHP module provides mcrypt library support
+Group: Development/Languages
+Requires: php-common = %{version}-%{release}
+BuildRequires: libmcrypt-devel
+
+%description mcrypt
+The php-mcrypt package contains a dynamic shared object that will add
+support for using the mcrypt library to PHP.
+
+%package mhash
+Summary: Standard PHP module provides mhash support
+Group: Development/Languages
+Requires: php-common = %{version}-%{release}
+BuildRequires: mhash-devel
+
+%description mhash
+The php-mhash package contains a dynamic shared object that will add
+support for using the mhash library to PHP.
+
 %prep
 %setup -q
 %patch1 -p1 -b .gnusrc
@@ -470,6 +490,8 @@ build --enable-force-cgi-redirect \
       --enable-zip=shared \
       --with-readline \
       --enable-dbase=shared
+      --with-mcrypt=shared,%{_prefix} \
+      --with-mhash=shared,%{_prefix}
 popd
 
 # Build Apache module, and the CLI SAPI, /usr/bin/php
@@ -537,7 +559,7 @@ install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/lib/php/session
 for mod in pgsql mysql mysqli odbc ldap snmp xmlrpc imap \
     mbstring ncurses gd dom xsl soap bcmath dba xmlreader xmlwriter \
     pdo pdo_mysql pdo_pgsql pdo_odbc pdo_sqlite json zip \
-    dbase; do
+    dbase mcrypt mhash; do
     cat > $RPM_BUILD_ROOT%{_sysconfdir}/php.d/${mod}.ini <<EOF
 ; Enable ${mod} extension module
 extension=${mod}.so
@@ -636,8 +658,13 @@ rm files.* macros.php
 %files bcmath -f files.bcmath
 %files dba -f files.dba
 %files pdo -f files.pdo
+%files mcrypt -f files.mcrypt
+%files mhash -f files.mhash
 
 %changelog
+* Fri Oct 01 2010 David Hrbáč <david@hrbac.cz> - 5.2.14-2
+- added mcrypt and mhash modules
+
 * Tue Aug 24 2010 David Hrbáč <david@hrbac.cz> - 5.2.14-1
 - new upstream release
 
