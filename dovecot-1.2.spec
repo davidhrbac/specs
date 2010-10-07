@@ -1,7 +1,7 @@
 Summary: Secure imap and pop3 server
 Name: dovecot
 Epoch: 1
-Version: 1.2.14
+Version: 1.2.15
 Release: 1%{?dist}
 #dovecot itself is MIT, a few sources are PD, (manage)sieve is LGPLv2, perfect_maildir.pl is GPLv2+
 License: MIT and LGPLv2 and GPLv2+
@@ -15,10 +15,10 @@ Group: System Environment/Daemons
 
 %define build_sieve 1
 %define build_managesieve 1
-%define ver4mansieve 1.2.12
-%define sieve_version 0.1.17
+%define ver4mansieve 1.2.15
+%define sieve_version 0.1.18
 %define sieve_name dovecot-1.2-sieve
-%define managesieve_version 0.11.11
+%define managesieve_version 0.11.12
 %define managesieve_name dovecot-1.2-managesieve
 
 %if %{?fedora}00%{?rhel} < 6
@@ -340,8 +340,8 @@ mkdir -p $RPM_BUILD_ROOT/var/lib/dovecot
 %if %{build_sieve}
 # dovecot-sieve
 pushd %{sieve_name}-%{sieve_version}
-#install -p -m644 doc/spamtest-virustest.txt $RPM_BUILD_ROOT%{docdir}-%{version}
-make install DESTDIR=$RPM_BUILD_ROOT
+install -p -m644 doc/spamtest-virustest.txt $RPM_BUILD_ROOT%{docdir}-%{version}
+make install DESTDIR=$RPM_BUILD_ROOT DOCDIR=$RPM_BUILD_ROOT%{docdir}-%{version}
 popd
 %endif
 
@@ -424,7 +424,7 @@ fi
 %if %{build_sieve}
 %files sieve
 %defattr(-,root,root,-)
-%doc sieve/spamtest-virustest.txt
+%doc /dovecot/sieve/spamtest-virustest.txt
 #%{_libdir}/%{name}/lda/lib90_cmusieve_plugin.so
 %{_bindir}/sieve-filter
 %{_bindir}/sieve-test
@@ -486,6 +486,9 @@ fi
 
 
 %changelog
+* Thu Oct 07 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.15-1
+- new upstream release
+
 * Tue Aug 31 2010 David Hrbáč <david@hrbac.cz> - 1:1.2.14-1
 - new upstream release
 

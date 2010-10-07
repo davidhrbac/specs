@@ -489,9 +489,9 @@ build --enable-force-cgi-redirect \
       --enable-json=shared \
       --enable-zip=shared \
       --with-readline \
-      --enable-dbase=shared
-      --with-mcrypt=shared,%{_prefix} \
-      --with-mhash=shared,%{_prefix}
+      --enable-dbase=shared \
+      --with-mcrypt=shared \
+      --with-mhash=shared
 popd
 
 # Build Apache module, and the CLI SAPI, /usr/bin/php
