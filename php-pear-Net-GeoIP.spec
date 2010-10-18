@@ -1,14 +1,14 @@
 %{!?__pear: %{expand: %%global __pear %{_bindir}/pear}}
-%global pear_name Net_DNS
+%global pear_name Net_GeoIP
 
-Name:           php-pear-Net-DNS
-Version:        1.0.5
+Name:           php-pear-Net-GeoIP
+Version:        1.0.0RC3
 Release:        1%{?dist}
-Summary:        Resolver library used to communicate with a DNS server
+Summary:        Library to perform geo-location lookups of IP addresses
 
 Group:          Development/Libraries
-License:        LGPL
-URL:            http://pear.php.net/package/Net_DNS
+License:        LGPL 2.1
+URL:            http://pear.php.net/package/Net_GeoIP
 Source0:        http://pear.php.net/get/%{pear_name}-%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -20,11 +20,8 @@ Provides:       php-pear(%{pear_name}) = %{version}
 
 
 %description
-A resolver library used to communicate with a name server to perform DNS
-queries, zone transfers, dynamic DNS updates, etc.
-Creates an object hierarchy from a DNS server response, which allows you
-to view all of the information given by the DNS server. It bypasses the
-system resolver library and communicates directly with the server.
+A library that uses Maxmind's GeoIP databases to accurately determine
+geographic location of an IP address.
 
 %prep
 %setup -q -c
@@ -47,7 +44,6 @@ rm -rf $RPM_BUILD_ROOT docdir
 
 # Clean up unnecessary files
 rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/.??*
-rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/tests
 
 # Install XML package description
 mkdir -p $RPM_BUILD_ROOT%{pear_xmldir}
@@ -77,34 +73,11 @@ fi
 %{pear_xmldir}/%{name}.xml
 # Expand this as needed to avoid owning dirs owned by our dependencies
 # and to avoid unowned dirs
-%{pear_phpdir}/Net/DNS/Header.php
-%{pear_phpdir}/Net/DNS/Packet.php
-%{pear_phpdir}/Net/DNS/Question.php
-%{pear_phpdir}/Net/DNS/Resolver.php
-%{pear_phpdir}/Net/DNS/RR.php
-%{pear_phpdir}/Net/DNS/RR/A.php
-%{pear_phpdir}/Net/DNS/RR/AAAA.php
-%{pear_phpdir}/Net/DNS/RR/CNAME.php
-%{pear_phpdir}/Net/DNS/RR/HINFO.php
-%{pear_phpdir}/Net/DNS/RR/MX.php
-%{pear_phpdir}/Net/DNS/RR/NAPTR.php
-%{pear_phpdir}/Net/DNS/RR/NS.php
-%{pear_phpdir}/Net/DNS/RR/RP.php
-%{pear_phpdir}/Net/DNS/RR/PTR.php
-%{pear_phpdir}/Net/DNS/RR/SPF.php
-%{pear_phpdir}/Net/DNS/RR/SOA.php
-%{pear_phpdir}/Net/DNS/RR/SRV.php
-%{pear_phpdir}/Net/DNS/RR/TSIG.php
-%{pear_phpdir}/Net/DNS/RR/TXT.php
-%{pear_phpdir}/Net/DNS.php
-##{pear_phpdir}/Net/generate_package_xml.php
-
-
+%{pear_phpdir}/Net/GeoIP.php
+%{pear_phpdir}/Net/GeoIP/DMA.php
+%{pear_phpdir}/Net/GeoIP/Location.php
+%{pear_datadir}/Net_GeoIP
+%{pear_testdir}/Net_GeoIP
 
 
 %changelog
-* Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 1.0.5-1
-- new upstream release
-
-* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.0.1-1 
-- initial release

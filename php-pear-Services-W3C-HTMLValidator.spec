@@ -1,14 +1,14 @@
 %{!?__pear: %{expand: %%global __pear %{_bindir}/pear}}
-%global pear_name Net_DNS
+%global pear_name Services_W3C_HTMLValidator
 
-Name:           php-pear-Net-DNS
-Version:        1.0.5
+Name:           php-pear-Services-W3C-HTMLValidator
+Version:        1.0.0
 Release:        1%{?dist}
-Summary:        Resolver library used to communicate with a DNS server
+Summary:        An Object Oriented Interface to the W3C HTML Validator service
 
 Group:          Development/Libraries
-License:        LGPL
-URL:            http://pear.php.net/package/Net_DNS
+License:        BSD
+URL:            http://pear.php.net/package/Services_W3C_HTMLValidator
 Source0:        http://pear.php.net/get/%{pear_name}-%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -17,14 +17,22 @@ BuildRequires:  php-pear >= 1:1.4.9-1.2
 Requires(post): %{__pear}
 Requires(postun): %{__pear}
 Provides:       php-pear(%{pear_name}) = %{version}
-
+Requires:       php-pear(HTTP_Request2) >= 0.2.0, php-pear(PEAR) >= 1.5.4
 
 %description
-A resolver library used to communicate with a name server to perform DNS
-queries, zone transfers, dynamic DNS updates, etc.
-Creates an object hierarchy from a DNS server response, which allows you
-to view all of the information given by the DNS server. It bypasses the
-system resolver library and communicates directly with the server.
+This package provides an object oriented interface to the API
+of the W3 HTML Validator application (http://validator.w3.org/).
+With this package you can connect to a running instance of the validator
+and
+retrieve the validation results (true|false) as well as the errors and
+warnings
+for a web page.
+
+By using the SOAP 1.2 output format from the validator, you are returned
+simple
+objects containing all the information from the validator. With this
+package it is
+trivial to build a validation system for web publishing.
 
 %prep
 %setup -q -c
@@ -43,11 +51,13 @@ cd %{pear_name}-%{version}
 rm -rf $RPM_BUILD_ROOT docdir
 %{__pear} install --nodeps --packagingroot $RPM_BUILD_ROOT %{name}.xml
 
+# Move documentation
+mkdir -p docdir
+mv $RPM_BUILD_ROOT%{pear_docdir}/* docdir
 
 
 # Clean up unnecessary files
 rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/.??*
-rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/tests
 
 # Install XML package description
 mkdir -p $RPM_BUILD_ROOT%{pear_xmldir}
@@ -71,40 +81,23 @@ fi
 
 %files
 %defattr(-,root,root,-)
-
+%doc %{pear_name}-%{version}/docdir/%{pear_name}/*
 
 
 %{pear_xmldir}/%{name}.xml
 # Expand this as needed to avoid owning dirs owned by our dependencies
 # and to avoid unowned dirs
-%{pear_phpdir}/Net/DNS/Header.php
-%{pear_phpdir}/Net/DNS/Packet.php
-%{pear_phpdir}/Net/DNS/Question.php
-%{pear_phpdir}/Net/DNS/Resolver.php
-%{pear_phpdir}/Net/DNS/RR.php
-%{pear_phpdir}/Net/DNS/RR/A.php
-%{pear_phpdir}/Net/DNS/RR/AAAA.php
-%{pear_phpdir}/Net/DNS/RR/CNAME.php
-%{pear_phpdir}/Net/DNS/RR/HINFO.php
-%{pear_phpdir}/Net/DNS/RR/MX.php
-%{pear_phpdir}/Net/DNS/RR/NAPTR.php
-%{pear_phpdir}/Net/DNS/RR/NS.php
-%{pear_phpdir}/Net/DNS/RR/RP.php
-%{pear_phpdir}/Net/DNS/RR/PTR.php
-%{pear_phpdir}/Net/DNS/RR/SPF.php
-%{pear_phpdir}/Net/DNS/RR/SOA.php
-%{pear_phpdir}/Net/DNS/RR/SRV.php
-%{pear_phpdir}/Net/DNS/RR/TSIG.php
-%{pear_phpdir}/Net/DNS/RR/TXT.php
-%{pear_phpdir}/Net/DNS.php
-##{pear_phpdir}/Net/generate_package_xml.php
+%{pear_phpdir}/Services/W3C/HTMLValidator/Error.php
+%{pear_phpdir}/Services/W3C/HTMLValidator/Exception.php
+%{pear_phpdir}/Services/W3C/HTMLValidator/Message.php
+%{pear_phpdir}/Services/W3C/HTMLValidator/Response.php
+%{pear_phpdir}/Services/W3C/HTMLValidator/Warning.php
+%{pear_phpdir}/Services/W3C/HTMLValidator.php
 
-
+%{pear_testdir}/Services_W3C_HTMLValidator
 
 
 %changelog
-* Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 1.0.5-1
-- new upstream release
-
-* Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.0.1-1 
+* Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 1.0.0-1
 - initial release
+

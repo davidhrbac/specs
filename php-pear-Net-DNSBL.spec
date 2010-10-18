@@ -2,8 +2,8 @@
 %global pear_name Net_DNSBL
 
 Name:           php-pear-Net-DNSBL
-Version:        1.3.3
-Release:        2%{?dist}
+Version:        1.3.4
+Release:        1%{?dist}
 Summary:        Checks if a given Host or URL is listed on an DNS-based Blackhole List (DNSBL, Real-time Blackhole List or RBL) or Spam URI Realtime Blocklist (SURBL)
 
 Group:          Development/Libraries
@@ -17,7 +17,11 @@ BuildRequires:  php-pear >= 1:1.4.9-1.2
 Requires(post): %{__pear}
 Requires(postun): %{__pear}
 Provides:       php-pear(%{pear_name}) = %{version}
-Requires:       php-pear(Cache_Lite) >= 1.4.1, php-pear(Net_DNS) >= 1.0.0, php-pear(Net_CheckIP) >= 1.1, php-pear(HTTP_Request) >= 1.2.3, php-pear(PEAR) >= 1.4.0b1
+Requires:       php-pear(Cache_Lite) >= 1.4.1
+Requires:       php-pear(Net_DNS) >= 1.0.0
+Requires:       php-pear(Net_CheckIP) >= 1.1
+Requires:       php-pear(HTTP_Request) >= 1.2.3
+Requires:       php-pear(PEAR) >= 1.4.0b1
 
 %description
 Checks if a given Host or URL is listed on an DNS-based Blackhole List
@@ -29,7 +33,6 @@ Checks if a given Host or URL is listed on an DNS-based Blackhole List
 [ -f package2.xml ] || mv package.xml package2.xml
 mv package2.xml %{pear_name}-%{version}/%{name}.xml
 cd %{pear_name}-%{version}
-
 
 %build
 cd %{pear_name}-%{version}
@@ -45,6 +48,8 @@ rm -rf $RPM_BUILD_ROOT docdir
 
 # Clean up unnecessary files
 rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/.??*
+rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/data
+rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/doc
 
 # Install XML package description
 mkdir -p $RPM_BUILD_ROOT%{pear_xmldir}
@@ -68,18 +73,17 @@ fi
 
 %files
 %defattr(-,root,root,-)
-
-
-
 %{pear_xmldir}/%{name}.xml
 # Expand this as needed to avoid owning dirs owned by our dependencies
 # and to avoid unowned dirs
 %{pear_phpdir}/Net/DNSBL/SURBL.php
 %{pear_phpdir}/Net/DNSBL.php
-
 %{pear_testdir}/Net_DNSBL
 
 
 %changelog
+* Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 1.3.4-1
+- new upstream release
+
 * Mon Mar 01 2010 David Hrbáč <david@hrbac.cz> - 1.3.3-1
 - added changelog :o)
