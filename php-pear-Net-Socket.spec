@@ -2,8 +2,8 @@
 %define pear_name Net_Socket
 
 Name:           php-pear-Net-Socket
-Version:        1.0.9
-Release:        3%{?dist}
+Version:        1.0.10
+Release:        1%{?dist}
 Summary:        Network Socket Interface
 Summary(fr):    Gestion des "sockets" réseaux
 
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 1.0.10-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.0.9-3
 - initial rebuild
 
