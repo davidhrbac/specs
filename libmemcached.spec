@@ -1,16 +1,19 @@
 Name:      libmemcached
 Summary:   Client library and command line tools for memcached server
-Version:   0.40
+Version:   0.44
 Release:   1%{?dist}
 License:   BSD
 Group:     System Environment/Libraries
-URL:       http://tangent.org/552/libmemcached.html
-Source0:   http://download.tangent.org/libmemcached-%{version}.tar.gz
+URL:       http://libmemcached.org/
+Source0:   http://launchpad.net/libmemcached/1.0/%{version}/+download/libmemcached-%{version}.tar.gz
 
+# Add -lsasl2 to libmemcached.pc
+# See http://lists.libmemcached.org/pipermail/libmemcached-discuss/2010-October/002207.html
+Patch0:    libmemcached-sasl.patch
 
 # checked during configure (for test suite)
 BuildRequires: memcached
-
+BuildRequires: cyrus-sasl-devel
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 
@@ -44,6 +47,7 @@ you will need to install %{name}-devel.
 
 %prep
 %setup -q
+%patch0 -p1 -b .sasl
 
 %{__rm} -f libmemcached/hsieh_hash.c 
 
@@ -83,12 +87,14 @@ you will need to install %{name}-devel.
 %defattr (-,root,root,-) 
 %doc AUTHORS COPYING README THANKS TODO ChangeLog
 %{_bindir}/mem*
-%exclude %{_libdir}/libmemcached.a
 %exclude %{_libdir}/libmemcached.la
-%exclude %{_libdir}/libmemcachedutil.a
+%exclude %{_libdir}/libmemcachedprotocol.la
 %exclude %{_libdir}/libmemcachedutil.la
-%{_libdir}/libmemcached.so.*
-%{_libdir}/libmemcachedutil.so.*
+%exclude %{_libdir}/libhashkit.la
+%{_libdir}/libhashkit.so.0*
+%{_libdir}/libmemcached.so.6*
+%{_libdir}/libmemcachedprotocol.so.0*
+%{_libdir}/libmemcachedutil.so.1*
 %{_mandir}/man1/mem*
 
 
@@ -96,15 +102,21 @@ you will need to install %{name}-devel.
 %defattr (-,root,root,-) 
 %doc examples
 %{_includedir}/libmemcached
+%{_includedir}/libhashkit
+%{_libdir}/libhashkit.so
 %{_libdir}/libmemcached.so
+%{_libdir}/libmemcachedprotocol.so
 %{_libdir}/libmemcachedutil.so
 %{_libdir}/pkgconfig/libmemcached.pc
-%{_libdir}/libmemcached.so
 %{_mandir}/man3/libmemcached*.3.gz
 %{_mandir}/man3/memcached_*.3.gz
+%{_mandir}/man3/hashkit*
 
 
 %changelog
+* Wed Oct 20 2010 David Hrbáč <david@hrbac.cz> - 0.44-1
+- new upstream release
+
 * Thu May 06 2010 David Hrbáč <david@hrbac.cz> - 0.40-1
 - new upstream version
 

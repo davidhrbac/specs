@@ -1,6 +1,6 @@
 Name:           gearmand
 Version:        0.13
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A distributed job system
 
 Group:          System Environment/Daemons
@@ -124,19 +124,19 @@ fi
 %dir %{_includedir}/libgearman
 %{_includedir}/libgearman/*.h
 %{_libdir}/pkgconfig/gearmand.pc
-%{_libdir}/libgearman.so
+%{_libdir}/libgearman*.so
 %{_mandir}/man3/gearman*.3.gz
-%dir %{_includedir}/libgearman-server
-%{_libdir}/libgearman-server.la
-%{_libdir}/libgearman-server.so*
 
 %files -n libgearman
 %defattr(-,root,root,-)
 %doc COPYING
 %{_libdir}/libgearman.so.*
-
+%{_libdir}/libgearman*.so.*
 
 %changelog
+* Wed Oct 20 2010 David Hrbáč <david@hrbac.cz> - 0.13-2
+- rebuild for new libmemcached
+
 * Tue Apr 06 2010 David Hrbáč <david@hrbac.cz> - 0.13-1
 - new upstream release
 

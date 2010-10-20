@@ -2,7 +2,7 @@
 %global pear_name HTML_Common2
 
 Name:           php-pear-HTML-Common2
-Version:        2.0.0RC1
+Version:        2.0.0
 Release:        1%{?dist}
 Summary:        Abstract base class for HTML classes (PHP5 port of HTML_Common package)
 
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Wed Oct 20 2010 David Hrbáč <david@hrbac.cz> - 2.0.0-1
+- new upstream release
+
 * Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 2.0.0RC1-1
 - initial release
 
