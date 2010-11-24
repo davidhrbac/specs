@@ -1,11 +1,11 @@
 Name: libgcrypt
-Version: 1.3.1
+Version: 1.4.6
 Release: 1%{?dist}
-#Source0: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2
-#Source1: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
+Source0: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2
+Source1: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
 
-Source0: ftp://ftp.gnupg.org/gcrypt/alpha/libgcrypt/libgcrypt-%{version}.tar.bz2
-Source1: ftp://ftp.gnupg.org/gcrypt/alpha/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
+#Source0: ftp://ftp.gnupg.org/gcrypt/alpha/libgcrypt/libgcrypt-%{version}.tar.bz2
+#Source1: ftp://ftp.gnupg.org/gcrypt/alpha/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
 
 Source2: wk@g10code.com
 Patch0: libgcrypt-1.2.2-lib64.patch
@@ -77,6 +77,7 @@ fi
 %defattr(-,root,root)
 %{_bindir}/%{name}-config
 %{_bindir}/dumpsexp
+%{_bindir}/hmac256
 %{_includedir}/*
 %{_libdir}/*.a
 %{_libdir}/*.so
@@ -86,6 +87,9 @@ fi
 %{_infodir}/gcrypt.info*
 
 %changelog
+* Thu Nov 18 2010 David Hrbáč <david@hrbac.cz> - 1.4.6-1
+- new upstream release
+
 * Tue Dec  4 2007 David Hrbáč <david@hrbac.cz> - 1.3.1-1.el4.hrb
 - update to the latest version
 
