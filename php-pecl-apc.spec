@@ -3,7 +3,7 @@
 
 Summary:       APC caches and optimizes PHP intermediate code
 Name:          php-pecl-apc
-Version:       3.0.19
+Version:       3.1.6
 Release:       1%{?dist}
 License:       PHP License
 Group:         Development/Languages
@@ -12,7 +12,7 @@ Source:        http://pecl.php.net/get/APC-%{version}.tgz
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires:      php-api = %{php_apiver}
 Conflicts:     php-mmcache php-eaccelerator
-BuildRequires: php-devel httpd-devel
+BuildRequires: php-devel httpd-devel pcre-devel
 Provides:      php-apc = %{version}-%{release}
 Obsoletes:     php-apc
 Provides:      php-pecl(apc)
@@ -25,6 +25,7 @@ caching and optimizing PHP intermediate code.
 %setup -q -n APC-%{version}
 
 %build
+%{?el4: perl -pi -e "s|\"pcre.h\"|\"pcre\/pcre.h\"|g" apc_php_pcre.h}
 %{_bindir}/phpize
 %configure --enable-apc-mmap --with-apxs=%{_sbindir}/apxs --with-php-config=%{_bindir}/php-config
 %{__make} %{?_smp_mflags}
@@ -61,6 +62,9 @@ EOF
 %{php_extdir}/apc.so
 
 %changelog
+* Wed Dec 01 2010 David Hrbáč <david@hrbac.cz> - 3.1.6-1
+- new upstream release
+
 * Wed Dec 10 2008 David Hrbáč <david@hrbac.cz> - 3.0.19-1
 - new upstream version
 
