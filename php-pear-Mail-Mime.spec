@@ -1,7 +1,7 @@
 %{!?__pear: %{expand: %%global __pear %{_bindir}/pear}}
 
 Name:		php-pear-Mail-Mime
-Version:	1.6.2
+Version:	1.8.1
 Release:	1%{?dist}
 Summary:	Classes to create and decode mime messages
 
@@ -96,6 +96,9 @@ fi
 
 
 %changelog
+* Wed Dec 01 2010 David Hrbáč <david@hrbac.cz> - 1.8.1-1
+- new upstream release
+
 * Wed Mar 24 2010 David Hrbáč <david@hrbac.cz> - 1.6.2-1
 - new upstream release
 
