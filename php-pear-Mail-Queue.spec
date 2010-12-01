@@ -2,7 +2,7 @@
 %global pear_name Mail_Queue
 
 Name:           php-pear-Mail-Queue
-Version:        1.2.3
+Version:        1.2.6
 Release:        1%{?dist}
 Summary:        Class for put mails in queue and send them later in background
 
@@ -52,6 +52,7 @@ mv $RPM_BUILD_ROOT%{pear_docdir}/* docdir
 
 # Clean up unnecessary files
 rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/.??*
+rm -rf $RPM_BUILD_ROOT%{pear_phpdir}/tests
 
 # Install XML package description
 mkdir -p $RPM_BUILD_ROOT%{pear_xmldir}
@@ -89,7 +90,11 @@ fi
 %{pear_phpdir}/Mail/Queue/Container.php
 %{pear_phpdir}/Mail/Queue/Error.php
 %{pear_phpdir}/Mail/Queue.php
+%{pear_testdir}/Mail_Queue
 
 %changelog
+* Wed Dec 01 2010 David Hrbáč <david@hrbac.cz> - 1.2.6-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.2.3-1
 - initial release
