@@ -4,7 +4,7 @@
 Summary:      A zip management extension
 Name:         php-pecl-zip
 Version:      1.8.10
-Release:      2%{?dist}
+Release:      1%{?dist}
 License:      PHP License
 Group:        Development/Languages
 URL:          http://pecl.php.net/package/zip
@@ -61,7 +61,7 @@ EOF
 %{php_extdir}/zip.so
 
 %changelog
-* Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 1.8.10-2
+* Fri Jul 10 2009 David Hrbáč <david@hrbac.cz> - 1.8.10-1
 - initial rebuild
 
 * Thu Jun 07 2007 Remi Collet <Fedora@FamilleCollet.com> 1.8.10-1

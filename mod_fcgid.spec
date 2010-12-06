@@ -10,7 +10,7 @@
 %endif
 
 Name:		mod_fcgid
-Version:	2.3.5
+Version:	2.3.6
 Release:	1%{?dist}
 Summary:	Apache2 module for high-performance server-side scripting 
 Group:		System Environment/Daemons
@@ -29,6 +29,15 @@ Patch0:		mod_fcgid.2.1-docurls.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	gawk, httpd-devel >= 2.0, pkgconfig
 Requires:	httpd-mmn = %([ -a %{_includedir}/httpd/.mmn ] && %{__cat} %{_includedir}/httpd/.mmn || echo missing)
+# sed required for fixconf script
+Requires:   /bin/sed
+# Make sure that selinux-policy is sufficiently up-to-date if it's installed
+# FastCGI policy properly incorporated into EL 5.5
+%if "%{?rhel}" == "5"
+Conflicts:     selinux-policy < 2.4.6-279.el5
+# No provide here because selinux-policy >= 2.4.6-279.el5 does the providing
+Obsoletes:     mod_fcgid-selinux <= %{version}-%{release}
+%endif
 
 %description
 mod_fcgid is a binary-compatible alternative to the Apache module mod_fastcgi.
@@ -79,8 +88,8 @@ SELinux policy module supporting FastCGI applications with mod_fcgid.
 %{__mv} -f configuration.htm.utf8 configuration.htm
 
 %build
-topdir=$(/usr/bin/dirname $(/usr/sbin/apxs -q exp_installbuilddir))
-%{__make} top_dir=${topdir}
+APXS=/usr/sbin/apxs ./configure.apxs
+%{__make}
 %if %{selinux_module}
 for selinuxvariant in %{selinux_variants}
 do
@@ -157,6 +166,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Dec 02 2010 David Hrbáč <david@hrbac.cz> - 2.3.6-1
+- new upstream release
+
 * Wed Sep 17 2008 David Hrbáč <david@hrbac.cz> - 2.2-4
 - initial rebuild
 
