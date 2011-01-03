@@ -5,8 +5,8 @@
 
 Summary: The PHP HTML-embedded scripting language
 Name: php
-Version: 5.2.14
-Release: 2%{?dist}
+Version: 5.2.15
+Release: 1%{?dist}
 License: PHP
 Group: Development/Languages
 URL: http://www.php.net/
@@ -662,6 +662,9 @@ rm files.* macros.php
 %files mhash -f files.mhash
 
 %changelog
+* Fri Dec 10 2010 David Hrbáč <david@hrbac.cz> - 5.2.15-1
+- new upstream release
+
 * Fri Oct 01 2010 David Hrbáč <david@hrbac.cz> - 5.2.14-2
 - added mcrypt and mhash modules
 

@@ -3,7 +3,7 @@
 
 Name:           php-pear-Text-CAPTCHA-Numeral
 Version:        1.3.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Generation of numeral maths captchas
 
 Group:          Development/Libraries
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Tue Dec 21 2010 David Hrbáč <david@hrbac.cz> - 1.3.0-4
+- patch to get rid of zero results
+
 * Thu Nov 18 2010 David Hrbáč <david@hrbac.cz> - 1.3.0-3
 - patch to work setOperation, not getOperation
 

@@ -2,7 +2,7 @@
 %global pear_name Net_DNS
 
 Name:           php-pear-Net-DNS
-Version:        1.0.5
+Version:        1.0.7
 Release:        1%{?dist}
 Summary:        Resolver library used to communicate with a DNS server
 
@@ -72,37 +72,38 @@ fi
 %files
 %defattr(-,root,root,-)
 
-
-
 %{pear_xmldir}/%{name}.xml
 # Expand this as needed to avoid owning dirs owned by our dependencies
 # and to avoid unowned dirs
+%{pear_phpdir}/Net/DNS.php
 %{pear_phpdir}/Net/DNS/Header.php
 %{pear_phpdir}/Net/DNS/Packet.php
 %{pear_phpdir}/Net/DNS/Question.php
-%{pear_phpdir}/Net/DNS/Resolver.php
 %{pear_phpdir}/Net/DNS/RR.php
 %{pear_phpdir}/Net/DNS/RR/A.php
 %{pear_phpdir}/Net/DNS/RR/AAAA.php
 %{pear_phpdir}/Net/DNS/RR/CNAME.php
 %{pear_phpdir}/Net/DNS/RR/HINFO.php
+%{pear_phpdir}/Net/DNS/RR/LOC.php
 %{pear_phpdir}/Net/DNS/RR/MX.php
 %{pear_phpdir}/Net/DNS/RR/NAPTR.php
 %{pear_phpdir}/Net/DNS/RR/NS.php
-%{pear_phpdir}/Net/DNS/RR/RP.php
 %{pear_phpdir}/Net/DNS/RR/PTR.php
-%{pear_phpdir}/Net/DNS/RR/SPF.php
+%{pear_phpdir}/Net/DNS/RR/RP.php
 %{pear_phpdir}/Net/DNS/RR/SOA.php
+%{pear_phpdir}/Net/DNS/RR/SPF.php
 %{pear_phpdir}/Net/DNS/RR/SRV.php
 %{pear_phpdir}/Net/DNS/RR/TSIG.php
 %{pear_phpdir}/Net/DNS/RR/TXT.php
-%{pear_phpdir}/Net/DNS.php
+%{pear_phpdir}/Net/DNS/Resolver.php
 ##{pear_phpdir}/Net/generate_package_xml.php
-
-
+%{pear_testdir}/%{pear_name}
 
 
 %changelog
+* Mon Jan 03 2011 David Hrbáč <david@hrbac.cz> - 1.0.7-1
+- new upstream release
+
 * Mon Oct 18 2010 David Hrbáč <david@hrbac.cz> - 1.0.5-1
 - new upstream release
 
