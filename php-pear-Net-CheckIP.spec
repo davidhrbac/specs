@@ -2,7 +2,7 @@
 %global pear_name Net_CheckIP
 
 Name:           php-pear-Net-CheckIP
-Version:        1.2.1
+Version:        1.2.2
 Release:        1%{?dist}
 Summary:        Check the syntax of IPv4 addresses
 
@@ -78,5 +78,8 @@ fi
 
 
 %changelog
+* Tue Jan 04 2011 David Hrbáč <david@hrbac.cz> - 1.2.2-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.2.1-1
 - initial release
