@@ -5,7 +5,7 @@
 
 Summary: The PHP HTML-embedded scripting language
 Name: php
-Version: 5.2.16
+Version: 5.2.17
 Release: 1%{?dist}
 License: PHP
 Group: Development/Languages
@@ -662,6 +662,9 @@ rm files.* macros.php
 %files mhash -f files.mhash
 
 %changelog
+* Thu Jan 06 2011 David Hrbáč <david@hrbac.cz> - 5.2.17-1
+- new upstream release
+
 * Thu Jan 06 2011 David Hrbáč <david@hrbac.cz> - 5.2.16-1
 - new upstream release
 
