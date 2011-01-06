@@ -1,7 +1,7 @@
 # next four lines substituted by autoconf
 %define major 1
 %define minor 0
-%define sub 1
+%define sub 14
 %define extralevel %{nil}
 %define release_name mock
 %define release_version %{major}.%{minor}.%{sub}%{extralevel}
@@ -15,26 +15,23 @@ Release: 1%{?dist}
 License: GPLv2+
 Group: Development/Tools
 Source: https://fedorahosted.org/mock/attachment/wiki/MockTarballs/%{name}-%{version}.tar.gz
-#Patch0: 0001-default-build-arch-to-i586-for-rawhide-to-match-fedo.patch
 URL: http://fedoraproject.org/wiki/Projects/Mock
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
-Requires: python >= 2.4, yum >= 2.4, tar, gzip, python-ctypes, python-decoratortools, usermode
+Requires: python >= 2.4, yum >= 2.4, yum-utils >= 1.1.9, tar, pigz, python-ctypes, python-decoratortools, usermode
+Requires: createrepo
 Requires(pre): shadow-utils
+Requires(post): coreutils
 BuildRequires: python-devel
+%if 0%{?el5}
+Requires: python-hashlib
+%endif
 
 %description
-Mock takes a srpm and builds it in a chroot
+Mock takes an SRPM and builds it in a chroot
 
 %prep
 %setup -q
-#%patch0 -p1
-%if "%{?dist}" == ".fc8"
-pushd etc/mock
-sed -i -e 's/^#exclude=/exclude=/' -e '/^# The above is not/d' \
-    fedora-9-x86_64.cfg fedora-rawhide-x86_64.cfg
-popd
-%endif
 
 %build
 %configure
@@ -62,6 +59,10 @@ ln -s fedora-rawhide-x86_64.cfg fedora-devel-x86_64.cfg
 ln -s fedora-rawhide-ppc.cfg fedora-devel-ppc.cfg
 ln -s fedora-rawhide-ppc64.cfg fedora-devel-ppc64.cfg
 popd
+find $RPM_BUILD_ROOT%{_sysconfdir}/mock -name "*.cfg" \
+    | sed -e "s|^$RPM_BUILD_ROOT|%%config(noreplace) |" > %{name}.cfgs
+# just for %%ghosting purposes
+ln -s fedora-rawhide-x86_64.cfg $RPM_BUILD_ROOT%{_sysconfdir}/mock/default.cfg
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -71,7 +72,21 @@ if [ $1 -eq 1 ]; then
     groupadd -r mock >/dev/null 2>&1 || :
 fi
 
-%files
+%post
+# TODO: use dist and version of install system, not build one
+if [ ! -e %{_sysconfdir}/%{name}/default.cfg ] ; then
+    arch=$(uname -i)
+    for ver in %{?fedora}%{?rhel} rawhide ; do
+        cfg=%{?fedora:fedora}%{?rhel:epel}-$ver-$arch.cfg
+        if [ -e %{_sysconfdir}/%{name}/$cfg ] ; then
+            ln -s $cfg %{_sysconfdir}/%{name}/default.cfg
+            exit 0
+        fi
+    done
+fi
+:
+
+%files -f %{name}.cfgs
 %defattr(-, root, root)
 
 # executables
@@ -83,7 +98,7 @@ fi
 
 # config files
 %dir  %{_sysconfdir}/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}/*.cfg
+%ghost %config(noreplace,missingok) %{_sysconfdir}/%{name}/default.cfg
 %config(noreplace) %{_sysconfdir}/%{name}/*.ini
 %config(noreplace) %{_sysconfdir}/pam.d/%{name}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
@@ -99,6 +114,9 @@ fi
 %attr(02775, root, mock) %dir /var/cache/mock
 
 %changelog
+* Wed Jan 05 2011 David Hrbáč <david@hrbac.cz> - 1.0.14-1
+- new upstream release
+
 * Tue Dec 01 2009 David Hrbáč <david@hrbac.cz> - 1.0.1-1
 - new upstream release
 - Patch from Paul Howarth to fix intermittent problems generating
