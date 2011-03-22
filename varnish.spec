@@ -14,7 +14,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # Needs to regenerate configure after patching in jemalloc system lib support
 BuildRequires: automake autoconf libtool
 
-BuildRequires: ncurses-devel libxslt groff pcre-devel pkgconfig jemalloc-devel
+BuildRequires: ncurses-devel libxslt groff pcre-devel pkgconfig
 Requires: varnish-libs = %{version}-%{release}
 Requires: logrotate
 Requires: ncurses
