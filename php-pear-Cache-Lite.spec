@@ -2,7 +2,7 @@
 %global pear_name Cache_Lite
 
 Name:           php-pear-Cache-Lite
-Version:        1.7.8
+Version:        1.7.9
 Release:        1%{?dist}
 Summary:        Fast and Safe little cache system
 
@@ -85,5 +85,8 @@ fi
 
 
 %changelog
+* Mon Mar 14 2011 David Hrbáč <david@hrbac.cz> - 1.7.9-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 1.7.8-1
 - initial release

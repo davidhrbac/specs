@@ -2,7 +2,7 @@
 %define pear_name Net_SMTP
 
 Name:           php-pear-Net-SMTP
-Version:        1.5.0
+Version:        1.5.1
 Release:        1%{?dist}
 Summary:        Provides an implementation of the SMTP protocol
 Summary(fr):    Fournit une mise en oeuvre du protocol SMTP
@@ -110,6 +110,9 @@ fi
 
 
 %changelog
+* Mon Mar 14 2011 David Hrbáč <david@hrbac.cz> - 1.5.1-1
+- new upstream release
+
 * Mon Feb 07 2011 David Hrbáč <david@hrbac.cz> - 1.5.0-1
 - new upstream release
 

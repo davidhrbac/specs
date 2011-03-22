@@ -2,7 +2,7 @@
 %global pear_name HTTP_Request2
 
 Name:           php-pear-HTTP-Request2
-Version:        0.5.2
+Version:        0.6.0
 Release:        1%{?dist}
 Summary:        Provides an easy way to perform HTTP requests
 
@@ -96,5 +96,8 @@ fi
 
 
 %changelog
+* Mon Mar 14 2011 David Hrbáč <david@hrbac.cz> - 0.6.0-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 0.5.1-1
 - initial release

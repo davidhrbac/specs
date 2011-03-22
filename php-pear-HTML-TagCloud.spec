@@ -2,7 +2,7 @@
 %global pear_name HTML_TagCloud
 
 Name:           php-pear-HTML-TagCloud
-Version:        0.2.4
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Generate a "Tag Cloud" in HTML and visualize tags by their frequency. Additionally visualizes each tag's age.
 
@@ -107,5 +107,8 @@ fi
 %{pear_testdir}/HTML_TagCloud
 
 %changelog
+* Mon Mar 14 2011 David Hrbáč <david@hrbac.cz> - 1.0.0-1
+- new upstream release
+
 * Sun Feb 28 2010 David Hrbáč <david@hrbac.cz> - 0.2.4-1
 - initial release 

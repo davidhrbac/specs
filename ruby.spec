@@ -22,7 +22,7 @@ Release:	1%{?dist}
 License:	Ruby or GPLv2
 URL:		http://www.ruby-lang.org/
 
-BuildRequires:	compat-readline5-devel
+BuildRequires:	readline-devel
 BuildRequires:	db4-devel
 BuildRequires:	gdbm-devel
 BuildRequires:	libX11-devel

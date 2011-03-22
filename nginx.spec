@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.8.53
+Version:        0.8.54
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -174,6 +174,10 @@ fi
 %config(noreplace) %{nginx_confdir}/fastcgi_params.default
 %config(noreplace) %{nginx_confdir}/koi-win
 %config(noreplace) %{nginx_confdir}/koi-utf
+%config(noreplace) %{nginx_confdir}/scgi_params
+%config(noreplace) %{nginx_confdir}/scgi_params.default
+%config(noreplace) %{nginx_confdir}/uwsgi_params
+%config(noreplace) %{nginx_confdir}/uwsgi_params.default
 %config(noreplace) %{nginx_confdir}/%{name}.conf
 %config(noreplace) %{nginx_confdir}/mime.types
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
@@ -185,6 +189,9 @@ fi
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 
 %changelog
+* Tue Mar 15 2011 David Hrbáč <david@hrbac.cz> - 0.8.54-1
+- new upstream release
+
 * Wed Oct 20 2010 David Hrbáč <david@hrbac.cz> - 0.8.53-1
 - new upstream release
 
