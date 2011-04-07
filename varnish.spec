@@ -7,7 +7,7 @@ Group: System Environment/Daemons
 URL: http://www.varnish-cache.org/
 Source0: http://repo.varnish-cache.org/source/%{name}-%{version}.tar.gz
 
-Patch6: varnish.jemalloc_as_system_library.patch
+#Patch6: varnish.jemalloc_as_system_library.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -266,6 +266,9 @@ fi
 %postun libs -p /sbin/ldconfig
 
 %changelog
+* Tue Mar 22 2011 David Hrbáč <david@hrbac.cz> - 2.1.5-2
+- initial rebuild
+
 * Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 

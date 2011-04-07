@@ -36,7 +36,7 @@ chmod -x *.c
 %patch1
 
 %build
-autoconf
+autoreconf
 export CFLAGS="-ggdb2 -O2"
 %configure --with-crypto --with-sha3
 make %{?_smp_mflags}
