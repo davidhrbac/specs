@@ -1,5 +1,5 @@
 Name:           mysqltuner
-Version:        1.1.1
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        MySQL high performance tuning script
 
@@ -46,6 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue May 10 2011 David Hrbáč <david@hrbac.cz> - 1.2.0-1
+- new upstream release
+
 * Wed Oct 07 2009 David Hrbáč <david@hrbac.cz> - 1.1.1-1
 - new upstream version
 

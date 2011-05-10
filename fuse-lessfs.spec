@@ -1,7 +1,7 @@
 %define real_name lessfs
 Summary:	Lessfs is an inline data deduplicating filesystem
 Name:		fuse-lessfs
-Version:	1.2.0
+Version:	1.3.3.11
 Release:	1%{?dist}
 License:	GPLv3
 Group:		Applications/System
@@ -32,8 +32,8 @@ chmod -x ChangeLog
 chmod -x *.c
 
 # patch for init script
-%patch0
-%patch1
+#%patch0
+#%patch1
 
 %build
 autoreconf
