@@ -3,7 +3,7 @@
 
 Summary:       APC caches and optimizes PHP intermediate code
 Name:          php-pecl-apc
-Version:       3.1.8
+Version:       3.1.9
 Release:       1%{?dist}
 License:       PHP License
 Group:         Development/Languages
@@ -43,7 +43,7 @@ extension = apc.so
 apc.enabled=1
 apc.shm_segments=1
 apc.optimization=0
-apc.shm_size=32
+apc.shm_size=32M
 apc.ttl=7200
 apc.user_ttl=7200
 apc.num_files_hint=1024
@@ -63,6 +63,9 @@ EOF
 %{_includedir}/php/ext/apc
 
 %changelog
+* Mon May 16 2011 David Hrbáč <david@hrbac.cz> - 3.1.9-1
+- new upstream release
+
 * Wed May 04 2011 David Hrbáč <david@hrbac.cz> - 3.1.8-1
 - new upstream release
 
