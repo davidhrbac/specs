@@ -1,7 +1,7 @@
 Summary: Protect apache against the slowloris attack.
 Name: mod_antiloris
-Version: 0.3
-Release: 2%{dist}
+Version: 0.4
+Release: 1%{dist}
 Group: System Environment/Daemons
 URL: ftp://ftp.monshouwer.eu/pub/linux/mod_antiloris/
 Source0: ftp://ftp.monshouwer.eu/pub/linux/mod_antiloris/mod_antiloris-%{version}.tar.bz2
@@ -48,6 +48,9 @@ install %{SOURCE1} README
 
 
 %changelog
+* Tue May 17 2011 David Hrbáč <david@hrbac.cz> - 0.4-1
+- new upstream release
+
 * Sun Jun 28 2009 David Hrbáč <david@hrbac.cz> - 0.3-2
 - a few spec file improvements
 
