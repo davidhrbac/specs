@@ -3,7 +3,7 @@
 %global channel pear.phpunit.de
 
 Name:           php-phpunit-PHPUnit
-Version:        3.4.14
+Version:        3.4.15
 Release:        1%{?dist}
 Summary:        Regression testing framework for unit tests
 
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Wed May 25 2011 David Hrbáč <david@hrbac.cz> - 3.4.15-1
+- new upstream release
+
 * Wed Jun 23 2010 David Hrbáč <david@hrbac.cz> - 3.4.14-1
 - new upstream release
 
