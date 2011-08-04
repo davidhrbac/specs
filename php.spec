@@ -1,11 +1,11 @@
 %define contentdir /var/www
-%define apiver 20041225
-%define zendver 20060613
-%define pdover 20060511
+%define apiver 20090626
+%define zendver 20090626
+%define pdover 20080721
 
 Summary: The PHP HTML-embedded scripting language
 Name: php
-Version: 5.2.17
+Version: 5.3.6
 Release: 1%{?dist}
 License: PHP
 Group: Development/Languages
@@ -253,15 +253,15 @@ Requires: php-common = %{version}-%{release}
 The php-mbstring package contains a dynamic shared object that will add
 support for multi-byte string handling to PHP.
 
-%package ncurses
-Summary: A module for PHP applications for using ncurses interfaces
-Group: Development/Languages
-Requires: php-common = %{version}-%{release}
-BuildRequires: ncurses-devel
-
-%description ncurses
-The php-ncurses package contains a dynamic shared object that will add
-support for using the ncurses terminal output interfaces.
+#%package ncurses
+#Summary: A module for PHP applications for using ncurses interfaces
+#Group: Development/Languages
+#Requires: php-common = %{version}-%{release}
+#BuildRequires: ncurses-devel
+#
+#%description ncurses
+#The php-ncurses package contains a dynamic shared object that will add
+#support for using the ncurses terminal output interfaces.
 
 %package gd
 Summary: A module for PHP applications for using the gd graphics library
@@ -301,19 +301,19 @@ BuildRequires: libmcrypt-devel
 The php-mcrypt package contains a dynamic shared object that will add
 support for using the mcrypt library to PHP.
 
-%package mhash
-Summary: Standard PHP module provides mhash support
-Group: Development/Languages
-Requires: php-common = %{version}-%{release}
-BuildRequires: mhash-devel
-
-%description mhash
-The php-mhash package contains a dynamic shared object that will add
-support for using the mhash library to PHP.
+#%package mhash
+#Summary: Standard PHP module provides mhash support
+#Group: Development/Languages
+#Requires: php-common = %{version}-%{release}
+#BuildRequires: mhash-devel
+#
+#%description mhash
+#The php-mhash package contains a dynamic shared object that will add
+#support for using the mhash library to PHP.
 
 %prep
 %setup -q
-%patch1 -p1 -b .gnusrc
+#%patch1 -p1 -b .gnusrc
 %patch2 -p1 -b .install
 %patch3 -p1 -b .norpath
 %patch5 -p1 -b .phpize64
@@ -322,10 +322,10 @@ support for using the mhash library to PHP.
 
 %patch21 -p1 -b .odbc
 %patch22 -p1 -b .shutdown
-%patch24 -p1 -b .macropen
+#%patch24 -p1 -b .macropen
 
 %patch30 -p1 -b .dlopen
-%patch31 -p1 -b .easter
+#%patch31 -p1 -b .easter
 %patch32 -p1 -b .systzdata
 
 %patch51 -p1 -b .tests-wddx
@@ -333,7 +333,7 @@ support for using the mhash library to PHP.
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
 cp TSRM/LICENSE TSRM_LICENSE
-cp regex/COPYRIGHT regex_COPYRIGHT
+#cp regex/COPYRIGHT regex_COPYRIGHT
 cp ext/gd/libgd/README gd_README
 
 # Source is built twice: once for /usr/bin/php, once for the Apache DSO.
@@ -556,10 +556,15 @@ install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/lib/php
 install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/lib/php/session
 
 # Generate files lists and stub .ini files for each subpackage
+#for mod in pgsql mysql mysqli odbc ldap snmp xmlrpc imap \
+#    mbstring ncurses gd dom xsl soap bcmath dba xmlreader xmlwriter \
+#    pdo pdo_mysql pdo_pgsql pdo_odbc pdo_sqlite json zip \
+#    dbase mcrypt mhash; do
 for mod in pgsql mysql mysqli odbc ldap snmp xmlrpc imap \
-    mbstring ncurses gd dom xsl soap bcmath dba xmlreader xmlwriter \
+    mbstring gd dom xsl soap bcmath dba xmlreader xmlwriter \
     pdo pdo_mysql pdo_pgsql pdo_odbc pdo_sqlite json zip \
-    dbase mcrypt mhash; do
+    mcrypt; do
+
     cat > $RPM_BUILD_ROOT%{_sysconfdir}/php.d/${mod}.ini <<EOF
 ; Enable ${mod} extension module
 extension=${mod}.so
@@ -586,7 +591,9 @@ cat files.pdo_odbc >> files.odbc
 cat files.pdo_sqlite >> files.pdo
 
 # Package json, dbase and zip in -common.
-cat files.json files.dbase files.zip > files.common
+#cat files.json files.dbase files.zip > files.common
+cat files.json files.zip > files.common
+
 
 # Install the macros file:
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/rpm
@@ -616,8 +623,8 @@ rm files.* macros.php
 
 %files common -f files.common
 %defattr(-,root,root)
-%doc CODING_STANDARDS CREDITS EXTENSIONS INSTALL LICENSE NEWS README*
-%doc Zend/ZEND_* gd_README TSRM_LICENSE regex_COPYRIGHT
+#%doc CODING_STANDARDS CREDITS EXTENSIONS INSTALL LICENSE NEWS README*
+#%doc Zend/ZEND_* gd_README TSRM_LICENSE regex_COPYRIGHT
 %config(noreplace) %{_sysconfdir}/php.ini
 %dir %{_sysconfdir}/php.d
 %dir %{_libdir}/php
@@ -630,8 +637,10 @@ rm files.* macros.php
 %defattr(-,root,root)
 %{_bindir}/php
 %{_bindir}/php-cgi
+%{_bindir}/phar.phar
+%{_bindir}/phar
 %{_mandir}/man1/php.1*
-%doc sapi/cgi/README* sapi/cli/README
+#%doc sapi/cgi/README* sapi/cli/README
 
 %files devel
 %defattr(-,root,root)
@@ -652,14 +661,14 @@ rm files.* macros.php
 %files xml -f files.xml
 %files xmlrpc -f files.xmlrpc
 %files mbstring -f files.mbstring
-%files ncurses -f files.ncurses
+#%files ncurses -f files.ncurses
 %files gd -f files.gd
 %files soap -f files.soap
 %files bcmath -f files.bcmath
 %files dba -f files.dba
 %files pdo -f files.pdo
 %files mcrypt -f files.mcrypt
-%files mhash -f files.mhash
+#%files mhash -f files.mhash
 
 %changelog
 * Thu Jan 06 2011 David Hrbáč <david@hrbac.cz> - 5.2.17-1
