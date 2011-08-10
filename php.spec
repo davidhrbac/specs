@@ -6,7 +6,7 @@
 Summary: The PHP HTML-embedded scripting language
 Name: php
 Version: 5.3.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: PHP
 Group: Development/Languages
 URL: http://www.php.net/
@@ -311,6 +311,17 @@ support for using the mcrypt library to PHP.
 #The php-mhash package contains a dynamic shared object that will add
 #support for using the mhash library to PHP.
 
+%package intl
+Summary: Internationalization extension for PHP applications
+Group: Development/Languages
+Requires: php-common = %{version}-%{release}
+BuildRequires: libicu-devel >= 3.6
+
+%description intl
+The php-intl package contains a dynamic shared object that will add
+support for using the ICU library to PHP.
+
+
 %prep
 %setup -q
 #%patch1 -p1 -b .gnusrc
@@ -491,7 +502,8 @@ build --enable-force-cgi-redirect \
       --with-readline \
       --enable-dbase=shared \
       --with-mcrypt=shared \
-      --with-mhash=shared
+      --with-mhash=shared \
+      --enable-intl=shared
 popd
 
 # Build Apache module, and the CLI SAPI, /usr/bin/php
@@ -563,7 +575,7 @@ install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/lib/php/session
 for mod in pgsql mysql mysqli odbc ldap snmp xmlrpc imap \
     mbstring gd dom xsl soap bcmath dba xmlreader xmlwriter \
     pdo pdo_mysql pdo_pgsql pdo_odbc pdo_sqlite json zip \
-    mcrypt; do
+    mcrypt intl; do
 
     cat > $RPM_BUILD_ROOT%{_sysconfdir}/php.d/${mod}.ini <<EOF
 ; Enable ${mod} extension module
@@ -669,8 +681,15 @@ rm files.* macros.php
 %files pdo -f files.pdo
 %files mcrypt -f files.mcrypt
 #%files mhash -f files.mhash
+%files intl -f files.intl
 
 %changelog
+* Fri Aug 05 2011 David Hrbáč <david@hrbac.cz> - 5.3.6-2
+- add php-intl sub-package
+
+* Wed Aug 03 2011 David Hrbáč <david@hrbac.cz> - 5.3.6-1
+- new upstream release
+
 * Thu Jan 06 2011 David Hrbáč <david@hrbac.cz> - 5.2.17-1
 - new upstream release
 
