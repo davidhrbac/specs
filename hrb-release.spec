@@ -1,7 +1,7 @@
 Summary: Repository hrb release file and package configuration
 Name: hrb-release
 Version: 0.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -17,6 +17,7 @@ Release file for hrb-tls repository.
 
 %prep
 
+%{?el6:path="el6"}
 %{?el5:path="el5"}
 %{?el4:path="el4"}
 %{?el3:path="el3"}
@@ -58,6 +59,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb.repo
 
 %changelog
+* Tue Aug 23 2011 David Hrbáč <david@hrbac.cz> - 0.1-5
+- el6 repo added
+
 * Thu Jan 21 2010 David Hrbáč <david@hrbac.cz> - 0.1-4
 - fixed testing mirrorlist
 
