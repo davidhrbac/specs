@@ -1,5 +1,5 @@
 %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-%{?el4:_without_bzr=1}
+%{?el4:%define _without_bzr 1}
 
 Name:      etckeeper
 Version:   0.56
@@ -33,7 +33,7 @@ To start using the package please read %{_docdir}/%{name}-%{version}/README
 Summary:  Support for bzr with etckeeper
 Group:    Applications/System
 Requires: %{name} = %{version}-%{release} bzr
-BuildRequires: bzr
+%{!?_without_bzr:BuildRequires: bzr}
 BuildRequires: python-devel
 
 %description bzr
@@ -57,7 +57,7 @@ rm -rf %{buildroot}
 make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
 %{__install} -D -p debian/cron.daily %{buildroot}%{_sysconfdir}/cron.daily/%{name}
 %{__install} -d  %{buildroot}%{_localstatedir}/cache/%{name}
-%{__sed} -i -e '1d' %{buildroot}%{python_sitelib}/bzrlib/plugins/%{name}/__init__.py
+%{!?_without_bzr: %{__sed} -i -e '1d' %{buildroot}%{python_sitelib}/bzrlib/plugins/%{name}/__init__.py }
 
 %clean
 rm -rf %{buildroot}
@@ -88,6 +88,7 @@ fi
 %config(noreplace) %{_sysconfdir}/yum/pluginconf.d/%{name}.conf
 %{_localstatedir}/cache/%{name}
 
+%if 0%{!?_without_bzr:1}
 %files bzr
 %defattr(-, root, root, -)
 %doc GPL
@@ -95,10 +96,12 @@ fi
 %if 0%{?fedora} || 0%{?rhel} > 5
 %{python_sitelib}/bzr_%{name}-*.egg-info
 %endif
+%endif
 
 %changelog
 * Mon Aug 29 2011 David Hrbáč <david@hrbac.cz> - 0.56-2
-- Initial reuild
+- Initial reruild
+- Disable bzr on el4
 
 * Wed Aug 17 2011 Thomas Moschny <thomas.moschny@gmx.de> - 0.56-2
 - Rebuilt for trailing slash bug of rpm-4.9.1
