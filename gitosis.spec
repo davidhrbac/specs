@@ -2,7 +2,7 @@
 
 Name:           gitosis
 Version:        0.2
-Release:        11.20080825git%{?dist}
+Release:        12.20090917git%{?dist}
 Summary:        Git repository hosting application
 
 Group:          Applications/System
@@ -14,7 +14,7 @@ URL:            http://eagain.net/gitweb/?p=gitosis.git;a=summary
 # $ cd gitosis
 # $ git-archive --format=tar --prefix=gitosis-0.2/ 44c7e7f0dca54f55fcc254d0344984fb8390098b | gzip > ../gitosis-0.2.tar.gz
 Source0:        gitosis-%{version}.tar.gz
-Source1:        README.fedora
+#Source1:        README.fedora
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildArch:      noarch
@@ -41,7 +41,7 @@ to one shared account that will not let them run arbitrary commands.
 rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 %{__install} -d -m 0755 %{buildroot}%{_localstatedir}/lib/gitosis
-cp %{SOURCE1} .
+#cp %{SOURCE1} .
  
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -56,7 +56,8 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING example.conf README.fedora README.rst TODO.rst gitweb.conf
+#%doc COPYING example.conf README.fedora README.rst TODO.rst gitweb.conf
+%doc COPYING example.conf README.rst TODO.rst gitweb.conf
 %{_bindir}/gitosis-init
 %{_bindir}/gitosis-run-hook
 %{_bindir}/gitosis-serve
@@ -64,6 +65,9 @@ exit 0
 %dir %attr(0755,gitosis,gitosis) %{_localstatedir}/lib/gitosis
 
 %changelog
+* Mon Sep 26 2011 David Hrbáč <david@hrbac.cz> - 0.2-12.20090917git
+- initial rebuild
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.2-11.20080825git
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
