@@ -20,10 +20,10 @@ URL:            http://github.com/sitaramc/gitolite
 # $ cd gitolite
 # $ git archive ed2bf5 |gzip >gitolite-ed2bf5.tar.gz
 #Source0:        gitolite-ed2bf5.tar.gz
-Source0:        sitaramc-gitolite-v2.0.3-0-g4c1e4b2.tar.gz
-Source1:        gitolite-README-fedora
+Source0:        gitolite-2.0.3.tar.gz
+#Source1:        gitolite-README-fedora
 # Far from being upstreamable
-Patch0:         gitolite-2.0-rpm.patch
+#Patch0:         gitolite-2.0-rpm.patch
 #Patch1:         gitolite-1.4.2-conf.patch
 #Patch2:         adcfix.post-v2.patch
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -54,10 +54,10 @@ elsewhere in the doc/ directory.
 %prep
 %setup -qn sitaramc-gitolite-4c1e4b2
 # Don't create backups; would mess with %%install
-%patch0 -p1
+#%patch0 -p1
 #%patch1 -p1
 #%patch2 -p1
-cp %{SOURCE1} .
+#cp %{SOURCE1} .
 
 
 %build
@@ -112,10 +112,14 @@ exit 0
 %attr(750,%{name},%{name}) %{gitolite_homedir}
 %attr(750,%{name},%{name}) %{gitolite_homedir}/.ssh
 %config(noreplace) %attr(640,%{name},%{name}) %{gitolite_homedir}/.ssh/authorized_keys
-%doc doc/COPYING doc/*.html gitolite-README-fedora
+%doc doc/COPYING doc/*.html 
+#gitolite-README-fedora
 
 
 %changelog
+* Thu Sep 22 2011 David Hrbáč <david@hrbac.cz> - 2.0.3-2
+- initial rebuild
+
 * Mon Aug 08 2011 Jon Ciesla <limb@jcomserv.net> - 2.0.3-2
 - Updated rpm patch to fix hooks, BZ 713020.
 
