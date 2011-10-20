@@ -7,6 +7,8 @@ Group: Applications/Internet
 URL: http://sublimation.org/scponly/
 Source: http://mesh.dl.sourceforge.net/sourceforge/scponly/scponly-%{version}.tgz
 Patch0: scponly-install.patch
+Patch1: scponly-rsync.patch
+Patch2: scponly-4.8-elif-gcc44.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n) 
 
 # Checks only for location of binaries
@@ -24,6 +26,11 @@ as a wrapper to the "tried and true" ssh suite of applications.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+
+%if 0%{?el6}
+%patch2 -p1
+%endif
 
 %build
 %configure --enable-scp-compat --enable-rsync-compat --enable-winscp-compat \
@@ -55,6 +62,10 @@ make install DESTDIR=%{buildroot}
 %config(noreplace) %{_sysconfdir}/scponly/*
 
 %changelog
+* Wed Sep 28 2011 David Hrbáč <david@hrbac.cz> - 4.8-2
+- merged patch to support rsync 3.x
+- gcc44 elif patch 
+
 * Fri Apr 11 2008 David Hrbáč <david@hrbac.cz> - 4.8-1
 - Updated to release 4.8.
 

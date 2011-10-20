@@ -8,7 +8,7 @@
 
 Name:           gitolite
 Version:        2.0.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Highly flexible server for git directory version tracker
 
 Group:          Applications/System
@@ -23,7 +23,7 @@ URL:            http://github.com/sitaramc/gitolite
 Source0:        gitolite-2.0.3.tar.gz
 #Source1:        gitolite-README-fedora
 # Far from being upstreamable
-#Patch0:         gitolite-2.0-rpm.patch
+Patch0:         gitolite-2.0-rpm.patch
 #Patch1:         gitolite-1.4.2-conf.patch
 #Patch2:         adcfix.post-v2.patch
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -54,7 +54,7 @@ elsewhere in the doc/ directory.
 %prep
 %setup -qn sitaramc-gitolite-4c1e4b2
 # Don't create backups; would mess with %%install
-#%patch0 -p1
+%patch0 -p1
 #%patch1 -p1
 #%patch2 -p1
 #cp %{SOURCE1} .
@@ -117,6 +117,9 @@ exit 0
 
 
 %changelog
+* Thu Oct 13 2011 David Hrbáč <david@hrbac.cz> - 2.0.3-3
+- added missing patch
+
 * Thu Sep 22 2011 David Hrbáč <david@hrbac.cz> - 2.0.3-2
 - initial rebuild
 
