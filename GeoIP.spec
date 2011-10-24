@@ -3,8 +3,8 @@
 %define data_stamp %(date +\%Y\%m\%d)
 
 Name:		GeoIP
-Version:	1.4.6
-Release:	2%{?dist}
+Version:	1.4.8
+Release:	1%{?dist}
 Summary:	C library finding what country an IP/hostname originates from
 
 Group:		System Environment/Libraries
@@ -165,6 +165,12 @@ install -D -m 0755 %{SOURCE5} %{buildroot}%{_sbindir}/geoip-fetch
 %{_localstatedir}/lib/%{name}/*.csv
 
 %changelog
+* Mon Oct 24 2011 David Hrbáč <david@hrbac.cz> - 1.4.8-1
+- new upstream release
+
+* Mon Oct 24 2011 David Hrbáč <david@hrbac.cz> - 1.4.7-1
+- new upstream release
+
 * Thu Jul 16 2009 David Hrbáč <david@hrbac.cz> - 1.4.6-2
 - added CVS to bin database for ipt_geoip
 

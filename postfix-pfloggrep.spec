@@ -2,7 +2,7 @@
 Name:           postfix-pfloggrep
 Version:        0.5
 Release:        2.%{svn}%{?dist}
-Summary:        pfloggrep -- where the heck is my mai
+Summary:        pfloggrep -- where the heck is my mail
 
 Group: 		System Environment/Daemons
 License:        Own
