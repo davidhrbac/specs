@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.8.55
+Version:        1.0.8
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -29,7 +29,7 @@ Requires(post):     chkconfig
 Requires(preun):    chkconfig, initscripts
 Requires(postun):   initscripts
 
-Source0:    http://sysoev.ru/nginx/nginx-%{version}.tar.gz
+Source0:    http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:    %{name}.init
 Source2:    %{name}.logrotate
 Source3:    virtual.conf
@@ -189,6 +189,9 @@ fi
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 
 %changelog
+* Thu Oct 20 2011 David Hrbáč <david@hrbac.cz> - 1.0.8-1
+- new upstream release
+
 * Thu Oct 20 2011 David Hrbáč <david@hrbac.cz> - 0.8.55-1
 - new upstream release
 

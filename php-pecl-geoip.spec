@@ -1,5 +1,4 @@
 # $Id: php-pecl-ssh2.spec,v 1.1 2008-05-19 11:38:25 dhrbac Exp $
-# Authority: stefan
 %global php_apiver  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP API => //p') | tail -1)
 %global php_extdir  %(php-config --extension-dir 2>/dev/null || echo "undefined")
 %global php_version %(php-config --version 2>/dev/null || echo 0)
@@ -9,7 +8,7 @@
 
 Summary: %{pecl_name} - Map IP address to geographic places
 Name: php-pecl-%{pecl_name}
-Version: 1.0.7
+Version: 1.0.8
 Release: 1%{?dist}
 License: PHP
 Group: Development/Languages
@@ -61,5 +60,8 @@ EOF
 
 
 %changelog
+* Mon Oct 24 2011 David Hrbáč <david@hrbac.cz> - 1.0.8-1
+- new upstream release
+
 * Fri May 29 2009 David Hrbáč <david@hrbac.cz> - 1.0-1
 - initial build
