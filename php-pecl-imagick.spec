@@ -6,7 +6,7 @@
 
 Summary:		Provides a wrapper to the ImageMagick library
 Name:		php-pecl-%peclName
-Version:		2.2.1
+Version:		3.0.1
 Release:		1%{?dist}
 License:		PHP
 Group:		Development/Libraries
@@ -56,6 +56,8 @@ install -m 0664 ../package.xml %{buildroot}%{pecl_xmldir}/%peclName.xml
 install -d %{buildroot}%{_sysconfdir}/php.d/
 install -m 0664 %{SOURCE1} %{buildroot}%{_sysconfdir}/php.d/%peclName.ini
 
+rm -rf %{buildroot}/%{_includedir}/php/ext/%peclName/
+
 %clean
 rm -rf %{buildroot}
 
@@ -79,5 +81,11 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/php.d/%peclName.ini
 
 %changelog
+* Tue Oct 25 2011 David Hrbáč <david@hrbac.cz> - 3.0.1-1
+- new upstream release
+
+* Tue Oct 25 2011 David Hrbáč <david@hrbac.cz> - 3.0.0-1
+- new upstream release
+
 * Tue Jan 05 2010 David Hrbáč <david@hrbac.cz> - 2.2.1-1
 - Initial release

@@ -1,7 +1,7 @@
 Summary: Repository hrb-fw release file and package configuration
 Name: hrb-fw-release
 Version: 0.1
-Release: 3%{?dist} 
+Release: 4%{?dist} 
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -17,6 +17,7 @@ Release file for hrb-fw repository.
 
 %prep
 
+%{?el6:path="el6"}
 %{?el5:path="el5"}
 %{?el4:path="el4"}
 %{?el3:path="el3"}
@@ -26,20 +27,20 @@ Release file for hrb-fw repository.
 # URL: http://www.hrbac.cz/repository.htm
 [hrb-fw-stable]
 name = hrb-fw
-#baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-fw/stable/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb-fw
+#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb-fw/stable/%{_arch}/
+mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-hrb-fw
 enabled = 1
 protect = 0
-gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 
 [hrb-fw-testing]
 name = hrb-fw-test
-#aseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb-fw/testing/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-testing-hrb-fw
+#aseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb-fw/testing/%{_arch}/
+mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-testing-hrb-fw
 enabled = 0
 protect = 0
-gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 EOF
 
@@ -58,6 +59,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb-fw.repo
 
 %changelog
+* Tue Oct 25 2011 David Hrbáč <david@hrbac.cz> - 0.1-4
+- new mirrorlist server
+
 * Thu Jan 21 2010 David Hrbáč <david@hrbac.cz> - 0.1-3
 - fixed testing mirrorlist
 

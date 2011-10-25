@@ -1,7 +1,7 @@
 Summary: Repository hrb release file and package configuration
 Name: hrb-release
 Version: 0.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
@@ -27,20 +27,20 @@ Release file for hrb-tls repository.
 # URL: http://www.hrbac.cz/repository.htm
 [hrb-stable]
 name = hrb
-#baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb/stable/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-hrb
+#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb/stable/%{_arch}/
+mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-hrb
 enabled = 1
 protect = 0
-gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 
 [hrb-testing]
 name = hrb-test
-#baseurl = http://webmel4.vsb.cz/hrb33/el%centos_ver/hrb/testing/%{_arch}/
-mirrorlist = http://webmel4.vsb.cz/hrb33/mirrors-testing-hrb
+#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb/testing/%{_arch}/
+mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-testing-hrb
 enabled = 0
 protect = 0
-gpgkey = http://webmel4.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 EOF
 
@@ -59,6 +59,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb.repo
 
 %changelog
+* Tue Oct 25 2011 David Hrbáč <david@hrbac.cz> - 0.1-6
+- new mirrorlist server
+
 * Tue Aug 23 2011 David Hrbáč <david@hrbac.cz> - 0.1-5
 - el6 repo added
 
