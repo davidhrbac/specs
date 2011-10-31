@@ -2,7 +2,7 @@
 Name:          jabberpy
 Version:       0.5
 # Used like this because upstream releases like 0.5-0
-Release:       0.17%{?dist}
+Release:       0.18%{?dist}
 Summary:       Python xmlstream and jabber IM protocol libs
 
 Group:         Development/Libraries
@@ -11,6 +11,7 @@ URL:           http://sourceforge.net/projects/jabberpy/
 Source0:       http://downloads.sf.net/sourceforge/%{name}/%{name}-%{version}-0.tar.gz
 Patch0:        jabberpy-no-init.patch
 Patch1:        jabberpy-clean-sockets.patch
+Patch2:        jabberpy-ipv6.patch
 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:     noarch
@@ -29,6 +30,7 @@ based applications with Python.
 chmod -x examples/*.py
 %patch0 -p1 -b .no-init
 %patch1 -p1 -b .clean-sockets
+%patch2 -p0 -b .ipv6
 
 %build
 %{__python} setup.py  build
@@ -47,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 26 2011 David Hrbáč <david@hrbac.cz> - 0.5-0.18
+- 670881 - IPv6 support for jabberpy
+
 * Tue Nov 23 2010 David Hrbáč <david@hrbac.cz> - 0.5-0.17
 - initial rebuild
 
