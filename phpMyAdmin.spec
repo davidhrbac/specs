@@ -2,13 +2,13 @@
 
 Summary:	Handle the administration of MySQL over the World Wide Web
 Name:		phpMyAdmin
-Version:	3.4.7
+Version:	3.4.7.1
 Release:	1%{?dist}
 License:	GPLv2+
 Group:		Applications/Internet
 URL:		http://www.phpmyadmin.net/
 #Source0:	http://downloads.sourceforge.net/projects/phpmyadmin/files/%{version}/%{pkgname}/%{pkgname}-%{version}-all-languages.tar.bz2
-Source0:    http://sourceforge.net/projects/phpmyadmin/files/%{pkgname}/%{version}/%{pkgname}-%{version}-all-languages.tar.bz2/download
+Source0:    http://sourceforge.net/projects/phpmyadmin/files/%{pkgname}/%{version}/%{pkgname}-%{version}-all-languages.tar.bz2
 Source1:    phpMyAdmin-config.inc.php
 Source2:	phpMyAdmin.htaccess
 %if 0%{?rhel} != 5
@@ -82,6 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755,apache,apache) %{_localstatedir}/lib/%{pkgname}/config
 
 %changelog
+* Thu Nov 10 2011 David Hrbáč <david@hrbac.cz> - 3.4.7.1-1
+- new upstream release
+
 * Thu Oct 27 2011 David Hrbáč <david@hrbac.cz> - 3.4.7-1
 - initial rebuild
 

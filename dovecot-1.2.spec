@@ -1,7 +1,7 @@
 Summary: Secure imap and pop3 server
 Name: dovecot
 Epoch: 1
-Version: 1.2.16
+Version: 1.2.17
 Release: 1%{?dist}
 #dovecot itself is MIT, a few sources are PD, (manage)sieve is LGPLv2, perfect_maildir.pl is GPLv2+
 License: MIT and LGPLv2 and GPLv2+
@@ -15,10 +15,10 @@ Group: System Environment/Daemons
 
 %define build_sieve 1
 %define build_managesieve 1
-%define ver4mansieve 1.2.16
-%define sieve_version 0.1.18
+%define ver4mansieve 1.2.17
+%define sieve_version 0.1.19
 %define sieve_name dovecot-1.2-sieve
-%define managesieve_version 0.11.12
+%define managesieve_version 0.11.13
 %define managesieve_name dovecot-1.2-managesieve
 
 %if %{?fedora}00%{?rhel} < 6
@@ -486,6 +486,9 @@ fi
 
 
 %changelog
+* Sat Nov 12 2011 David Hrbáč <david@hrbac.cz> - 1:1.2.17-1
+- new upstream release
+
 * Tue Jan 04 2011 David Hrbáč <david@hrbac.cz> - 1:1.2.16-1
 - new upstream release
 

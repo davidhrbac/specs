@@ -34,7 +34,7 @@ Patch50: re-alpine-2.02-openssl.patch
 
 #BuildRequires: automake libtool
 BuildRequires: gettext
-BuildRequires: hunspell
+#BuildRequires: hunspell
 ## passing --with-npa=/usr/bin/inews
 #BuildRequires: inews
 BuildRequires: krb5-devel

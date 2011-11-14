@@ -1,6 +1,6 @@
 Summary: Define and use macros within the Apache configuration
 Name: mod_macro
-Version: 1.1.6
+Version: 1.1.11
 Release: 1%{dist}
 Group: System Environment/Daemons
 URL: http://cri.ensmp.fr/~coelho/mod_macro/
@@ -49,5 +49,8 @@ install -Dp -m0644 %{name}.conf %{buildroot}%{_sysconfdir}/httpd/conf.d/%{name}.
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %changelog
+* Wed Nov 02 2011 David Hrbáč <david@hrbac.cz> - 1.1.11-1
+- new upstream release
+
 * Wed Aug 12 2009 David Hrbáč <david@hrbac.cz> - 1.1.6-1
 - Initial build.
