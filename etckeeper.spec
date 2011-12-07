@@ -2,8 +2,8 @@
 %{?el4:%define _without_bzr 1}
 
 Name:      etckeeper
-Version:   0.56
-Release:   2%{?dist}
+Version:   0.57
+Release:   1%{?dist}
 Summary:   Store /etc in a SCM system (git, mercurial, bzr or darcs)
 Group:     Applications/System
 License:   GPLv2+
@@ -99,6 +99,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 07 2011 David Hrbáč <david@hrbac.cz> - 0.57-1
+- new upstream release
+
 * Mon Aug 29 2011 David Hrbáč <david@hrbac.cz> - 0.56-2
 - Initial reruild
 - Disable bzr on el4

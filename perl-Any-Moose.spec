@@ -9,6 +9,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/S/SA/SARTAK/Any-Moose-%{v
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.006_002
+BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Mouse) >= 0.40
 Requires:       perl(Mouse) >= 0.40
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
