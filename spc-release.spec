@@ -48,7 +48,7 @@ gpgcheck = 1
 
 %install
 %{__rm} -rf %{buildroot}
-%{__install} -Dp -m0644 spc.yum %{buildroot}%{_sysconfdir}/yum.repos.d/hrb.repo
+%{__install} -Dp -m0644 spc.yum %{buildroot}%{_sysconfdir}/yum.repos.d/spc.repo
 
 %clean
 %{__rm} -rf %{buildroot}
