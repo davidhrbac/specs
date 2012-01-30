@@ -44,7 +44,7 @@ gpgcheck = 1
 #protect = 0
 #gpgkey = http://webmel53.vsb.cz/spc33/RPM-GPG-KEY-hrb.txt
 #gpgcheck = 1
-#EOF
+EOF
 
 %install
 %{__rm} -rf %{buildroot}
