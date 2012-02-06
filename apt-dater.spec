@@ -1,15 +1,11 @@
-%define name apt-dater
-%define version 0.8.6
-%define release 1
-
-Name:       %{name}
-Version:    %{version}
-Release:    %{release}%{?dist}
+Name:       apt-dater
+Version:    0.8.6
+Release:    1%{?dist}
 Summary:	Terminal-based remote package update manager
 #Version:	0.8.6
 #Release:	1%{?dist}
 URL:		http://www.ibh.de/apt-dater/
-Source:      http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source:     http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 License:	GPL
 Group:		System/Management
 Requires:	screen
