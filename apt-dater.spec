@@ -24,7 +24,9 @@ BuildRequires:	automake
 BuildRequires:	autoconf
 BuildRequires:	perl
 
+%if 0%{?rhel} > 5 
 BuildRequires:	popt-devel
+%endif
 
 Buildroot:	%{_tmppath}/%{name}-buildroot
 
