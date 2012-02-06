@@ -5,8 +5,8 @@
 
 Summary: The PHP HTML-embedded scripting language
 Name: php
-Version: 5.3.6
-Release: 2%{?dist}
+Version: 5.3.10
+Release: 1%{?dist}
 License: PHP
 Group: Development/Languages
 URL: http://www.php.net/
@@ -684,6 +684,9 @@ rm files.* macros.php
 %files intl -f files.intl
 
 %changelog
+* Fri Feb 03 2012 David Hrbáč <david@hrbac.cz> - 5.3.10-1
+- new upstream release
+
 * Fri Aug 05 2011 David Hrbáč <david@hrbac.cz> - 5.3.6-2
 - add php-intl sub-package
 
