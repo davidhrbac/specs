@@ -1,7 +1,7 @@
 %define real_name lessfs
 Summary:	Lessfs is an inline data deduplicating filesystem
 Name:		fuse-lessfs
-Version:	1.3.3.11
+Version:	1.5.9
 Release:	1%{?dist}
 License:	GPLv3
 Group:		Applications/System
@@ -10,11 +10,16 @@ Source:         http://downloads.sourceforge.net/%{real_name}/%{real_name}-%{ver
 Patch0:         lessfs-init.patch
 Patch1:         lessfs-init-4096.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires:  tokyocabinet-devel 
-BuildRequires:  openssl-devel
-BuildRequires:  fuse-devel
 BuildRequires:  autoconf
+BuildRequires:  fuse-devel
+BuildRequires:  mhash-devel
+BuildRequires:  openssl-devel
+BuildRequires:  snappy-devel
+BuildRequires:  tokyocabinet-devel 
+
 Requires: fuse
+Requires: mhash 
+Requires: snappy
 
 Obsoletes: %{real_name} <= %{name}-%{version}
 Provides: %{real_name} = %{name}-%{version}
@@ -36,15 +41,15 @@ chmod -x *.c
 #%patch1
 
 %build
-autoreconf
+#autoreconf
 export CFLAGS="-ggdb2 -O2"
-%configure --with-crypto --with-sha3
+%configure --with-crypto --with-sha3 --with-snappy 
 make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install
-install -D -m 755 etc/lessfs %{buildroot}/etc/init.d/lessfs
+install -D -m 755 etc/lessfs-init_example %{buildroot}/etc/init.d/lessfs
 install -D -m 755 etc/lessfs.cfg %{buildroot}/etc/lessfs.cfg
 
 rm -rf %{buildroot}%{_datadir}/%{name}
@@ -62,14 +67,18 @@ rm -rf %{buildroot}
 %doc FAQ ChangeLog COPYING README
 %{_bindir}/lessfs
 %{_sbindir}/mklessfs
-%{_sbindir}/defrag_lessfs
 %{_sbindir}/lessfsck
 %{_sbindir}/listdb
+%{_sbindir}/replogtool
 %{_mandir}/man1/lessfs*
+%{_mandir}/man1/replogtool*
 /etc/init.d/lessfs
 %config(noreplace) /etc/lessfs.cfg
 
 %changelog
+* Mon Feb 13 2012 David Hrbáč <david@hrbac.cz> - 1.5.9-1
+- new upstream release
+
 * Thu Nov 18 2010 David Hrbáč <david@hrbac.cz> - 1.2.0-1
 - new upstream release
 

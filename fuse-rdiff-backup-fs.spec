@@ -9,6 +9,7 @@ URL:            http://www.rdiff-backup-fs.com
 Source:         https://rdiff-backup-fs.googlecode.com/files/%{real_name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  fuse-devel
+BuildRequires:  zlib-devel
 Requires: fuse
 
 Obsoletes: %{real_name} <= %{name}-%{version}

@@ -2,7 +2,7 @@
 
 Summary:	Handle the administration of MySQL over the World Wide Web
 Name:		phpMyAdmin
-Version:	3.4.9
+Version:	3.4.10
 Release:	1%{?dist}
 License:	GPLv2+
 Group:		Applications/Internet
@@ -82,6 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755,apache,apache) %{_localstatedir}/lib/%{pkgname}/config
 
 %changelog
+* Wed Feb 15 2012 David Hrbáč <david@hrbac.cz> - 3.4.10-1
+- new upstream release
+
 * Mon Jan 02 2012 David Hrbáč <david@hrbac.cz> - 3.4.9-1
 - new upstream release
 
