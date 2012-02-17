@@ -1,25 +1,20 @@
 %define roundcubedir %{_datadir}/roundcubemail
 %global _logdir /var/log  
 Name: roundcubemail
-Version:  0.3.1
+Version:  0.7.1
 Release:  2%{?dist}
 Summary: Round Cube Webmail is a browser-based multilingual IMAP client
 
 Group: Applications/System         
 License: GPLv2
 URL: http://www.roundcube.net
-Source0: http://downloads.sourceforge.net/project/roundcubemail/roundcubemail-dependent/%{version}/roundcubemail-%{version}-dep.tar.gz
+Source0: http://downloads.sourceforge.net/roundcubemail/roundcubemail-%{version}-dep.tar.gz
 Source1: roundcubemail.conf
 Source2: roundcubemail.logrotate
-#Source4: roundcubemail-README.fedora
-Patch0: roundcubemail-0.2-beta-confpath.patch
-# From upstream, not in a release yet, BZ 476223.
-#Patch1: roundcubemail-0.2-beta-html2text.patch
-# From upstream, not in a release yet, BZ 476830.
-#Patch2: roundcubemail-0.2-beta-CVE-2008-5620.patch
-#Patch3: roundcubemail-0.2-CVE-2009-0413.patch
-#Patch4: roundcubemail-0.2-stable-pg-mdb2.patch
-Patch5: roundcubemail-0.3.1-CVE-2010-0464.patch
+Source4: roundcubemail-README.fedora
+# Non-upstremable: Adjusts config path to Fedora policy
+Patch6: roundcubemail-0.4.1-confpath.patch
+Patch7: roundcubemail-0.7.1-strict.patch
 
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root%(%{__id_u} -n)
@@ -31,11 +26,12 @@ Requires: php-pear-Net-Socket
 Requires: php, httpd
 Requires: php-pear-Mail-mimeDecode
 Requires: php-mcrypt
-Requires: php-pear-MDB2
+Requires: php-pear-MDB2 >= 2.5.0
 Requires: php-pear-MDB2-Driver-mysql
 Requires: php-pecl-Fileinfo
 Requires: php-xml
 Requires: php-mbstring
+Requires: php-pear-Net-IDNA2
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client
@@ -49,12 +45,8 @@ interface is fully skinnable using XHTML and CSS 2.
 %prep
 %setup -q -n roundcubemail-%{version}-dep
 
-%patch0 -p0
-#%patch1 -p0
-#%patch2 -p0
-#%patch3 -p0
-#%patch4 -p0
-%patch5 -p0
+%patch6 -p0
+%patch7 -p0
 
 # fix permissions and remove any .htaccess files
 find . -type f -print | xargs chmod a-x
@@ -98,7 +90,7 @@ cp -pr %SOURCE2 %{buildroot}%{_sysconfdir}/logrotate.d/roundcubemail
 
 mkdir -p %{buildroot}/var/log/roundcubemail
 
-#cp -pr %SOURCE4 .
+cp -pr %SOURCE4 .
 
 # use dist files as config files
 mv %{buildroot}%{roundcubedir}/config/db.inc.php.dist %{buildroot}%{_sysconfdir}/roundcubemail/db.inc.php
@@ -135,8 +127,7 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL 
-#roundcubemail-README.fedora
+%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL roundcubemail-README.fedora
 %{roundcubedir}
 %dir %{_sysconfdir}/%{name}
 %attr(0640,root,apache) %config(noreplace) %{_sysconfdir}/%{name}/db.inc.php
@@ -147,8 +138,47 @@ exit 0
 %config(noreplace) %{_sysconfdir}/logrotate.d/roundcubemail
 
 %changelog
-* Sun Jun 20 2010 David Hrbáč <david@hrbac.cz> - 0.3.1-2
-- initial release
+* Thu Feb 16 2012 Jon Ciesla <limburgher@gmail.com> - 0.7.1-2
+- Fix logrotate, BZ 789552.
+- Modify error logging for strict, BZ 789576.
+
+* Wed Feb  1 2012 Adam Williamson <awilliam@redhat.com> - 0.7.1-1
+- new upstream release
+
+* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
+* Wed Dec 14 2011 Adam Williamson <awilliam@redhat.com> - 0.7-1
+- new upstream release
+- drop all patches except confpath.patch:
+	+ html2text.patch and all CVE fixes were merged upstream
+	+ pg-mdb2.patch no longer necessary as all currently supported
+	  Fedora releases have a php-pear-MDB2-Driver-pgsql package new
+	  enough to work with this option
+
+* Fri Oct 07 2011 Jon Ciesla <limb@jcomserv.net> = 0.6-1
+- New upstream.
+
+* Tue Sep 06 2011 Jon Ciesla <limb@jcomserv.net> = 0.5.4-1
+- New upstream, fixes multiple security issues.
+
+* Tue Jul 05 2011 Jon Ciesla <limb@jcomserv.net> = 0.5.3-1
+- New upstream.
+
+* Tue May 17 2011 Jon Ciesla <limb@jcomserv.net> = 0.5.2-1
+- New upstream.
+
+* Thu Feb 10 2011 Jon Ciesla <limb@jcomserv.net> = 0.5.1-1
+- New upstream.
+
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Mon Oct 18 2010 Jon Ciesla <limb@jcomserv.net> = 0.4.2-1
+- New upstream.
+
+* Mon Oct 04 2010 Jon Ciesla <limb@jcomserv.net> = 0.4.1-1
+- New upstream.
 
 * Mon Feb 01 2010 Jon Ciesla <limb@jcomserv.net> = 0.3.1-2
 - Patch to fix CVE-2010-0464, BZ 560143.
