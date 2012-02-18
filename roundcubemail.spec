@@ -11,7 +11,7 @@ URL: http://www.roundcube.net
 Source0: http://downloads.sourceforge.net/roundcubemail/roundcubemail-%{version}-dep.tar.gz
 Source1: roundcubemail.conf
 Source2: roundcubemail.logrotate
-Source4: roundcubemail-README.fedora
+#Source4: roundcubemail-README.fedora
 # Non-upstremable: Adjusts config path to Fedora policy
 Patch6: roundcubemail-0.4.1-confpath.patch
 Patch7: roundcubemail-0.7.1-strict.patch
@@ -90,7 +90,7 @@ cp -pr %SOURCE2 %{buildroot}%{_sysconfdir}/logrotate.d/roundcubemail
 
 mkdir -p %{buildroot}/var/log/roundcubemail
 
-cp -pr %SOURCE4 .
+#cp -pr %SOURCE4 .
 
 # use dist files as config files
 mv %{buildroot}%{roundcubedir}/config/db.inc.php.dist %{buildroot}%{_sysconfdir}/roundcubemail/db.inc.php
@@ -127,7 +127,7 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL roundcubemail-README.fedora
+%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL
 %{roundcubedir}
 %dir %{_sysconfdir}/%{name}
 %attr(0640,root,apache) %config(noreplace) %{_sysconfdir}/%{name}/db.inc.php
@@ -138,6 +138,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/logrotate.d/roundcubemail
 
 %changelog
+* Fri Feb 17 2012 David Hrbáč <david@hrbac.cz> - 0.7.1-2
+- initial rebuild
+
 * Thu Feb 16 2012 Jon Ciesla <limburgher@gmail.com> - 0.7.1-2
 - Fix logrotate, BZ 789552.
 - Modify error logging for strict, BZ 789576.
