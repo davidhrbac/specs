@@ -1,24 +1,38 @@
-%define           ENABLE_SNMP_SUBAGENT 0
-%define           ENABLE_MGMT 1
-%define           uid 24
-%define           gname haclient
-%define           uname hacluster
-Summary:          Heartbeat subsystem for High-Availability Linux
+
+# When downloading directly from Mercurial, it will automatically add this prefix
+# Invoking 'hg archive' wont but you can add one with:
+# hg archive -t tgz -p "Linux-HA-Dev-" -r $upstreamversion $upstreamversion.tar.gz
+%global specversion 1
+#global upstreamprefix Linux-HA-Dev-
+%global upstreamprefix Heartbeat-3-0-
+%global upstreamversion STABLE-3.0.4
+
+#global alphatag %{upstreamversion}.hg
+
+%global           ENABLE_SNMP_SUBAGENT 0
+%global           gname haclient
+%global           uname hacluster
+
+Summary:          Messaging and membership subsystem for High-Availability Linux
 Name:             heartbeat
-Version:          2.1.4
-Release:          6%{?dist}
+Version:          3.0.4
+# For dev snapshots
+#Release:         #{?alphatag:0.}#{specversion}#{?alphatag:.#{alphatag}}#{?dist}
+Release:          %{?alphatag:0.}%{specversion}%{?alphatag:.%{alphatag}}%{?dist}
 License:          GPLv2 and LGPLv2+
 URL:              http://linux-ha.org/
 Group:            System Environment/Daemons
-Source0:          http://hg.linux-ha.org/lha-2.1/archive/STABLE-%{version}.tar.bz2
-Patch0:           heartbeat-fedora-pam.patch
-Patch1:           heartbeat-2.1.4-default-init.patch
+# For dev snapshots
+#Source0:         http://hg.linux-ha.org/dev/archive/%{upstreamversion}.tar.bz2
+Source0:          http://hg.linux-ha.org/heartbeat-STABLE_3_0/archive/STABLE-3.0.4.tar.bz2
+Patch1:           heartbeat-3.0.4-disable-xinclude.patch
+Patch2:           heartbeat-3.0.0-haresources.patch
 BuildRoot:        %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n) 
 BuildRequires:    glib2-devel
 BuildRequires:    iputils
-BuildRequires:    libnet-devel
-#BuildRequires:    libtool-ltdl-devel
-BuildRequires:    net-snmp-devel 
+#BuildRequires:    libnet-devel
+BuildRequires:    libtool-ltdl-devel
+BuildRequires:    net-snmp-devel >= 5.4
 BuildRequires:    bzip2-devel 
 BuildRequires:    ncurses-devel
 BuildRequires:    openssl-devel
@@ -27,27 +41,33 @@ BuildRequires:    libxml2-devel
 BuildRequires:    gettext
 BuildRequires:    bison
 BuildRequires:    flex
-%if %{ENABLE_MGMT}
-BuildRequires:    gnutls-devel 
-BuildRequires:    pam-devel
-BuildRequires:    python-devel
-BuildRequires:    swig
-%endif
-Requires:         ldirectord = %{version}-%{release}
-Requires:	  PyXML
-Requires(pre):	  shadow-utils
+BuildRequires:    zlib-devel
+BuildRequires:    mailx
+BuildRequires:    which
+BuildRequires:    cluster-glue-libs-devel
+BuildRequires:    libuuid-devel
+BuildRequires:    libxslt
+BuildRequires:    docbook-style-xsl
+ExcludeArch:	ppc64
+Requires:         PyXML
+Requires:         resource-agents
+Requires:         cluster-glue-libs
+Requires(pre):    shadow-utils
+Requires(pre):    cluster-glue
 Requires(post):   /sbin/chkconfig
 Requires(preun):  /sbin/chkconfig
-%if %{ENABLE_MGMT}
-Requires:         gettext
-%endif
+Obsoletes:        heartbeat-gui < %{version}-%{release}
 
 %description
 heartbeat is a basic high-availability subsystem for Linux-HA.
 It will run scripts at initialization, and when machines go up or down.
 This version will also perform IP address takeover using gratuitous ARPs.
-It supports "n-node" clusters with significant capabilities for managing
-resources and dependencies.
+
+Heartbeat contains a cluster membership layer, fencing, and local and
+clusterwide resource management functionality.
+
+When used with Pacemaker, it supports "n-node" clusters with significant 
+capabilities for managing resources and dependencies.
 
 In addition it continues to support the older release 1 style of
 2-node clustering.
@@ -60,49 +80,13 @@ It implements the following kinds of heartbeats:
         - "ping" heartbeats (for routers, switches, etc.)
            (to be used for breaking ties in 2-node systems)
 
-%package ldirectord
-Summary:          Monitor daemon for maintaining high availability resources
+%package libs
+Summary:          Heartbeat libraries
 Group:            System Environment/Daemons
-Requires:         ipvsadm
-Requires(post):   /sbin/chkconfig
-Requires(preun):  /sbin/chkconfig
-Provides: ldirectord = %{version}-%{release}
-Obsoletes: ldirectord < 2.1.4-5
+Requires:         heartbeat = %{version}-%{release}
 
-%description ldirectord
-ldirectord is a stand-alone daemon to monitor services of real 
-for virtual services provided by The Linux Virtual Server
-(http://www.linuxvirtualserver.org/). It is simple to install 
-and works with the heartbeat code (http://www.linux-ha.org/).
-
-%package stonith
-Requires:       net-snmp-libs
-Summary:        Provides an interface to Shoot The Other Node In The Head 
-Group:          System Environment/Daemons
-Provides: stonith = %{version}-%{release}
-Obsoletes: stonith < 2.1.4-5
-
-%description stonith
-The STONITH module (a.k.a. STONITH) provides an extensible interface
-for remotely powering down a node in the cluster.  The idea is quite simple:
-When the software running on one machine wants to make sure another
-machine in the cluster is not using a resource, pull the plug on the other 
-machine. It's simple and reliable, albeit admittedly brutal.
-
-%package pils
-Summary:        Provides a general plugin and interface loading library
-Group:          System Environment/Daemons
-Provides: pils = %{version}-%{release}
-Obsoletes: pils < 2.1.4-5
-
-%description pils
-PILS is an generalized and portable open source Plugin and Interface Loading 
-System. PILS was developed as part of the Open Cluster Framework reference 
-implementation, and is designed to be directly usable by a wide variety of 
-other applications.
-PILS manages both plugins (loadable objects), and the interfaces these plugins 
-implement. PILS is designed to support any number of plugins implementing any 
-number of interfaces.
+%description libs
+Heartbeat library package
 
 %package devel 
 Summary:        Heartbeat development package 
@@ -110,36 +94,16 @@ Group:          System Environment/Daemons
 Requires:       heartbeat = %{version}-%{release}
 
 %description devel
-Heartbeat development package
-
-%package gui
-Summary: Provides a gui interface to manage heartbeat clusters
-Group: System Environment/Daemons
-Requires: heartbeat = %{version}-%{release}
-Requires: PyXML
-Requires: pygtk2 >= 2.4
-
-%description gui
-GUI client for Heartbeat clusters
+Headers and shared libraries for writing programs for Heartbeat
 
 %prep
-%setup -q -n Heartbeat-STABLE-2-1-STABLE-%{version}
-%patch0 -p1
-%patch1 -p1
- 
+%setup -q -n %{upstreamprefix}%{upstreamversion}
+%patch2 -p1 
+
 %build
 ./bootstrap
 # disable-fatal-warnings flag used to disable gcc4.x warnings of 'difference in signedness'
-CFLAGS=${RPM_OPT_FLAGS} \
-%configure \
-  --with-ocf-root=%{_datadir}/ocf \
-  --disable-fatal-warnings \
-  --disable-static \
-%if %{ENABLE_MGMT}
-  --enable-mgmt
-%else
-  --disable-mgmt
-%endif
+CFLAGS=${RPM_OPT_FLAGS} %configure  --disable-fatal-warnings --disable-static
 
 # get rid of rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -150,34 +114,19 @@ make %{?_smp_mflags}
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
+# disable xsltproc from trying to hit the net
+export XSLTPROC_OPTIONS=""
 make DESTDIR=$RPM_BUILD_ROOT install
 
 # cleanup
 [ -d $RPM_BUILD_ROOT/usr/man ] && rm -rf $RPM_BUILD_ROOT/usr/man
 [ -d $RPM_BUILD_ROOT/usr/share/libtool ] && rm -rf $RPM_BUILD_ROOT/usr/share/libtool
 find $RPM_BUILD_ROOT -type f -name *.la -exec rm -f {} ';'
-
-sed -i -e '1i# -*-Shell-script-*-' $RPM_BUILD_ROOT/%{_libdir}/heartbeat/ocf-shellfuncs 
-sed -i -e '1i# -*-Shell-script-*-' $RPM_BUILD_ROOT/%{_sysconfdir}/ha.d/shellfuncs
-chmod -x $RPM_BUILD_ROOT/%{_libdir}/heartbeat/ocf-shellfuncs
-chmod -x $RPM_BUILD_ROOT/%{_sysconfdir}/ha.d/shellfuncs
-chmod -x $RPM_BUILD_ROOT/%{_libdir}/heartbeat-gui/pymgmt.py
-
-# fix some wrong line endings issues
-sed -i 's/\r//' $RPM_BUILD_ROOT/%{_datadir}/ocf/resource.d/heartbeat/SAPDatabase
-sed -i 's/\r//' $RPM_BUILD_ROOT/%{_datadir}/ocf/resource.d/heartbeat/SAPInstance
-
-%find_lang haclient
+mv $RPM_BUILD_ROOT/%{_datadir}/doc/%{name} $RPM_BUILD_ROOT/%{_datadir}/doc/%{name}-%{version}
+rm -rf $RPM_BUILD_ROOT/%{_datadir}/heartbeat/cts
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%pre
-getent group %{gname} >/dev/null || groupadd -r %{gname}
-getent passwd %{uname} >/dev/null || \
-useradd -r -g %{gname} -d /var/lib/heartbeat/cores/hacluster -s /sbin/nologin \
--c "heartbeat user" %{uname}
-exit 0
 
 %post
 /sbin/ldconfig
@@ -193,156 +142,122 @@ fi
 
 /sbin/ldconfig
 
-%post ldirectord
-/sbin/chkconfig --add ldirectord
-
-%postun ldirectord -p /sbin/ldconfig
-
-%preun ldirectord
-/sbin/chkconfig --del ldirectord
-
-%post stonith -p /sbin/ldconfig
-
-%postun stonith -p /sbin/ldconfig
-
-%post pils -p /sbin/ldconfig
-
-%postun pils -p /sbin/ldconfig
-
-%files -f haclient.lang
-%doc %{_datadir}/doc/%{name}-%{version}
+%files
 %defattr(-,root,root,-)
+%doc %{_datadir}/doc/%{name}-%{version}
 %dir %{_sysconfdir}/ha.d
 %{_sysconfdir}/ha.d/harc
-%config(noreplace) %{_sysconfdir}/ha.d/shellfuncs
 %{_sysconfdir}/ha.d/rc.d
 %config(noreplace) %{_sysconfdir}/ha.d/README.config
-%{_libdir}/heartbeat
-%{_libdir}/libapphb.so.*
-%{_libdir}/libccmclient.so.*
-%{_libdir}/libcib.so.*
-%{_libdir}/libclm.so.*
-%{_libdir}/libcrmcommon.so.*
-%{_libdir}/libtransitioner.so.*
-%{_libdir}/libhbclient.so.*
-%{_libdir}/liblrm.so.*
-%{_libdir}/libpengine.so.*
-%{_libdir}/libplumb.so.*
-%{_libdir}/libplumbgpl.so.*
-%{_libdir}/librecoverymgr.so.*
-%{_libdir}/libstonithd.so.*
-%{_libdir}/libpe_rules.so.*
-%{_libdir}/libpe_status.so.*
 %{_datadir}/heartbeat/
-%{_datadir}/ocf/
 %{_sysconfdir}/ha.d/resource.d/
-%exclude %{_sysconfdir}/ha.d/resource.d/ldirectord
 %{_sysconfdir}/init.d/heartbeat
 %config(noreplace) %{_sysconfdir}/logrotate.d/heartbeat
 %dir %{_var}/lib/heartbeat
-%dir %{_var}/lib/heartbeat/cores
-%dir %attr (0755, root, root) %{_var}/lib/heartbeat/cores/root
-%dir %attr (0755, nobody, nobody) %{_var}/lib/heartbeat/cores/nobody
-%dir %attr (0755, hacluster, haclient) %{_var}/lib/heartbeat/cores/hacluster
 %dir %{_var}/run/heartbeat
-%attr (2755, hacluster, haclient) %{_bindir}/cl_status
+%attr (2755, %{uname}, %{gname}) %{_bindir}/cl_status
 %{_bindir}/cl_respawn
-%{_sbindir}/ciblint
-%{_sbindir}/hb_report
-%{_sbindir}/crmadmin
-%{_sbindir}/cibadmin
-%{_sbindir}/ccm_tool
-%{_sbindir}/crm_diff
-%{_sbindir}/crm_uuid
-%{_sbindir}/crm_mon
-%{_sbindir}/crm_sh
-%{_sbindir}/iso8601
-%{_sbindir}/crm_master
-%{_sbindir}/crm_standby
-%{_sbindir}/crm_attribute
-%{_sbindir}/crm_resource
-%{_sbindir}/crm_verify
-%{_sbindir}/attrd_updater
-%{_sbindir}/crm_failcount
-%{_sbindir}/ocf-tester
-%{_sbindir}/ha_logger
-%{_sbindir}/ptest
-%dir %attr (755, hacluster, haclient) %{_var}/run/heartbeat/ccm
-%dir %attr (755, hacluster, haclient) %{_var}/run/heartbeat/crm
-%dir %attr (755, hacluster, haclient) %{_var}/lib/heartbeat/crm
-%dir %attr (755, hacluster, haclient) %{_var}/lib/heartbeat/pengine
+%dir %attr (755, %{uname}, %{gname}) %{_var}/run/heartbeat/ccm
 %{_mandir}/man1/cl_status.1*
-%{_mandir}/man1/ha_logger.1*
 %{_mandir}/man1/hb_standby.1*
 %{_mandir}/man1/hb_takeover.1*
 %{_mandir}/man1/hb_addnode.1*
 %{_mandir}/man1/hb_delnode.1*
 %{_mandir}/man8/heartbeat.8*
 %{_mandir}/man8/apphbd.8*
-%{_mandir}/man8/ha_logd.8*
-%{_mandir}/man8/cibadmin.8.gz
-%{_mandir}/man8/crm_resource.8.gz
+%{_mandir}/man5/authkeys.5*
+%{_mandir}/man5/ha.cf.5*
 %if %{ENABLE_SNMP_SUBAGENT}
 /LINUX-HA-MIB.mib
 %endif
-%if %{ENABLE_MGMT}
-%{_libdir}/libhbmgmt.so.*
-%{_libdir}/libhbmgmtclient.so.*
-%{_libdir}/libhbmgmtcommon.so.*
-%{_libdir}/libhbmgmttls.so.*
-%config(noreplace) %{_sysconfdir}/pam.d/hbmgmtd
-%endif
 
-%files ldirectord
-%doc doc/COPYING 
-%doc doc/README
-%doc ldirectord/ldirectord.cf
+%files libs
 %defattr(-,root,root,-)
-%{_sbindir}/ldirectord
-%config(noreplace) %{_sysconfdir}/logrotate.d/ldirectord
-%{_sysconfdir}/init.d/ldirectord
-%{_sysconfdir}/ha.d/resource.d/ldirectord
-%{_mandir}/man8/ldirectord.8*
-
-%files stonith
-%doc doc/COPYING 
-%doc doc/README
-%defattr(-,root,root,-)
-%{_libdir}/libstonith.so.*
-%{_libdir}/stonith/
-%{_sbindir}/stonith
-%{_sbindir}/meatclient
-%{_mandir}/man8/stonith.8*
-%{_mandir}/man8/meatclient.8*
-
-%files pils
-%doc doc/COPYING 
-%doc doc/README
-%defattr(-,root,root,-)
-/usr/include/pils
-%{_libdir}/libpils.*
-%{_libdir}/pils/
+%{_libdir}/heartbeat
+%{_libdir}/libapphb.so.*
+%{_libdir}/libccmclient.so.*
+%{_libdir}/libclm.so.*
+%{_libdir}/libhbclient.so.*
 
 %files devel
-%doc %{_datadir}/doc/%{name}-%{version}
 %defattr(-,root,root,-)
+%doc %{_datadir}/doc/%{name}-%{version}
 %{_includedir}/heartbeat/
-%{_includedir}/clplumbing/
 %{_includedir}/saf/
 %{_includedir}/ocf/
-%{_includedir}/stonith/
-%{_includedir}/pils/
 %{_libdir}/*.so
 
-%files gui
-%defattr(-,root,root)
-%{_libdir}/heartbeat-gui
-%{_datadir}/heartbeat-gui
-%{_bindir}/hb_gui
-
 %changelog
-* Fri Oct 30 2009 David Hrbáč <david@hrbac.cz> - 2.1.4-6
-- Rebuild
+* Tue Apr 03 2012 David Hrbáč <david@hrbac.cz> - 3.0.4-1.1
+- rebuild
+
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.4-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Sun Jan 23 2011 Kevin Fenzi <kevin@tummy.com> - 3.0.4-1
+- Update to 3.0.4
+
+* Fri Apr 30 2010 Kevin Fenzi <kevin@tummy.com> - 3.0.0-0.7.0daab7da36a8.hg
+- Add patch to fix haresource based clusters - fixes #576608
+
+* Mon Feb 22 2010 Andrew Beekhof <andrew@beekhof.net> - 3.0.0-0.6.0daab7da36a8.hg
+- Correctly link to all required libraries when building
+
+* Thu Oct 15 2009 Andrew Beekhof <andrew@beekhof.net> - 3.0.0-0.5.0daab7da36a8.hg
+- Resolve file conflict, shellfuncs is provided by resource-agents
+
+* Fri Aug 21 2009 Tomas Mraz <tmraz@redhat.com> - 3.0.0-0.4.0daab7da36a8.hg.1
+- rebuilt with new openssl
+
+* Mon Aug 17 2009 Andrew Beekhof <andrew@beekhof.net> - 3.0.0-0.4.0daab7da36a8.hg
+- Make use of the specversion variable
+- Add explicit dependancy on cluster-glue-libs to prevent yum from trying to use 
+  the deprecated heartbeat-{pils|stonith} packages
+- Update to upstream version 0daab7da36a8
+  + Clean up configure. Source most variables from cluster-glue to ensure build consistency
+
+* Mon Aug 17 2009 Andrew Beekhof <andrew@beekhof.net> - 3.0.0-0.3.b37cbb1b036c.hg
+- Make use of the uname/gname variables
+- Use global instead of define for variables
+- Remove user/group creation.  This is handled in cluster-glue
+- Add obsoletes directive for gui subpackage which is no longer supplied
+- Move ldirectord subpackage to resource-agents
+- Use the full configure macro
+- Update to upstream version b37cbb1b036c
+  + LVSSyncDaemonSwap syncid
+  + remove the remaining OCF RA which live in the agents repository
+  + High: RA: IPv6addr: support for new nic and cidr_netmask parameters in the OCF RA
+  + Low: Build: findif moved to agents.
+  + Low: Build: move ldirectord to agents.
+  + Low: Build: remove a few hb_report artifacts.
+
+* Thu Aug 13 2009 Andrew Beekhof <andrew@beekhof.net> - 3.0.0-0.2.11f858f3bc4c.hg
+- Create a libs subpackage to support multi-arch
+
+* Tue Aug 4 2009 Andrew Beekhof <andrew@beekhof.net> - 3.0.0-0.1.11f858f3bc4c.hg
+- Update to 3.0.0-beta and build against cluster-glue
+
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.4-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
+* Thu Jun 25 2009 Jochen Schmitt <Jochen herr-schmitt de> - 2.1.4-11
+- Revert changes of 2-1.4-11
+
+* Thu Jun 25 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.1.4-10 
+- Add separate filesystem subpackage (#501518)
+
+* Sun Jun 14 2009 Kevin Fenzi <kevin@tummy.com> - 2.1.4-9
+- Remove perl(Net::IMAP::Simple::SSL) for now as it's not in Fedora (yet).
+
+* Fri Jun 11 2009 Kevin Fenzi <kevin@tummy.com> - 2.1.4-8
+- Add perl(Net::IMAP::Simple::SSL) to ldirector subpackage
+- Fix MAILCMD (#502443)
+- Add patch to fix duplicate install of OCF drbd
+
+* Fri Apr 24 2009 Kevin Fenzi <kevin@tummy.com> - 2.1.4-7
+- Move ldirector dep to subpackage (#493625)
+- Add zlib-devel to BuildRequires (#497079)
+- Add pygtk2-libglade (#497079)
 
 * Tue Feb 24 2009 Kevin Fenzi <kevin@tummy.com> - 2.1.4-6
 - Remove symlink thats no longer needed. 
@@ -607,9 +522,9 @@ fi
   + Communication Layer
     + netstring encoding format is changed to be more efficient
     + add compression capability for big messages
-  + Add man pages for hb_standby/hb_takeover	
+  + Add man pages for hb_standby/hb_takeover
   + The assert triggered by 2.0.0 has been fixed
-  + CIB can now contain XML comments and/or be in DOS format	
+  + CIB can now contain XML comments and/or be in DOS format
   + Includes implementation of the ISO8601 date format
   + New CLI tools for changing cluster preferences, node attributes 
     and node standby
@@ -638,13 +553,13 @@ fi
 * Fri Jul 29 2005  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 2.0.0 - First stable release of the next generation of the Linux-HA project
   + Basic Characteristics described here:
-	http://linux-ha.org/FactSheetv2
+        http://linux-ha.org/FactSheetv2
   + Core infrastructure improvments:
     + Messaging (message acknowledging and flow control)
     + Logging   (logging daemon)
   + Release 1.x style (2-node) clusters fully supported
   + Multi-node support (so far up to 16-node clusters tested)
-	See http://linux-ha.org/GettingStartedV2 for more information
+        See http://linux-ha.org/GettingStartedV2 for more information
   + New components:
     + Cluster Information Base    (replicated resource configuration)
     + Cluster Resource Manager    (supporting 1->N nodes)
@@ -664,12 +579,12 @@ fi
   Known issues in 2.0.0:
     - Under some rare circumstances the cluster manager will time out
       while stabilizing a new cluster state.  This appears to be
-	otherwise harmless - the cluster is actually fine.
-	http://www.osdl.org/developer_bugzilla/show_bug.cgi?id=770
+        otherwise harmless - the cluster is actually fine.
+        http://www.osdl.org/developer_bugzilla/show_bug.cgi?id=770
     - Under some rare circumstances, a dev assert will be triggered
-	in unpack.c.  This results in the pengine getting restarted.
-	This is annoying, but not a disaster.
-	http://www.osdl.org/developer_bugzilla/show_bug.cgi?id=797
+        in unpack.c.  This results in the pengine getting restarted.
+        This is annoying, but not a disaster.
+        http://www.osdl.org/developer_bugzilla/show_bug.cgi?id=797
 
 * Tue May 23 2005  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 1.99.5 - Near-final beta of 2.0.0 release
@@ -690,7 +605,7 @@ fi
     for basic ideas about getting started.
   + Release 1 style (2-node) clusters still fully supported
   + Release 2 style clusters support 1-N node clusters
-	(where N is probably something like 8-32)
+        (where N is probably something like 8-32)
 
 * Tue Mar 20 2005  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 1.99.3 - Near-final beta "technology preview" of 2.0.0 release
@@ -713,12 +628,12 @@ fi
 + Version 1.99.0 - *early* beta series - preparing for 2.0.0
   + All STABLE changes noted below have been ported to this branch
   + Included in this release is a beta of the next generation of Heartbeat
-	resource manager developed by Andrew Beekhof.  
-	http://linuxha.trick.ca/NewHeartbeatDesign is a good place to learn
-	more about this effort. Please examine crm/README, crm/test/README
-	and crm/crm-1.0.dtd for example usage and configuration.
+        resource manager developed by Andrew Beekhof.  
+        http://linuxha.trick.ca/NewHeartbeatDesign is a good place to learn
+        more about this effort. Please examine crm/README, crm/test/README
+        and crm/crm-1.0.dtd for example usage and configuration.
   + Also included is the L(ocal) R(esource) M(anager) developed by IBM China
-	which is an integral part of the NewHeartbeatDesign.
+        which is an integral part of the NewHeartbeatDesign.
   + Known caveats:
     - STONITH as a whole has seen a code cleanup and should be tested
       carefully.
@@ -813,7 +728,7 @@ fi
   + Significant library restructuring
   + Watchdog device NOWAYOUT is now overridded if defaulted
   + Watchdog device now kills machine instantly after deadtime
- 	instead of after one minute
+         instead of after one minute
   + Hostnames should now be treated case-independently...
   + Added new client status APIs - client_status() and cstatus_callback()
   + Fixed bug with auto_failback and quick full restarts
@@ -822,34 +737,34 @@ fi
   + STONITH operations repeat after a 5 second delay, not immediately...
   + Added hb_takeover command - complement to hb_standby
   + Added documentation on how to use evlog/TCP to enable testing to
-	take place without losing messages due to UDP message forwarding
+        take place without losing messages due to UDP message forwarding
   + Several new tests from Mi, Jun - split brain, bandwidth, failure
-	detection time.
+        detection time.
   + Fix to LVM resource from Harald Milz <hm@muc.de>
 
 * Tue Feb 16 2004  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 1.2.0
   + Replaced the nice_failback option with the auto_failback option.
-	THIS OBSOLETES THE NICE_FAILBACK OPTION. READ THE DOCS FOR HOW
-	TO UPGRADE SMOOTHLY.
+        THIS OBSOLETES THE NICE_FAILBACK OPTION. READ THE DOCS FOR HOW
+        TO UPGRADE SMOOTHLY.
   + Added a new feature to hb_standby which allows you to give up
-	  any specific category of resources:  local, foreign, or all.
-	The old behavior is "all" which is the default.
-	This allows you to put a auto_failback no cluster into
-	  an active/active configuration on demand.
+          any specific category of resources:  local, foreign, or all.
+        The old behavior is "all" which is the default.
+        This allows you to put a auto_failback no cluster into
+          an active/active configuration on demand.
   + ipfail now works properly with auto_failback on (active/active)
   + ipfail now has "hysteresis" so that it doesn't respond immediately
-	to a network failure, but waits a little while so that the
-	damage can be properly assessed and extraneous takeovers avoided
+        to a network failure, but waits a little while so that the
+        damage can be properly assessed and extraneous takeovers avoided
   + Added new ping node timeout directive "deadping"
   + Made sure heartbeat preallocated stack and heap, and printed a
-	message if we allocate heap once we're started up...
+        message if we allocate heap once we're started up...
   + IPMILan STONITH plugin added to CVS
   + Added IPaddr2 resource script
   + Made the APC smart UPS ups code compatible with more UPSes
   + Added a (preliminary?) ordered messaging facility from Yi Zhu
   + Changed IPaddr's method of doing ARPs in background so that
-	certain timing windows were closed.
+        certain timing windows were closed.
   + Added OCF (wrapper) resource script
   + Allow respawn programs to take arguments
   + Added pinggroups (where any node being up is OK)
@@ -860,11 +775,11 @@ fi
 * Tue Feb 10 2004  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 1.1.5
   + ipfail now has "hysteresis" so that it doesn't respond immediately
-	to a network failure, but waits a little while so that the
-	damage can be properly assessed and extraneous takeovers avoided
+        to a network failure, but waits a little while so that the
+        damage can be properly assessed and extraneous takeovers avoided
   + Several fixes to cl_poll()
   + More fixes to the IPC code - especially handling data reception
-	after EOF
+        after EOF
   + removed some unclean code from GSource for treating EOF conditions
   + Several bugs concerning hanging when shutting down early during startup
   + A few BasicSanityCheck bug fixes
@@ -876,7 +791,7 @@ fi
   + Made init script handle standby correctly for new config files
   + Improved the fast failure detection test
   + Added some backwards compatibility for nice_failback and some default
-	authentication directives
+        authentication directives
   + Corrected the 1.1.4 change log
   
 
@@ -885,7 +800,7 @@ fi
   + ipfail now works properly with auto_failback on (active/active)
   + Changed the API to use sockets (IPC library) instead of FIFOs.
   + Added new apiauth directives to provide authorization information
-	formerly provided by the FIFO permissions.
+        formerly provided by the FIFO permissions.
   + Added Intel's implementation of the SAF data checkpointing API and daemon
   + Added a cleanup suggested by Emily Ratliff.
   + IPMILan STONITH plugin added to CVS
@@ -962,42 +877,42 @@ fi
 * Mon Jul 13 2003  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 1.1.2
   + Replaced the nice_failback option with the auto_failback option.
-	THIS OBSOLETES THE NICE_FAILBACK OPTION. READ THE DOCS FOR HOW
-	TO UPGRADE SMOOTHLY.
+        THIS OBSOLETES THE NICE_FAILBACK OPTION. READ THE DOCS FOR HOW
+        TO UPGRADE SMOOTHLY.
   + Changed IPaddr to not do ARPs in background, and shortened time 
-	between ARPs.  Also made these things tunable...
+        between ARPs.  Also made these things tunable...
   + changed our comm ttys to not become our controlling TTYs
   + Enhanced the ServeRAID script to fix a critical bug by using a new feature
   + Added a new DirectoryMap to CVS - tells where everything is...
   + significantly enhanced the BasicSanityCheck script, and the tests
-	it calls.
+        it calls.
   + added a new option to use a replacement poll function for improved
-	real-time performance.
+        real-time performance.
   + added the ability to have a cluster node's name be different
-	from it's uname -n
+        from it's uname -n
   + Moved where CTS gets installed to /usr/lib/heartbeat/cts
   + Big improvements to the CTS README from IBM test labs in Austin.
   + bug fixes to the WTI NPS power switch
   + new client API calls:
-	return arbitrary configuration parameters
-	return current resource status
+        return arbitrary configuration parameters
+        return current resource status
   + Added a new clplumbing function: mssleep()
   + added new capabilities for supporting pseudo-resources
   + added new messages which come out after initial takeover is done
-	 (improves CTS results)
+         (improves CTS results)
   + LOTS of documentation updates.
   + fixed a security vulnerability
   + fixed a bug where heartbeat would shut down while in the middle
-	of processing resource movement requests.
+        of processing resource movement requests.
   + changed compilation flags to eliminate similar future security
-	issues
+        issues
   + went to even-more-strict gcc flags
   + fixed several "reload" bugs.  Now reload works ;-)
   + fixed STONITH bug when other node never heard from.
   + Minor bug fixes (cleaned up corrupted message)
   + Two different client API bugs fixed.
   + changed the configure script to test which warning flags are
-	supported by the current gcc.
+        supported by the current gcc.
   + enhanced the API test program to test new capabilities...
 
 
@@ -1005,20 +920,20 @@ fi
 + Version 1.1.1
   + Significant restructuring of the processes in heartbeat
   + Added a new feature to hb_standby which allows you to give up
-	  any specific category of resources:  local, foreign, or all.
-	The old behavior is "all" which is the default.
-	This allows you to put a nice_failback cluster into
-	  an active/active configuration
+          any specific category of resources:  local, foreign, or all.
+        The old behavior is "all" which is the default.
+        This allows you to put a nice_failback cluster into
+          an active/active configuration
   + Enhancements to the ServeRAID code to make it work with the new
     (supported) version of IPSSEND from the ServeRAID folks...
   + Added STONITH code for the Dell remote access controller
   + Fixed a major bug which kept it from taking over correctly after 246
-	days or so
+        days or so
   + Fixed a major bug where heartbeat didn't lock itself into memory
-	properly
+        properly
   + Added new ping node timeout directive "deadping"
   + Made sure heartbeat preallocated stack and heap, and printed a
-	message if we allocate heap once we're started up...
+        message if we allocate heap once we're started up...
   + Minor heartbeat API bug fixes
   + Minor documentation fixes
   + Minor fix to allow IP addresses with /32 masks...
@@ -1055,7 +970,7 @@ fi
   + Fixed some compile errors on different platforms, and library versions
   + Disable ccm from running on 'ping' nodes
   + Put in Steve Snodgrass' fix to send_arp to make it work on non-primary
-	interfaces.
+        interfaces.
 
 * Thu Feb 13 2003  Alan Robertson <alanr@unix.sh> (see doc/AUTHORS file)
 + Version 1.0.1 beta series
@@ -1103,7 +1018,7 @@ fi
   + Heartbeat API client headers fixup
   + Added new API calls
   + Simplified (and fixed) handling of local status.  This would sometimes cause
-	obscure failures on startup.
+        obscure failures on startup.
   + Added new IPsrcaddr resource script
 
   KNOWN BUGS:
@@ -1136,12 +1051,12 @@ fi
   + changed API code to not 1-char reads from clients
   + Ignored certain error conditions from API clients
   + fixed an obscure error message about trying to retransmit a packet
-	which we haven't sent yet.  This happens after restarts.
+        which we haven't sent yet.  This happens after restarts.
   + made the PILS libraries available in a separate package
   + moved the stonith headers to stonith/... when installed
   + improved debugging for NV failure cases...
   + updated AUTHORS file and simplified the changelog authorship
-	(look in AUTHORS for the real story)
+        (look in AUTHORS for the real story)
   + Added Ram Pai's CCM membership code
   + Added the application heartbeat code
   + Added the Kevin Dwyer's ipfail client code to the distribution
@@ -1160,11 +1075,11 @@ fi
   + Cluster partitioning  now handled correctly (really!)
   + Complete rearchitecture of plugin system
   + Complete restructure of build system to use automake and port things
-	to AIX, FreeBSD and solaris.
+        to AIX, FreeBSD and solaris.
   + Added Lclaudio's "standby" capability to put a node into standby
-	mode on demand.
+        mode on demand.
   + Added code to send out gratuitous ARP requests as well as gratuitous
-	arp replies during IP address takeover.
+        arp replies during IP address takeover.
   + Suppress stonith operations for nodes which went down gracefully.
   + Significantly improved real-time performance
   + Added new unicast heartbeat type.
@@ -1211,12 +1126,12 @@ fi
   + Added several new "plumbing" subsystems (IPC, longclock_t, proctrack, etc.)
   + Added a new "contrib" directory.
   + Fixed serious (but trivial) bug in the process tracking code which caused
-	it to exit heartbeat - this occured repeatably for STONITH operations.
+        it to exit heartbeat - this occured repeatably for STONITH operations.
   + Write a 'v' to the watchdog device to tell it not to reboot us when
-	we close the device.
+        we close the device.
   + Various ldirectord fixes due to Horms
   + Minor patch from Lorn Kay to deal with loopback interfaces which might
-	have been put in by LVS direct routing
+        have been put in by LVS direct routing
   + Updated AUTHORS file and moved list of authors over
 
 * Fri Mar 16 2001  Alan Robertson <alanr@unix.sh>
@@ -1225,12 +1140,12 @@ fi
   + Split into 3 rpms - heartbeat, heartbeat-stonith heartbeat-ldirectord
 
   + Made media modules and authentication modules and stonith modules
-	dynamically loadable.
+        dynamically loadable.
 
   + Added Multicast media support
   + Added ping node/membership/link type for tiebreaking.  This will
-	be useful when implementing quorum on 2-node systems.
-	(not yet compatible with nice_failback(?))
+        be useful when implementing quorum on 2-node systems.
+        (not yet compatible with nice_failback(?))
   + Removed ppp support
 
   + Heartbeat client API support
@@ -1239,14 +1154,14 @@ fi
     +   support for the Baytech RPC-3A power switch
     +   support for the APCsmart UPS
     +   support for the VACM cluster management tool
-    +	support for WTI RPS10
-    +	support for Night/Ware RPC100S
-    +	support for "Meatware" (human intervention) module
-    +	support for "null" (testing only) module
+    +        support for WTI RPS10
+    +        support for Night/Ware RPC100S
+    +        support for "Meatware" (human intervention) module
+    +        support for "null" (testing only) module
 
   + Fixed startup timing bugs
   + Fixed shutdown sequence bugs: takeover occured before
-	resources were released by other system
+        resources were released by other system
   + Fixed various logging bugs
   + Closed holes in protection against replay attacks
 
@@ -1279,8 +1194,8 @@ fi
   + Print the version of heartbeat when starting.
   + Print exhaustive version info when starting with debug on.
   + Hosts now have 3 statuses {down, up, active} active means that it knows
-	that all its links are operational, and it's safe to send cluster
-	messages
+        that all its links are operational, and it's safe to send cluster
+        messages
   + Significant revisions to nice_failback (mainly due to lclaudio)
   + More SuSE-compatibility. Thanks to Friedrich Lobenstock <fl@fl.priv.at>
   + Tidied up logging so it can be to files, to syslog or both (Horms)
@@ -1308,7 +1223,7 @@ fi
 * Sat Dec 25 1999 Alan Robertson <alanr@unix.sh>
 + Version 0.4.7
   + Added the nice_failback feature. If the cluster is running when
-	the primary starts it acts as a secondary. (Luis Claudio Goncalves)
+        the primary starts it acts as a secondary. (Luis Claudio Goncalves)
   + Put in lots of code to make lost packet retransmission happen
   + Stopped trying to use the /proc/ha interface
   + Finished the error recovery in the heartbeat protocol (and got it to work)
@@ -1316,12 +1231,12 @@ fi
   + Raised the maximum length of a node name
   + Added Jacob Rief's ldirectord resource type
   + Added Stefan Salzer's <salt@cin.de> fix for a 'grep' in IPaddr which
-	wasn't specific enough and would sometimes get IPaddr confused on
-	IP addresses that prefix-matched.
+        wasn't specific enough and would sometimes get IPaddr confused on
+        IP addresses that prefix-matched.
   + Added Lars Marowsky-Bree's suggestion to make the code almost completely
-	robust with respect to jumping the clock backwards and forwards
+        robust with respect to jumping the clock backwards and forwards
   + Added code from Michael Moerz <mike@cubit.at> to keep findif from
-	core dumping if /proc/route can't be read.
+        core dumping if /proc/route can't be read.
 
 * Mon Nov 22 1999 Alan Robertson <alanr@unix.sh>
 + Version 0.4.6
@@ -1340,7 +1255,7 @@ fi
 * Wed Oct 13 1999 Alan Robertson <alanr@unix.sh>
 + Version 0.4.5
   + Mijta Sarp added a new feature to authenticate heartbeat packets
-	using a variety of strong authentication techniques
+        using a variety of strong authentication techniques
   + Changed resource acquisition and relinquishment to occur in heartbeat,
        instead of in the start/stop script.  This means you don't *really*
        have to use the start/stop script if you don't want to.
@@ -1360,7 +1275,7 @@ fi
   + Fixed a bug where the FIFO doesn't get created correctly.
   + Fixed a couple of uninitialized variables in heartbeat and /proc/ha code
   + Fixed longstanding crash bug related to getting a SIGALRM while in malloc
-	or free.
+        or free.
   + Implemented new memory management scheme, including memory stats
 
 * Thu Sep 16 1999 Alan Robertson <alanr@unix.sh>
@@ -1373,19 +1288,19 @@ fi
   + Changed startup scripts to create /dev/watchdog if needed
   + Turned off loading of /proc/ha module by default.
   + Incorporated bug fix from Thomas Hepper <th@ant.han.de> to IPaddr for
-	PPP configurations
+        PPP configurations
   + Put in a fix from Gregor Howey <ghowey@bremer-nachrichten.de>
-	where Gregor found that I had stripped off the ::resourceid part
-	of the string in ResourceManager resulting in some bad calls later on.
+        where Gregor found that I had stripped off the ::resourceid part
+        of the string in ResourceManager resulting in some bad calls later on.
   +  Made it compliant with the FHS (filesystem hierarchy standard)
   +  Fixed IP address takeover so we can take over on non-eth0 interface
   +  Fixed IP takeover code so we can specify netmasks and broadcast addrs,
-	or default them at the user's option.
+        or default them at the user's option.
   +  Added code to report on message buffer usage on SIGUSR[12]
   +  Made SIGUSR1 increment debug level, and SIGUSR2 decrement it.
   +  Incorporated Rudy's latest "Getting Started" document
   +  Made it largely Debian-compliant.  Thanks to Guenther Thomsen, Thomas
-	Hepper, Iñaki Fernández Villanueva and others.
+        Hepper, Iñaki Fernández Villanueva and others.
   +  Made changes to work better with Red Hat 6.1, and SMP code.
   +  Sometimes it seems that the Master Control Process dies :-(
 
@@ -1395,14 +1310,14 @@ fi
   + Implemented application notification for groups starting/stopping
   + Eliminated restriction on floating IPs only being associated with eth0
   + Added a uniform resource model, with IP resources being only one kind.
-	(Thanks to Lars Marowsky-Bree for a good suggestion)
+        (Thanks to Lars Marowsky-Bree for a good suggestion)
   + Largely rewrote the IP address takeover code, making it clearer, fit
-	into the uniform resource model, and removing some restrictions.
+        into the uniform resource model, and removing some restrictions.
   + Preliminary "Getting Started" document by Rudy Pawul
   + Improved the /proc/ha code
   + Fixed memory leak associated with serial ports, and problem with return
-	of control to the "master" node.
-	(Thanks to Holger Kiehl for reporting them, and testing fixes!)
+        of control to the "master" node.
+        (Thanks to Holger Kiehl for reporting them, and testing fixes!)
 
 * Tue Jul 6 1999 Alan Robertson <alanr@unix.sh>
 + Version 0.4.1
@@ -1413,24 +1328,24 @@ fi
   + Made logs more uniform and neater
   + Fixed several other minor bugs
   + Added very preliminary kernel code for monitoring and controlling
-	heartbeat via /proc/ha.  Very cool, but not really done yet.
+        heartbeat via /proc/ha.  Very cool, but not really done yet.
 
 * Wed Jun 30 1999 Alan Robertson <alanr@unix.sh>
 + Version 0.4.0
   + Changed packet format from single line positional parameter style
-	to a collection of {name,value} pairs.  A vital change for the future.
+        to a collection of {name,value} pairs.  A vital change for the future.
   + Fixed some bugs with regard to forwarding data around rings
   + We now modify /etc/ppp/ip-up.local, so PPP-udp works out of the box
-	(at least for Red Hat)
+        (at least for Red Hat)
   + Includes the first version of Volker Wiegand's Hardware Installation Guide
-	(it's pretty good for a first version!)
+        (it's pretty good for a first version!)
 
 * Wed Jun 09 1999 Alan Robertson <alanr@unix.sh>
 + Version 0.3.2
   + Added UDP/PPP bidirectional serial ring heartbeat
-	(PPP ensures data integrity on the serial links)
+        (PPP ensures data integrity on the serial links)
   + fixed a stupid bug which caused shutdown to give unpredictable
-	results
+        results
   + added timestamps to /var/log/ha-log messages
   + fixed a couple of other minor oversights.
 
