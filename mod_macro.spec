@@ -5,8 +5,6 @@ Release: 1%{dist}
 Group: System Environment/Daemons
 URL: http://cri.ensmp.fr/~coelho/mod_macro/
 Source0: http://cri.ensmp.fr/~coelho/mod_macro/mod_macro-%{version}.tar.gz
-#Source1: README
-#Source2: antiloris.conf
 License: Apache Licence 2.0
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: httpd-devel >= 2.0.40-6

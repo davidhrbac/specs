@@ -7,8 +7,8 @@
 %endif
 
 Name:           gitolite
-Version:        2.0.3
-Release:        3%{?dist}
+Version:        2.3
+Release:        1%{?dist}
 Summary:        Highly flexible server for git directory version tracker
 
 Group:          Applications/System
@@ -20,8 +20,9 @@ URL:            http://github.com/sitaramc/gitolite
 # $ cd gitolite
 # $ git archive ed2bf5 |gzip >gitolite-ed2bf5.tar.gz
 #Source0:        gitolite-ed2bf5.tar.gz
-Source0:        gitolite-2.0.3.tar.gz
-#Source1:        gitolite-README-fedora
+#Source0:        gitolite-2.0.3.tar.gz
+Source0:        sitaramc-gitolite-v2.3-0-g01e789a.tar.gz
+Source1:        gitolite-README-fedora
 # Far from being upstreamable
 Patch0:         gitolite-2.0-rpm.patch
 #Patch1:         gitolite-1.4.2-conf.patch
@@ -52,7 +53,7 @@ elsewhere in the doc/ directory.
 
 
 %prep
-%setup -qn sitaramc-gitolite-4c1e4b2
+%setup -qn sitaramc-gitolite-6857652
 # Don't create backups; would mess with %%install
 %patch0 -p1
 #%patch1 -p1
@@ -83,7 +84,9 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # Code
 install -p src/gl-* $RPM_BUILD_ROOT%{_bindir}
+install -p src/sshkeys-lint $RPM_BUILD_ROOT%{_bindir}
 install -p -m644 src/*.pm $RPM_BUILD_ROOT%{perl_vendorlib}
+echo "%{version}-%{release}" >conf/VERSION
 cp -a conf hooks $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # empty authorized_keys file
@@ -117,6 +120,9 @@ exit 0
 
 
 %changelog
+* Sat Mar 17 2012 David Hrbáč <david@hrbac.cz> - 2.3-1
+- new upstream release
+
 * Thu Oct 13 2011 David Hrbáč <david@hrbac.cz> - 2.0.3-3
 - added missing patch
 

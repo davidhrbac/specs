@@ -3,7 +3,7 @@
 
 Summary: HA monitor built upon LVS, VRRP and service pollers
 Name: keepalived
-Version: 1.1.19
+Version: 1.2.2
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/System
@@ -43,13 +43,15 @@ healthchecks and LVS directors failover.
 # Fix file mode (600 as of 1.1.13)
 %{__chmod} a+r doc/samples/sample.misccheck.smbcheck.sh
 # Included as doc, so disable its dependencies
-%{__chmod} -x goodies/arpreset.pl
+#%{__chmod} -x goodies/arpreset.pl
 
 
 %build
 KERNELDIR=$(ls -1d /lib/modules/%{kernel}*/build | head -1)
-%configure --with-kernel-dir="${KERNELDIR}"
-%{__make} %{?_smp_mflags} STRIP=/bin/true
+%configure
+#--with-kernel-dir="${KERNELDIR}"
+%{__make} %{?_smp_mflags}
+#STRIP=/bin/true
 
 #%configure --with-kernel-dir="/lib/modules/%{kernel}/build"
 #%{__make} %{?_smp_mflags} STRIP=/bin/true
@@ -93,7 +95,8 @@ fi
 %files
 %defattr(-,root,root,-)
 %doc AUTHOR ChangeLog CONTRIBUTORS COPYING README TODO
-%doc doc/keepalived.conf.SYNOPSIS doc/samples/ goodies/arpreset.pl
+%doc doc/keepalived.conf.SYNOPSIS doc/samples/
+#goodies/arpreset.pl
 %dir %{_sysconfdir}/keepalived/
 %config(noreplace) %{_sysconfdir}/keepalived/keepalived.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/keepalived
@@ -106,6 +109,9 @@ fi
 
 
 %changelog
+* Fri Mar 09 2012 David Hrbáč <david@hrbac.cz> - 1.2.2-1
+- new upstream release
+
 * Tue Dec 01 2009 David Hrbáč <david@hrbac.cz> - 1.1.19-1
 - new upstream release
 - Include patch to remove obsolete -k option to modprobe (#528465).
