@@ -1,10 +1,11 @@
 Summary: Script to mirror hrb repositories
 Name: hrb-mirror
-Version: 0.1
+Version: 0.1.1
 Release: 1%{?dist}
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
+Requires: flock
 BuildArch:  noarch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -17,7 +18,7 @@ Script to mirror hrb repositories.
 %{__cat} <<EOF >hrb.cron
 #Script to mirror hrb repositories
 #rsync --delete-delay --delay-updates --delete -a 158.196.128.251::hrb/ /var/www/html/hrb33/
-rsync --delete-delay --delay-updates --delete -a repository.vsb.cz::hrb /var/www/html/hrb33/
+/usr/bin/flock -w 60 /var/lock/EUAK1qEPB3SM /usr/bin/rsync -qai4CH --safe-links --delay-updates --delete repository.vsb.cz::hrb /var/www/html/hrb33/
 EOF
 %build
 %install
@@ -33,5 +34,9 @@ EOF
 %config %{_sysconfdir}/cron.hourly/hrb33
 
 %changelog
+* Thu May 03 2012 David Hrbáč <david@hrbac.cz> - 0.1.1-1
+- new quiet version
+- added flock
+
 * Thu Nov 12 2009 David Hrbáč <david@hrbac.cz> - 0.1-1
 - Initial package. 
