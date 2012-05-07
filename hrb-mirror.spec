@@ -1,11 +1,11 @@
 Summary: Script to mirror hrb repositories
 Name: hrb-mirror
-Version: 0.1.1
+Version: 0.1.2
 Release: 1%{?dist}
 License: GPL
 Group: System Environment/Base
 URL: http://www.hrbac.cz/repository.htm
-Requires: flock
+Requires: /usr/bin/flock
 BuildArch:  noarch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -34,6 +34,9 @@ EOF
 %config %{_sysconfdir}/cron.hourly/hrb33
 
 %changelog
+* Mon May 07 2012 David Hrbáč <david@hrbac.cz> - 0.1.2-1
+- better flock requirement
+
 * Thu May 03 2012 David Hrbáč <david@hrbac.cz> - 0.1.1-1
 - new quiet version
 - added flock
