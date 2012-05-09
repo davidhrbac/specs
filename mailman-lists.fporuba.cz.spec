@@ -234,7 +234,7 @@ sed -r -i \
     -e 's|^DST_CRON_SCRIPT.*|DST_CRON_SCRIPT=/etc/cron.d/%{name}|g' \
     -e 's|/etc/init.d/mailman|/etc/init.d/%{name}|g' \
     -e 's|mailman-update-cfg|%{name}-update-cfg|g' \
-    -e 's|^prog=.*|^prog="%{name}"|g' \
+    -e 's|^prog=.*|prog="%{name}"|g' \
     $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 %endif
 
