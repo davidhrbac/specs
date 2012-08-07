@@ -1,7 +1,7 @@
 Summary:	mod_gnutls is a DSO module for the apache Web server.
 Name:		mod_gnutls
 Version:	0.5.9
-Release:	1%{?dist}
+Release:	2%{?dist}
 Group:		System Environment/Daemons
 URL:		http://www.outoforder.cc/projects/apache/mod_gnutls/
 Source:		http://www.outoforder.cc/downloads/mod_gnutls/%{name}-%{version}.tar.bz2
@@ -11,10 +11,12 @@ License:	Apache Software License
 BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	httpd-devel >= 2.0.52
 BuildRequires:	gnutls >= 2.4, gnutls-devel >= 2.4, gnutls-utils >= 2.4, apr-devel
+BuildRequires:  apr_memcache-devel
 Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
 Requires:	gnutls >= 2.4
 #Requires:	gnutls >= 2.1, httpd >= 2.0.52
 Requires:	httpd >= %(rpm -q httpd --qf "%%{version}-%%{release}\n")
+Requires:   apr_memcache
 
 %description
 mod_gnutls uses the GnuTLS library to provide SSL v3, TLS 1.0 and TLS 1.1
@@ -63,6 +65,9 @@ mkdir -p -m 0700 $RPM_BUILD_ROOT%{_var}/cache/mod_gnutls_cache
 %attr(0700, apache, apache) %{_var}/cache/mod_gnutls_cache
 
 %changelog
+* Tue Aug 07 2012 David Hrbáč <david@hrbac.cz> - 0.5.9-2
+- added apr_memcache support
+
 * Tue Nov 16 2010 David Hrbáč <david@hrbac.cz> - 0.5.9-1
 - new upstream release
 

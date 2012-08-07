@@ -5,7 +5,7 @@
 
 Summary: The PHP HTML-embedded scripting language
 Name: php
-Version: 5.3.10
+Version: 5.3.13
 Release: 1%{?dist}
 License: PHP
 Group: Development/Languages
@@ -684,6 +684,9 @@ rm files.* macros.php
 %files intl -f files.intl
 
 %changelog
+* Wed May 16 2012 David Hrbáč <david@hrbac.cz> - 5.3.13-1
+- new upstream release
+
 * Fri Feb 03 2012 David Hrbáč <david@hrbac.cz> - 5.3.10-1
 - new upstream release
 
