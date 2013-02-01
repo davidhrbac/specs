@@ -5,16 +5,16 @@
 Summary:	Python XML Schema Bindings
 Name:		python-%{module}
 Version:	1.1.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	Apache v2.0
 Group:		Development/Languages/Python
 Source0:	http://downloads.sourceforge.net/project/pyxb/pyxb/%{version}%20%28Beta%29/PyXB-base-%{version}.tar.gz
 URL:		http://pyxb.sourceforge.net
 BuildRequires:	python-devel
 BuildRequires:  python >= 2.4
-Requires:	python-PyXML
-Requires:	python-libs
-Requires:	python-modules
+#Requires:	python-PyXML
+#Requires:	python-libs
+#Requires:	python-modules
 Requires:       python >= 2.4
 BuildArch:	noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -64,11 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NOTICE README.txt doc/*
-%{python_sitelib}/pyxb
-%if "%{py_ver}" > "2.4"
-%{python_sitelib}/%{module}-*.egg-info
-%endif
+%doc doc/* LICENSE NOTICE PKG-INFO README.txt
+%{python_sitelib}/*
 
 %files -n PyXB
 %defattr(644,root,root,755)
@@ -81,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc examples/*
 
 %changelog
+* Mon Oct 08 2012 David Hrbáč <david@hrbac.cz> - 1.1.2-2
+- removed python-modules requirement
+
 * Tue Jul 27 2010 David Hrbáč <david@hrbac.cz> - 1.1.2-1
 - New upstream version
 

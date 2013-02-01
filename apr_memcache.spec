@@ -1,18 +1,19 @@
 Summary:    A client for memcached
 Name:       apr_memcache
 Version:    0.7.0
-Release:    1
+Release:    1%{?dist}
 License:    Apache v2.0
 Group:      Libraries
 Source0:    http://www.outoforder.cc/downloads/apr_memcache/%{name}-%{version}.tar.bz2
 #Patch0:     %{name}-libtool.patch
+Patch0:     apr_reslist_invalidate.patch
 URL:        http://www.outoforder.cc/projects/libs/apr_memcache/
-BuildRequires:  apr-devel >= 1.2.2
-BuildRequires:  apr-util-devel >= 1.2.2
+BuildRequires:  apr-devel 
+BuildRequires:  apr-util-devel
 BuildRequires:  autoconf >= 2.53
 BuildRequires:  automake
 BuildRequires:  libtool
-BuildRoot:  %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot: %{_tmppath}/%{name}-root
 
 %description
 apr_memcache is a client for memcached written in C, using APR and
@@ -23,8 +24,8 @@ making it perfect for use inside Apache Modules.
 Summary:    Development files for apr_memcache
 Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
-Requires:   apr-devel >= 1.2.2
-Requires:   apr-util-devel >= 1.2.2
+Requires:   apr-devel
+Requires:   apr-util-devel
 
 %description devel
 Header files for apr_memcache.
@@ -39,14 +40,14 @@ Static apr_memcache library.
 
 %prep
 %setup -q
-#%patch0 -p1
+#{?el4: %patch1 -p}
 
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoheader}
-%{__automake}
-%{__autoconf}
+#{__libtoolize}
+#{__aclocal} -I m4
+#{__autoheader}
+#{__automake}
+#{__autoconf}
 
 %configure \
     --with-apr=%{_bindir}/apr-1-config \

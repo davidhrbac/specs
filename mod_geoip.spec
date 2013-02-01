@@ -1,7 +1,7 @@
 Summary: GeoIP module for the Apache HTTP Server
 Name: mod_geoip
-Version: 1.2.5
-Release: 2%{?dist}
+Version: 1.2.7
+Release: 1%{?dist}
 License: Apache Software License
 Group: System Environment/Daemons
 URL: http://www.maxmind.com/app/mod_geoip
@@ -19,7 +19,7 @@ the lookup.  It is free software, licensed under the Apache license.
 %prep
 
 %setup -n mod_geoip2_%{version}
-%patch0 -p0
+#%patch0 -p0
 
 %build
 /usr/sbin/apxs -Wc,"%{optflags}" -Wl,"-lGeoIP" -c mod_geoip.c
@@ -50,6 +50,9 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/mod_geoip.conf
 
 %changelog
+* Thu Oct 25 2012 David Hrbáč <david@hrbac.cz> - 1.2.7-1
+- new upstream release
+
 * Fri Jan 29 2010 David Hrbáč <david@hrbac.cz> - 1.2.5-2
 - better mod_geoip.conf
 - experimental support for GEOIP_COUNTRY_EDITION_V6

@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        1.0.12
+Version:        1.0.15
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -189,6 +189,9 @@ fi
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 
 %changelog
+* Thu Jan 31 2013 David Hrbáč <david@hrbac.cz> - 1.0.15-1
+- new upstream release
+
 * Thu Feb 16 2012 David Hrbáč <david@hrbac.cz> - 1.0.12-1
 - new upstream release
 
