@@ -1,10 +1,10 @@
 Summary: Repository hrb release file and package configuration
 Name: hrb-release
-Version: 0.1
-Release: 7%{?dist}
+Version: 0.2
+Release: 1%{?dist}
 License: GPL
 Group: System Environment/Base
-URL: http://www.hrbac.cz/repository.htm
+URL: http://repository.hrbac.cz
 
 #Source0: mirrors-hrb-mirrors
 
@@ -24,23 +24,23 @@ Release file for hrb repository.
 
 %{__cat} <<EOF >hrb.yum
 # Name: hrb repository 
-# URL: http://www.hrbac.cz/repository.htm
+# URL: http://repository.hrbac.cz
 [hrb-stable]
 name = hrb
-#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb/stable/%{_arch}/
-mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-hrb
+#baseurl = http://repository.hrbac.cz/mirrors/el%centos_ver/hrb/stable/%{_arch}/
+mirrorlist = http://repository.hrbac.cz/mirrors/mirrors-hrb
 enabled = 1
 protect = 0
-gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://repository.hrbac.cz/mirrors/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 
 [hrb-testing]
 name = hrb-test
-#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb/testing/%{_arch}/
-mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-testing-hrb
+#baseurl = http://repository.hrbac.cz/mirrors/el%centos_ver/hrb/testing/%{_arch}/
+mirrorlist = http://repository.hrbac.cz/mirrors/mirrors-testing-hrb
 enabled = 0
 protect = 0
-gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://repository.hrbac.cz/mirrors/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 EOF
 
@@ -59,6 +59,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb.repo
 
 %changelog
+* Fri Feb 01 2013 David Hrbáč <david@hrbac.cz> - 0.2-1
+- moving to github site
+
 * Fri Jan 13 2012 David Hrbáč <david@hrbac.cz> - 0.1-7
 - corrected description
 

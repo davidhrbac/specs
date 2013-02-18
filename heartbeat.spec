@@ -5,7 +5,7 @@
 %global specversion 1
 #global upstreamprefix Linux-HA-Dev-
 %global upstreamprefix Heartbeat-3-0-
-%global upstreamversion STABLE-3.0.4
+%global upstreamversion STABLE-3.0.5
 
 #global alphatag %{upstreamversion}.hg
 
@@ -15,7 +15,7 @@
 
 Summary:          Messaging and membership subsystem for High-Availability Linux
 Name:             heartbeat
-Version:          3.0.4
+Version:          3.0.5
 # For dev snapshots
 #Release:         #{?alphatag:0.}#{specversion}#{?alphatag:.#{alphatag}}#{?dist}
 Release:          %{?alphatag:0.}%{specversion}%{?alphatag:.%{alphatag}}%{?dist}
@@ -188,6 +188,9 @@ fi
 %{_libdir}/*.so
 
 %changelog
+* Mon Feb 11 2013 David Hrbáč <david@hrbac.cz> - 3.0.5-1
+- new upstream release
+
 * Tue Apr 03 2012 David Hrbáč <david@hrbac.cz> - 3.0.4-1.1
 - rebuild
 

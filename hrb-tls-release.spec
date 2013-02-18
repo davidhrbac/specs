@@ -1,10 +1,10 @@
 Summary: Repository hrb-tls release file and package configuration
 Name: hrb-tls-release
-Version: 0.1
-Release: 5%{?dist} 
+Version: 0.2
+Release: 1%{?dist} 
 License: GPL
 Group: System Environment/Base
-URL: http://www.hrbac.cz/repository.htm
+URL: http://repository.hrbac.cz
 
 #Source0: mirrors-hrb-tls-mirrors
 
@@ -24,23 +24,23 @@ Release file for hrb-tls repository.
 
 %{__cat} <<EOF >hrb-tls.yum
 # Name: hrb-tls repository 
-# URL: http://www.hrbac.cz/repository.htm
+# URL: http://repository.hrbac.cz
 [hrb-tls-stable]
 name = hrb-tls
-#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb-tls/stable/%{_arch}/
-mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-hrb-tls
+#baseurl = http://repository.hrbac.cz/mirrors/el%centos_ver/hrb-tls/stable/%{_arch}/
+mirrorlist = http://repository.hrbac.cz/mirrors/mirrors-hrb-tls
 enabled = 1
 protect = 0
-gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://repository.hrbac.cz/mirrors/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 
 [hrb-tls-testing]
 name = hrb-tls-test
-#baseurl = http://webmel53.vsb.cz/hrb33/el%centos_ver/hrb-tls/testing/%{_arch}/
-mirrorlist = http://webmel53.vsb.cz/hrb33/mirrors-testing-hrb-tls
+#baseurl = http://repository.hrbac.cz/mirrors/el%centos_ver/hrb-tls/testing/%{_arch}/
+mirrorlist = http://repository.hrbac.cz/mirrors/mirrors-testing-hrb-tls
 enabled = 0
 protect = 0
-gpgkey = http://webmel53.vsb.cz/hrb33/RPM-GPG-KEY-hrb.txt
+gpgkey = http://repository.hrbac.cz/mirrors/RPM-GPG-KEY-hrb.txt
 gpgcheck = 1
 EOF
 
@@ -59,6 +59,9 @@ EOF
 %config(noreplace) %{_sysconfdir}/yum.repos.d/hrb-tls.repo
 
 %changelog
+* Fri Feb 01 2013 David Hrbáč <david@hrbac.cz> - 0.2-1
+- moving to github site
+
 * Tue Oct 25 2011 David Hrbáč <david@hrbac.cz> - 0.1-5
 - new mirrorlist server
 
