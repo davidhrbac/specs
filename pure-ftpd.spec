@@ -1,3 +1,4 @@
+%define _default_patch_fuzz 3
 Name:       pure-ftpd
 Version:    1.0.22
 Release:    4%{?dist}
